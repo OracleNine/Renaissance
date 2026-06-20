@@ -3,7 +3,7 @@ from core.models import Profile, User
 from .forms import RegisterForm, CreateWikiForm
 from django.contrib.auth.views import LoginView
 
-# Create your views here.
+# Registration Views
 def index(request):
     return render(request, "core/index.html")
 
@@ -11,7 +11,7 @@ def signup(request):
     if (request.user.is_authenticated):
         return redirect("/dashboard")
     else:
-        if request.method == "POST":
+        if (request.method == "POST"):
             form = RegisterForm(request.POST)
             if form.is_valid():
                 form.save()
@@ -41,8 +41,13 @@ def dashboard_wikis(request):
         return redirect("/login")
 
 def dashboard_create(request):
-    if (request.user.is_authenticated):
-        form = CreateWikiForm()
-        return render(request, "core/social/create-wiki.html", {"form": form})
-    else:
+    if not (request.user.is_authenticated):
         return redirect("/login")
+    elif (request.method == "POST"):
+        form = CreateWikiForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("/dashboard/wikis")
+    else:
+        form = CreateWikiForm()
+    return render(request, "core/social/create-wiki.html", {"form": form})

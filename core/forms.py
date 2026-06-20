@@ -12,9 +12,10 @@ class RegisterForm(UserCreationForm):
         fields = ["email", "username", "password1", "password2"]
 
 class CreateWikiForm(ModelForm):
-    name = forms.CharField()
-    description = forms.CharField( widget=forms.Textarea )
+    name = forms.CharField(help_text='The name of your wiki.')
+    subdomain = forms.CharField(help_text='Only alphanumeric characters and dashes are allowed.')
+    description = forms.CharField( widget=forms.Textarea, help_text='Tell us about your wiki.' )
 
     class Meta:
         model = Wiki
-        fields = ["name", "description"]
+        fields = ["name", "subdomain", "description"]
