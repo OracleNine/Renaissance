@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponse
-from core.models import Profile, User, Wiki
+from core.models import Profile, User, Wiki, Member
 from .forms import RegisterForm, CreateWikiForm
 
 # Registration Views
@@ -33,9 +33,21 @@ def dashboard_activity(request):
 
 def dashboard_wikis(request):
     if request.user.is_authenticated:
-        profile = request.user.profile
+        memberships = Member.objects.filter(profile=request.user.profile)
 
-        return render(request, "core/social/wikis.html")
+        wikis = []
+        for membership in memberships:
+            wikiName = membership.wiki.name
+            wikiDescription = membership.wiki.description
+            wikiSubdomain= membership.wiki.subdomain
+
+            wikis.append({
+                "name": wikiName,
+                "description": wikiDescription,
+                "subdomain": wikiSubdomain
+            })
+
+        return render(request, "core/social/wikis.html", {"wikis": wikis})
     else:
         return redirect("/login")
 
