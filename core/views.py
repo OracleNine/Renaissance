@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
 from core.models import Profile, User
-from .forms import RegisterForm
+from .forms import RegisterForm, CreateWikiForm
+from django.contrib.auth.views import LoginView
 
 # Create your views here.
 def index(request):
@@ -8,7 +9,7 @@ def index(request):
 
 def signup(request):
     if (request.user.is_authenticated):
-        return redirect("/")
+        return redirect("/dashboard")
     else:
         if request.method == "POST":
             form = RegisterForm(request.POST)
@@ -19,11 +20,12 @@ def signup(request):
                 user = User.objects.filter(username=data["username"])[0]
                 profile = Profile(user=user)
                 profile.save()
-            return redirect("/")
+            return redirect("/dashboard")
         else:
             form = RegisterForm()
         return render(request, "registration/signup.html", {"form": form})
 
+# Dashboard Views
 def dashboard_activity(request):
     if (request.user.is_authenticated):
         return render(request, "core/social/activity.html")
@@ -40,6 +42,7 @@ def dashboard_wikis(request):
 
 def dashboard_create(request):
     if (request.user.is_authenticated):
-        return render(request, "/core/social/create-wiki.html")
+        form = CreateWikiForm()
+        return render(request, "core/social/create-wiki.html", {"form": form})
     else:
         return redirect("/login")
