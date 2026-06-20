@@ -26,6 +26,6 @@ def signup(request):
 
 def dashboard(request):
     if (request.user.is_authenticated):
-        return render(request, "core/dashboard.html")
+        return render(request, "core/social/dashboard.html")
     else:
         return redirect("/login")
