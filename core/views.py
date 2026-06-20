@@ -23,3 +23,9 @@ def signup(request):
         else:
             form = RegisterForm()
         return render(request, "registration/signup.html", {"form": form})
+
+def dashboard(request):
+    if (request.user.is_authenticated):
+        return render(request, "core/dashboard.html")
+    else:
+        return redirect("/login")
