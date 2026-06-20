@@ -24,8 +24,22 @@ def signup(request):
             form = RegisterForm()
         return render(request, "registration/signup.html", {"form": form})
 
-def dashboard(request):
+def dashboard_activity(request):
     if (request.user.is_authenticated):
-        return render(request, "core/social/dashboard.html")
+        return render(request, "core/social/activity.html")
+    else:
+        return redirect("/login")
+
+def dashboard_wikis(request):
+    if (request.user.is_authenticated):
+        profile = request.user.profile
+
+        return render(request, "core/social/wikis.html")
+    else:
+        return redirect("/login")
+
+def dashboard_create(request):
+    if (request.user.is_authenticated):
+        return render(request, "/core/social/create-wiki.html")
     else:
         return redirect("/login")

@@ -8,7 +8,7 @@ class Role(models.Model):
 
 class Member(models.Model):
     wiki = models.ForeignKey(Wiki, on_delete=models.CASCADE)
-    profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     roles = models.ManyToManyField(Role)
 
 class Tag(models.Model):
