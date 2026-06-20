@@ -2,11 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 
-class lowerField(models.CharField):
-    def get_prep_value(self, value):
-        value = super().get_prep_value(value)
-        return value if value is None else value.lower()
-
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     friends = models.ManyToManyField("self")
@@ -14,7 +9,7 @@ class Profile(models.Model):
 class Wiki(models.Model):
     name = models.CharField(max_length=25)
     subdomainValidator = RegexValidator(r'^[0-9a-z\-]*$', 'Only alphanumeric characters and dashes are allowed.')
-    subdomain = lowerField(max_length=25, validators=[subdomainValidator])
+    subdomain = models.CharField(max_length=25, validators=[subdomainValidator])
     description = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
 
