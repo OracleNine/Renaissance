@@ -5,7 +5,16 @@
 {% block content %}
 
 <h1>{{ page.name }}</h1>
+<h2>{{ page.wiki }}</h2>
 
 <p>{{ page.content }}</p>
+
+<p>Watchers:
+<ul>
+    {% for user in page.watchers %}
+    <li>{{ user }}</li>
+    {% endfor %}
+</ul>
+</p>
 
 {% endblock %}

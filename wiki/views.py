@@ -22,10 +22,7 @@ def page(request, wiki_name, page_name):
         
         page = Page.objects.filter(wiki=wiki, name=pageName)[0]
 
-        context = {
-            "name": page.name,
-            "content": page.content,
-        }
+        context = page.createDict()
 
         return render(request, "wiki/page/page.html", context={"page": context})
 

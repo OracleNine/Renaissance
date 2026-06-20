@@ -5,6 +5,9 @@ from django.core.validators import RegexValidator
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     friends = models.ManyToManyField("self")
+    
+    def getName(self):
+        return self.user.username
 
 class Wiki(models.Model):
     name = models.CharField(max_length=25)
