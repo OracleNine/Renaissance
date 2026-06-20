@@ -13,7 +13,7 @@ class RegisterForm(UserCreationForm):
 
 class CreateWikiForm(ModelForm):
     name = forms.CharField(help_text='The name of your wiki.')
-    subdomain = forms.CharField(help_text='Only alphanumeric characters and dashes are allowed.')
+    subdomain = forms.CharField(help_text='Only alphanumeric characters and dashes are allowed.', widget=forms.TextInput(attrs={'style': 'text-transform: lowercase;', 'class': 'font-monospace'}))
     description = forms.CharField( widget=forms.Textarea, help_text='Tell us about your wiki.' )
 
     class Meta:

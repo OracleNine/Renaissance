@@ -1,17 +1,16 @@
 from django.shortcuts import render, redirect, HttpResponse
-from core.models import Profile, User
+from core.models import Profile, User, Wiki
 from .forms import RegisterForm, CreateWikiForm
-from django.contrib.auth.views import LoginView
 
 # Registration Views
 def index(request):
     return render(request, "core/index.html")
 
 def signup(request):
-    if (request.user.is_authenticated):
+    if request.user.is_authenticated:
         return redirect("/dashboard")
     else:
-        if (request.method == "POST"):
+        if request.method == "POST":
             form = RegisterForm(request.POST)
             if form.is_valid():
                 form.save()
@@ -27,13 +26,13 @@ def signup(request):
 
 # Dashboard Views
 def dashboard_activity(request):
-    if (request.user.is_authenticated):
+    if request.user.is_authenticated:
         return render(request, "core/social/activity.html")
     else:
         return redirect("/login")
 
 def dashboard_wikis(request):
-    if (request.user.is_authenticated):
+    if request.user.is_authenticated:
         profile = request.user.profile
 
         return render(request, "core/social/wikis.html")
@@ -41,13 +40,19 @@ def dashboard_wikis(request):
         return redirect("/login")
 
 def dashboard_create(request):
-    if not (request.user.is_authenticated):
+    if not request.user.is_authenticated:
         return redirect("/login")
-    elif (request.method == "POST"):
+    elif request.method == "POST":
         form = CreateWikiForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect("/dashboard/wikis")
+            data = form.cleaned_data
+            if Wiki.objects.filter(subdomain=data["subdomain"]).exists():
+                return render(request, "core/social/create-wiki.html", {"form": form, "error": True, "message": "A wiki with this subdomain already exists. Please pick another subdomain."})
+            else:
+                form.save()
+                wiki = Wiki.objects.filter(subdomain=data["subdomain"])[0]
+                wiki.add_founder(request.user)
+                return redirect("/dashboard/wikis")
     else:
         form = CreateWikiForm()
-    return render(request, "core/social/create-wiki.html", {"form": form})
+    return render(request, "core/social/create-wiki.html", {"form": form, "error": False, "message": ""})
