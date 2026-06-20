@@ -12,6 +12,9 @@ class RegisterForm(UserCreationForm):
         fields = ["email", "username", "password1", "password2"]
 
 class CreateWikiForm(ModelForm):
+    name = forms.CharField()
+    description = forms.CharField( widget=forms.Textarea )
+
     class Meta:
         model = Wiki
         fields = ["name", "description"]
