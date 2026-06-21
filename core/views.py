@@ -37,14 +37,11 @@ def dashboard_wikis(request):
 
         wikis = []
         for membership in memberships:
-            wikiName = membership.wiki.name
-            wikiDescription = membership.wiki.description
-            wikiSubdomain= membership.wiki.subdomain
 
             wikis.append({
-                "name": wikiName,
-                "description": wikiDescription,
-                "subdomain": wikiSubdomain
+                "name": membership.wiki.name,
+                "description": membership.wiki.description,
+                "subdomain": membership.wiki.subdomain
             })
 
         return render(request, "core/social/wikis.html", {"wikis": wikis})
