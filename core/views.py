@@ -34,16 +34,13 @@ def dashboard_activity(request):
 def dashboard_wikis(request):
     if request.user.is_authenticated:
         memberships = Member.objects.filter(profile=request.user.profile)
-
         wikis = []
         for membership in memberships:
-
             wikis.append({
                 "name": membership.wiki.name,
                 "description": membership.wiki.description,
                 "subdomain": membership.wiki.subdomain
             })
-
         return render(request, "core/social/wikis.html", {"wikis": wikis})
     else:
         return redirect("/login")

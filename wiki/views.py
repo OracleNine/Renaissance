@@ -5,12 +5,12 @@ from wiki.models import Page
 
 # Create your views here.
 
-def page(request, wiki_subdomain, page_name):
-    wiki = get_object_or_404(Wiki, subdomain=wiki_subdomain)
-    name = page_name.replace("_", " ")
+def page(request, wikiSubdomain, pageName):
+    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+    name = pageName.replace("_", " ")
     pageExists = Page.objects.filter(wiki=wiki, name=name).exists()
 
-    if not pageExists and (name == "Home"):
+    if not pageExists and name == "Home":
         homePage = Page(wiki=wiki, name="Home", content="Welcome to your new wiki!")
         homePage.save()
     elif not pageExists:
@@ -22,5 +22,5 @@ def page(request, wiki_subdomain, page_name):
 
 
 
-def index(request, wiki_subdomain):
-    return page(request, wiki_subdomain, "Home")
+def index(request, wikiSubdomain):
+    return page(request, wikiSubdomain, "Home")
