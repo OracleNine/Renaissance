@@ -61,8 +61,8 @@ def dashboard_create(request):
 
 @login_required
 def api_subdomain_occupied(request):
-    if request.GET.get('subdomain', 'none') != 'none':
-        subdomain = request.GET.get('subdomain', 'none')
+    subdomain = request.GET.get('subdomain', 'none')
+    if subdomain != 'none':
         if Wiki.objects.filter(subdomain=subdomain).exists():
             return HttpResponse("<div class=\"alert alert-warning\"><i class=\"bi bi-exclamation-triangle-fill\"></i> This subdomain is taken. Please choose another one.</div>")
     return HttpResponse()
