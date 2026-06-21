@@ -1,25 +1,26 @@
-from django.shortcuts import render, redirect
+from django.http import Http404
+from django.shortcuts import render, redirect, get_object_or_404
+from core.models import Wiki
 from wiki.models import Page
-from .utils import page_exists
 
 # Create your views here.
 
-def page(request, wiki_name, page_name):
-    result = page_exists(wiki_name, page_name)
-    if result['wiki'] is None:
-        return redirect("/404")
-    elif result['page'] is None:
-        return redirect("/wiki/" + result['wiki'].subdomain) # TODO change this to a customizeable 404 page
-    elif result["page"].name == "Home":
-        # First time wiki setup
-        homePage = Page(wiki=result["wiki"], name="Home", content="Welcome to your new wiki!")
-        homePage.save()
+def page(request, wiki_subdomain, page_name):
+    wiki = get_object_or_404(Wiki, subdomain=wiki_subdomain)
+    pageName = page_name.replace("_", " ")
+    pageExists = Page.objects.filter(wiki=wiki, name=pageName).exists()
 
-    page = Page.objects.filter(wiki=result["wiki"], name=result["page"].name)[0]
+    if not pageExists and (pageName == "Home"):
+        homePage = Page(wiki=wiki, name="Home", content="Welcome to your new wiki!")
+        homePage.save()
+    elif not pageExists:
+        raise Http404
+
+    page = Page.objects.filter(wiki=wiki, name=pageName)[0]
     context = page.createDict()
     return render(request, "wiki/page/page.html", context={"page": context})
 
 
 
-def index(request, wiki_name):
-    return page(request, wiki_name, "Home")
+def index(request, wiki_subdomain):
+    return page(request, wiki_subdomain, "Home")
