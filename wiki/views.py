@@ -7,14 +7,20 @@ from wiki.models import Page
 def page_exists(wiki_name, page_name):
     wiki = Wiki.objects.filter(subdomain=wiki_name)
     if not wiki.exists():
-        return {}
+        return {
+            "wiki": None, 
+            "page": None
+            }
     else:
         wiki = wiki[0]
         name = page_name.replace("_", " ")
         pageExists = Page.objects.filter(name=name).exists()
 
         if not pageExists:
-            return {}
+            return {
+                "wiki": wiki,
+                "page": None
+            }
         else:
             page = Page.objects.filter(name=name)[0]
             return {
@@ -24,12 +30,13 @@ def page_exists(wiki_name, page_name):
 
 def page(request, wiki_name, page_name):
     pageExists = page_exists(wiki_name, page_name)
-    if not pageExists:
+    if pageExists['wiki'] is None:
         return redirect("/404")
+    elif pageExists['page'] is None:
+        return redirect("/wiki/" + pageExists['wiki'].subdomain) # TODO change this to a customizeable 404 page
     elif pageExists["page"].name == "Home":
         # First time wiki setup
         homePage = Page(wiki=pageExists["wiki"], name="Home", content="Welcome to your new wiki!")
-        # TODO: Generate top and side navigation
         homePage.save()
 
     page = Page.objects.filter(wiki=pageExists["wiki"], name=pageExists["page"].name)[0]
