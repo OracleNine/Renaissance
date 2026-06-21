@@ -15,15 +15,15 @@ def page(request, wiki_name, page_name):
             # First time wiki setup
             
             homePage = Page(wiki=wiki, name="Home", content="Welcome to your new wiki!")
+            # TODO: Generate top and side navigation
+            
             homePage.save()
 
         elif not pageExists:
             return redirect("/404")
         
         page = Page.objects.filter(wiki=wiki, name=pageName)[0]
-
         context = page.createDict()
-
         return render(request, "wiki/page/page.html", context={"page": context})
 
 def index(request, wiki_name):
