@@ -71,7 +71,7 @@ def dashboard_create(request):
     return render(request, "core/social/create-wiki.html", {"form": form, "error": False, "message": ""})
 
 def api_subdomain_occupied(request):
-    if request.GET.get('subdomain', 'none') != 'none':
+    if request.user.is_authenticated and request.GET.get('subdomain', 'none') != 'none':
         subdomain = request.GET.get('subdomain', 'none')
         if Wiki.objects.filter(subdomain=subdomain).exists():
             return HttpResponse("<div class=\"alert alert-warning\"><i class=\"bi bi-exclamation-triangle-fill\"></i> This subdomain is taken. Please choose another one.</div>")
