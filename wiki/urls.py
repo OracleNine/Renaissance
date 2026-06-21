@@ -3,6 +3,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("<str:wikiSubdomain>/", views.index, name="index"),
-    path("<str:wikiSubdomain>/p/<str:pageName>", views.page, name="page")
+    path("<str:wikiSubdomain>/", views.index, name="wiki_index"),
+    path("<str:wikiSubdomain>/p/<str:pageName>", views.page, name="wiki_page"),
+    path("<str:wikiSubdomain>/p/<str:pageName>/edit", views.edit, name="wiki_edit")
 ]

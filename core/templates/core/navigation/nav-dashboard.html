@@ -1,6 +1,6 @@
 <nav class="nav flex-column">
-  <a class="nav-link" aria-current="page" href="/dashboard/"><i class="bi bi-eye-fill"></i> Activity</a>
-  <a class="nav-link" href="/dashboard/wikis"><i class="bi bi-book-half"></i> Wikis</a>
+  <a class="nav-link" aria-current="page" href="{% url 'dashboard_activity' %}"><i class="bi bi-eye-fill"></i> Activity</a>
+  <a class="nav-link" href="{% url 'dashboard_wikis' %}"><i class="bi bi-book-half"></i> Wikis</a>
   <a class="nav-link" href="#"><i class="bi bi-chat-fill"></i> Messages</a>
   <a class="nav-link" href="#"><i class="bi bi-sliders"></i> User Settings</a>
 </nav>

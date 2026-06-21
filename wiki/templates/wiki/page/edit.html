@@ -1,0 +1,25 @@
+{% extends 'wiki/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+{{ page.wiki }} - {{ page.name }}
+{% endblock %}
+
+{% block content %}
+
+{% include 'wiki/navigation/nav-top.html' with page=page %}
+{% include 'wiki/navigation/nav-side.html' %}
+<div class="container mx-10 p-5">
+    <form method="POST" class="form-group">
+        {% csrf_token %}
+        {{ form|crispy }}
+
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="submit" class="btn btn-primary"><i class="bi bi-floppy-fill"></i> Save</button>
+            <button type="submit" class="btn btn-primary"><i class="bi bi-floppy-fill"></i> Save and Continue</button>
+        </div>
+    </form>
+
+</div>
+
+{% endblock %}
