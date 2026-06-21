@@ -65,6 +65,14 @@ def dashboard_create(request):
                 wiki = Wiki.objects.filter(subdomain=data["subdomain"])[0]
                 wiki.add_founder(request.user)
                 return redirect("/dashboard/wikis")
+
     else:
         form = CreateWikiForm()
     return render(request, "core/social/create-wiki.html", {"form": form, "error": False, "message": ""})
+
+def api_subdomain_occupied(request):
+    if request.GET.get('subdomain', 'none') != 'none':
+        subdomain = request.GET.get('subdomain', 'none')
+        if Wiki.objects.filter(subdomain=subdomain).exists():
+            return HttpResponse("<div class=\"alert alert-warning\"><i class=\"bi bi-exclamation-triangle-fill\"></i> This subdomain is taken. Please choose another one.</div>")
+    return HttpResponse()
