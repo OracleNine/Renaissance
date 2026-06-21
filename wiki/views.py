@@ -7,16 +7,16 @@ from wiki.models import Page
 
 def page(request, wiki_subdomain, page_name):
     wiki = get_object_or_404(Wiki, subdomain=wiki_subdomain)
-    pageName = page_name.replace("_", " ")
-    pageExists = Page.objects.filter(wiki=wiki, name=pageName).exists()
+    name = page_name.replace("_", " ")
+    pageExists = Page.objects.filter(wiki=wiki, name=name).exists()
 
-    if not pageExists and (pageName == "Home"):
+    if not pageExists and (name == "Home"):
         homePage = Page(wiki=wiki, name="Home", content="Welcome to your new wiki!")
         homePage.save()
     elif not pageExists:
         raise Http404
 
-    page = Page.objects.filter(wiki=wiki, name=pageName)[0]
+    page = Page.objects.filter(wiki=wiki, name=name)[0]
     context = page.createDict()
     return render(request, "wiki/page/page.html", context={"page": context})
 
