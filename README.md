@@ -6,7 +6,9 @@ Renaissance is a wiki engine. Renaissance has several planned features including
 
 This is a personal project, so updates may be irregular. However, anyone is free to contribute and I will do my best to look through all pull requests.
 
-[![Django][Djangoproject.com]][Django-url]
+[![Django][Djangoproject.com]][Django-url] 
+[![Bootstrap][Bootstrap.com]][Bootstrap-url]
+[![HTMX][Htmx.org]][Htmx-url]
 
 ## Installation
 
@@ -85,5 +87,7 @@ Go to your browser and visit `localhost:8000`. If you see Renaissance, then the 
 <!-- Shields.io badges. You can a comprehensive list with many more badges at: https://github.com/inttter/md-badges -->
 [Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
 [Bootstrap-url]: https://getbootstrap.com
-[Djangoproject.com]: https://img.shields.io/badge/Django-%23092E20.svg?logo=django&logoColor=white
+[Djangoproject.com]: https://img.shields.io/badge/Django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white
 [Django-url]: https://djangoproject.com
+[Htmx.org]: https://img.shields.io/badge/HTMX-36C?style=for-the-badge&logo=htmx&logoColor=fff
+[Htmx-url]: https://htmx.org/
