@@ -23,8 +23,12 @@ MacOS/Linux:
 source venv/bin/activate
 ```
 
-5. [Fork the repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) and [clone it](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo#cloning-your-forked-repository) to your machine.
+5. If you want to contribute, you should [fork the repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) and [clone it](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo#cloning-your-forked-repository) to your machine. 
 
+If you don't want to contribute, just clone the repo.
+```
+git clone https://github.com/OracleNine/Renaissance.git
+```
 6. Install all requirements.
 ```
 pip install -r requirements.txt
