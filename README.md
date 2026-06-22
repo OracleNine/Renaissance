@@ -1,5 +1,5 @@
 ## About
-Renaissance is a wiki engine that is currently in development. Renaissance has several planned features including Markdown-based pages, an admin panel which allows you to manage plugins and schedule backups, and all the other bells and whistles you would expect in a standard wiki engine. If you're curious about specific features, there is a roadmap available on our [Discord](https://discord.gg/JTMQq7mg22).
+Renaissance is a open source wiki engine that is currently in development. Renaissance has several planned features including Markdown-based pages, an admin panel which allows you to manage plugins and schedule backups, and all the other bells and whistles you would expect in a standard wiki engine. If you're curious about specific features, there is a roadmap available on our [Discord](https://discord.gg/JTMQq7mg22).
 
 This is a personal project, so updates may be irregular. However, anyone is free to contribute and I will do my best to look through all pull requests.
 
@@ -36,25 +36,18 @@ cd renaissance
 ```
 pip install -r requirements.txt
 ```
-7. Create a `.env` file in the `Renaissance` directory, and fill it out with your database information.
-A few important pointers:
-* The `.env` file must be in the *same* directory as your `manage.py` file.
-* Only postgresql has been tested currently. I do not know if other DBs are compatible, but you are welcome to try.
-* An `.env.example` file has been included in this repository for your convenience.
+7. In your database system of choice, create a new database.
+> Only postgresql has been tested currently. I do not know if other DBs are compatible, but you are welcome to try.
 ```
-ENGINE=''
-HOST=''
-NAME=''
-USER=''
-PASSWORD=''
-PORT=''
+CREATE DATABASE <database_name>;
 ```
-8. Make migrations. This creates the tables in your database.
+8. Rename the `.env.example` file to `.env`, and then fill it out with your database information.
+9. Make migrations. This creates the tables in your database.
 ```
 python3 manage.py makemigrations
 python3 manage.py migrate
 ```
-9. Verify that the installation was successful.
+10. Verify that the installation was successful.
 Run this command:
 ```
 python3 manage.py runserver
