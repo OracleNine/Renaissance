@@ -9,6 +9,7 @@ Renaissance is a wiki engine written with django and HTMX. Renaissance has sever
 1. Make sure Python and git are installed, Renaissance is on Python v`3.12.4`.
 2. Create a directory where you want Renaissance to be installed. 
 3. Inside this directory, initialize a virtual environment.
+
 Windows:
 ```
 py -m venv env
@@ -17,7 +18,9 @@ MacOS/Linux:
 ```
 python3 -m venv env
 ```
+
 4. Activate the virtual environment.
+
 Windows:
 ```
 venv\Scripts\activate
@@ -26,6 +29,7 @@ MacOS/Linux:
 ```
 source env/bin/activate
 ```
+
 5. Clone the repository and navigate into its directory.
 ```
 git clone "https://github.com/OracleNine/Renaissance"
