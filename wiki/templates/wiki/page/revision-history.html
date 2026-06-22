@@ -3,6 +3,7 @@
     <tr>
       <th scope="col"># ID</th>
       <th scope="col">Title</th>
+      <th scope="col">Content</th>
       <th scope="col">Created on</th>
       <th scope="col">Author</th>
     </tr>
@@ -12,6 +13,7 @@
     <tr>
       <th scope="row">{{ revision.pk }}</th>
       <td>{{ revision.name }}</td>
+      <td>{{ revision.content|truncatechars:30 }}</td>
       <td>{{ revision.created_at }}</td>
       <td>{{ revision.author }}</td>
     </tr>

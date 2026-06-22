@@ -72,6 +72,7 @@ def view_revisions(request, wikiSubdomain, pageName):
         revisionList.append({
             "pk": revision.pk,
             "name": revision.name,
+            "content": revision.content,
             "created_at": revision.created_at,
             "author": revision.author.user.username
         })
