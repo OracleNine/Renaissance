@@ -41,7 +41,10 @@ def edit(request, wikiSubdomain, pageName):
             newPage = form.save(commit=False)
             newPage.wiki = wiki
             newPage.save()
-            return redirect(reverse("wiki_page", kwargs={"wikiSubdomain": wikiSubdomain, "pageName": pageName}))
+            if 'redirect' in request.POST:
+                return redirect(reverse("wiki_page", kwargs={"wikiSubdomain": wikiSubdomain, "pageName": pageName}))
+            else:
+                return redirect(reverse("wiki_edit", kwargs={"wikiSubdomain": wikiSubdomain, "pageName": pageName}))
     else:
         if page.exists():
             context = page[0].createDict()
