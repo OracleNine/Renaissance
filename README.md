@@ -23,12 +23,12 @@ MacOS/Linux:
 source venv/bin/activate
 ```
 
-5. If you want to contribute, you should [fork the repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) and [clone it](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo#cloning-your-forked-repository) to your machine. 
-
-If you don't want to contribute, just clone the repo.
+5. Clone the repo, and navigate to the directory which contains `manage.py`.
 ```
 git clone https://github.com/OracleNine/Renaissance.git
+cd renaissance
 ```
+> If you want to contribute, you should [fork the repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) and [clone it](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo#cloning-your-forked-repository) to your machine. 
 6. Install all requirements.
 ```
 pip install -r requirements.txt
