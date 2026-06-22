@@ -9,16 +9,9 @@ Renaissance is a wiki engine written with django and HTMX. Renaissance has sever
 1. Make sure Python and git are installed, Renaissance is on Python v`3.12.4`.
 2. Create a directory where you want Renaissance to be installed. 
 3. Inside this directory, initialize a virtual environment.
-
-Windows:
-```
-py -m venv env
-```
-MacOS/Linux:
 ```
 python3 -m venv env
 ```
-
 4. Activate the virtual environment.
 
 Windows:
@@ -39,7 +32,7 @@ cd renaissance
 ```
 pip install -r requirements.txt
 ```
-6. Create a `.env` file in the `Renaissance` directory.
+6. Create a `.env` file in the `Renaissance` directory, and fill it out with your database information.
 A few important pointers:
 * The `.env` file must be in the *same* directory as your `manage.py` file.
 * Only postgresql has been tested currently. I do not know if other DBs are compatible, but you are welcome to try.
@@ -52,10 +45,15 @@ USER=''
 PASSWORD=''
 PORT=''
 ```
-7. Verify that the installation was successful.
+7. Make migrations. This creates the tables in your database.
+```
+python3 manage.py makemigrations
+python3 manage.py migrate
+```
+8. Verify that the installation was successful.
 Run this command:
 ```
-py manage.py runserver
+python3 manage.py runserver
 ```
 
 Go to your browser and visit `localhost:8000`. If you see Renaissance, then the installation was successful.
