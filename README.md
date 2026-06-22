@@ -10,7 +10,7 @@ Renaissance is a wiki engine written with django and HTMX. Renaissance has sever
 2. Create a directory where you want Renaissance to be installed. 
 3. Inside this directory, initialize a virtual environment.
 ```
-python3 -m venv env
+python3 -m venv venv
 ```
 4. Activate the virtual environment.
 
@@ -20,7 +20,7 @@ venv\Scripts\activate
 ```
 MacOS/Linux:
 ```
-source env/bin/activate
+source venv/bin/activate
 ```
 
 5. Clone the repository and navigate into its directory.
