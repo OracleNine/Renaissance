@@ -66,7 +66,7 @@ def view_revisions(request, wikiSubdomain, pageName):
     wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
     page = Page.objects.filter(wiki=wiki, name=pageName)[0]
 
-    allRevisions = Revision.objects.filter(target=page)
+    allRevisions = Revision.objects.filter(target=page).order_by('-created_at')
     revisionList = []
     for revision in allRevisions:
         revisionList.append({
