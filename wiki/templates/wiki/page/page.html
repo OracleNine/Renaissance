@@ -26,6 +26,11 @@
         <a href="{% url 'wiki_edit' wikiSubdomain=wikiSubdomain pageName=pageName %}" class="btn btn-primary">Edit</a>
         <a href="#" class="btn btn-primary">Tags</a>
         <a href="#" class="btn btn-primary">Watch</a>
+        <a hx-post="{% url 'wiki_view_revisions' wikiSubdomain=wikiSubdomain pageName=pageName %}" hx-target="#revision-history" class="btn btn-primary">Revisions</a>
+    </div>
+
+    <div id="revision-history">
+
     </div>
 </div>
 
