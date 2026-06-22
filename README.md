@@ -11,7 +11,7 @@ This is a personal project, so updates may be irregular. However, anyone is free
 
 ## Installation
 
-1. Make sure Python and git are installed, Renaissance is on Python v`3.12.4`.
+1. Make sure Python and git are installed, Renaissance is on Python `3.12.4`.
 2. Create a directory where you want Renaissance to be installed. 
 3. Inside this directory, initialize a virtual environment.
 ```
