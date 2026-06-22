@@ -23,16 +23,13 @@ MacOS/Linux:
 source venv/bin/activate
 ```
 
-5. Clone the repository and navigate into its directory.
-```
-git clone "https://github.com/OracleNine/Renaissance"
-cd renaissance
-```
-5. Install all requirements.
+5. [Fork the repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) and [clone it](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo#cloning-your-forked-repository) to your machine.
+
+6. Install all requirements.
 ```
 pip install -r requirements.txt
 ```
-6. Create a `.env` file in the `Renaissance` directory, and fill it out with your database information.
+7. Create a `.env` file in the `Renaissance` directory, and fill it out with your database information.
 A few important pointers:
 * The `.env` file must be in the *same* directory as your `manage.py` file.
 * Only postgresql has been tested currently. I do not know if other DBs are compatible, but you are welcome to try.
@@ -45,18 +42,22 @@ USER=''
 PASSWORD=''
 PORT=''
 ```
-7. Make migrations. This creates the tables in your database.
+8. Make migrations. This creates the tables in your database.
 ```
 python3 manage.py makemigrations
 python3 manage.py migrate
 ```
-8. Verify that the installation was successful.
+9. Verify that the installation was successful.
 Run this command:
 ```
 python3 manage.py runserver
 ```
 
 Go to your browser and visit `localhost:8000`. If you see Renaissance, then the installation was successful.
+
+## Contributing
+
+
 
 ## Contact
 * Join the [discord](https://discord.gg/JTMQq7mg22)
