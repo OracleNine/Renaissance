@@ -2,7 +2,11 @@
 Wiki software for the modern era.
 
 ## About
-Renaissance is a wiki engine written with django and HTMX. Renaissance has several planned features including Markdown-based pages, an admin panel which allows you to manage plugins and schedule backups, and all the other bells and whistles you would expect in a standard wiki engine. If you're curious about specific features, there is a roadmap available on our [Discord](https://discord.gg/JTMQq7mg22).
+Renaissance is a wiki engine. Renaissance has several planned features including Markdown-based pages, an admin panel which allows you to manage plugins and schedule backups, and all the other bells and whistles you would expect in a standard wiki engine. If you're curious about specific features, there is a roadmap available on our [Discord](https://discord.gg/JTMQq7mg22).
+
+This is a personal project, so updates may be irregular. However, anyone is free to contribute and I will do my best to look through all pull requests.
+
+[![Django][Djangoproject.com]][Django-url]
 
 ## Installation
 
@@ -65,3 +69,21 @@ Go to your browser and visit `localhost:8000`. If you see Renaissance, then the 
 
 ## Contact
 * Join the [discord](https://discord.gg/JTMQq7mg22)
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/OracleNine/Renaissance.svg?style=for-the-badge
+[contributors-url]: https://github.com/OracleNine/Renaissance/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/OracleNine/Renaissance.svg?style=for-the-badge
+[forks-url]: https://github.com/OracleNine/Renaissance/network/members
+[stars-shield]: https://img.shields.io/github/stars/OracleNine/Renaissance.svg?style=for-the-badge
+[stars-url]: https://github.com/OracleNine/Renaissance/stargazers
+[issues-shield]: https://img.shields.io/github/issues/OracleNine/Renaissance.svg?style=for-the-badge
+[issues-url]: https://github.com/OracleNine/Renaissance/issues
+[license-shield]: https://img.shields.io/github/license/OracleNine/Renaissance.svg?style=for-the-badge
+[license-url]: https://github.com/OracleNine/Renaissance/blob/master/LICENSE.txt
+<!-- Shields.io badges. You can a comprehensive list with many more badges at: https://github.com/inttter/md-badges -->
+[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
+[Bootstrap-url]: https://getbootstrap.com
+[Djangoproject.com]: https://img.shields.io/badge/Django-%23092E20.svg?logo=django&logoColor=white
+[Django-url]: https://djangoproject.com
