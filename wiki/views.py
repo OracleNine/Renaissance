@@ -1,7 +1,6 @@
 from django.http import Http404, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import ValidationError
 
 from core.models import Wiki
 from wiki.models import Page
@@ -32,7 +31,12 @@ def page(request, wikiSubdomain, pageName):
 def edit(request, wikiSubdomain, pageName):
     wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
     page = Page.objects.filter(wiki=wiki, name=pageName)
-
+    context = {
+                "wiki": wiki.name,
+                "name": pageName,
+                "content": "",
+                "tags": []
+            }
     if request.method == "POST":
         form = EditForm(request.POST)
         if page.exists():
@@ -45,16 +49,10 @@ def edit(request, wikiSubdomain, pageName):
                 return redirect(reverse("wiki_page", kwargs={"wikiSubdomain": wikiSubdomain, "pageName": pageName}))
             else:
                 return redirect(reverse("wiki_edit", kwargs={"wikiSubdomain": wikiSubdomain, "pageName": pageName}))
+        
     else:
         if page.exists():
             context = page[0].createDict()
-        else:
-            context = {
-                "wiki": wiki.name,
-                "name": pageName,
-                "content": "",
-                "tags": []
-            }
         form = EditForm(initial={
             "name": context['name'],
             "content": context['content'],
