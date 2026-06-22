@@ -10,13 +10,22 @@
 {% include 'wiki/navigation/nav-top.html' with page=page %}
 {% include 'wiki/navigation/nav-side.html' %}
 <div class="container mx-10 p-5">
-    <form method="POST" class="form-group" id="editForm" action="{% url 'wiki_save' wikiSubdomain=wikiSubdomain %}">
+    {% if error %}
+    <div id="error">
+        {{ form.errors }}
+    </div>
+    {% endif %}
+    <form method="POST" class="form-group" id="editForm">
         {% csrf_token %}
         {{ form|crispy }}
 
     <div class="btn-group" role="group" aria-label="Basic example">
-        <button type="submit" class="btn btn-primary" name="redirect"><i class="bi bi-floppy-fill"></i> Save</button>
-        <button type="submit" class="btn btn-primary" name="no-redirect"><i class="bi bi-floppy-fill"></i> Save and Continue</button>
+        <button type="submit" 
+                class="btn btn-primary" 
+                name="redirect"><i class="bi bi-floppy-fill"></i> Save</button>
+        <button type="submit" 
+                class="btn btn-primary" 
+                name="no-redirect"><i class="bi bi-floppy-fill"></i> Save & Continue</button>
     </div>
 
     </form>

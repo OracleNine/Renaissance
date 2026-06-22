@@ -1,5 +1,6 @@
 from django.db import models
 from core.models import Wiki, Profile
+from django.core.validators import RegexValidator
 
 class Tag(models.Model):
     wiki = models.ForeignKey(Wiki, on_delete=models.CASCADE)
@@ -10,13 +11,15 @@ class Tag(models.Model):
 
 class Page(models.Model):
     wiki = models.ForeignKey(Wiki, on_delete=models.CASCADE)
-    name = models.CharField(max_length=25)
+    nameValidator = RegexValidator(r'^[\w\-\s]+$', 'Invalid page name.')
+    name = models.CharField(max_length=25, validators=[nameValidator])
     content = models.TextField()
     watchlist = models.ManyToManyField(Profile)
     tags = models.ManyToManyField(Tag)
 
     def createDict(self):
         context = {}
+        context["pk"] = self.pk
         context["wiki"] = self.wiki.name
         context["name"] = self.name
         context["content"] = self.content
