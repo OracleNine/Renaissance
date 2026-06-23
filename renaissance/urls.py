@@ -29,6 +29,6 @@ urlpatterns = [
         name="login",
     ),
     path("", include("django.contrib.auth.urls")),
-    path("wiki/", include("wiki.urls"))
+    path("wiki/", include("wiki.urls")),
 ]
 

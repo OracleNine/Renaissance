@@ -1,0 +1,8 @@
+{
+  "assets/js/wiki-editor.js": {
+    "file": "js/wiki-editor-bundle.js",
+    "name": "wiki-editor",
+    "src": "assets/js/wiki-editor.js",
+    "isEntry": true
+  }
+}

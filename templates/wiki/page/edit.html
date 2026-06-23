@@ -1,5 +1,6 @@
 {% extends 'wiki/base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 {% block title %}
 {{ page.wiki }} - {{ page.name }}
@@ -9,12 +10,16 @@
 
 {% include 'wiki/navigation/nav-top.html' with page=page %}
 {% include 'wiki/navigation/nav-side.html' %}
+
+<script type="module" src="{% static 'js/wiki-editor-bundle.js' %}"></script>
+
 <div class="container mx-10 p-5">
     {% if error %}
     <div id="error">
         {{ form.errors }}
     </div>
     {% endif %}
+
     <form method="POST" class="form-group" id="editForm">
         {% csrf_token %}
         {{ form|crispy }}
@@ -29,6 +34,10 @@
     </div>
 
     </form>
+    <br />
+    <div class="test-editor">
+
+    </div>
 
 </div>
 

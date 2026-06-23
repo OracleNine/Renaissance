@@ -1,9 +1,11 @@
 {% extends "core/base.html" %}
+{% load static %}
 
 {% block title %}Home{% endblock %}
 
 {% block content %}
 <div class="container">
+
     {% if user.is_authenticated %}<p>Sweet, you're logged in as {{ user.username }}</p>{% endif %}
     
     <p>This is the home page. There's nothing here right now, but that's okay.</p>
