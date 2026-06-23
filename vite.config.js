@@ -9,7 +9,7 @@ export default defineConfig({
     manifest: "manifest.json",
     rollupOptions: {
       input: {
-        'index': path.resolve(__dirname, './assets/index.js'),
+        'alpine': path.resolve(__dirname, './assets/alpine.js'),
       },
       output: {
         entryFileNames: `js/[name]-bundle.js`,

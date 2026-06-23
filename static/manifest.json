@@ -1,8 +1,8 @@
 {
-  "assets/index.js": {
-    "file": "js/index-bundle.js",
-    "name": "index",
-    "src": "assets/index.js",
+  "assets/alpine.js": {
+    "file": "js/alpine-bundle.js",
+    "name": "alpine",
+    "src": "assets/alpine.js",
     "isEntry": true
   }
 }

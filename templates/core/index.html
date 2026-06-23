@@ -4,7 +4,7 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container mx-10 p-5">
 
     <div x-data="{ count: 0 }">
         <button x-on:click="count++">Increment</button>
@@ -15,5 +15,38 @@
     {% if user.is_authenticated %}<p>Sweet, you're logged in as {{ user.username }}</p>{% endif %}
     
     <p>This is the home page. There's nothing here right now, but that's okay.</p>
+
+    <div x-data="editor('<p>Hello world! :-)</p>')">
+      <template x-if="isLoaded()">
+        <div class="menu">
+          <button
+            @click="toggleHeading({ level: 1 })"
+            :class="{ 'is-active': isActive('heading', { level: 1 }, updatedAt) }"
+          >
+            H1
+          </button>
+          <button @click="toggleBold()" :class="{ 'is-active' : isActive('bold', updatedAt) }">
+            Bold
+          </button>
+          <button @click="toggleItalic()" :class="{ 'is-active' : isActive('italic', updatedAt) }">
+            Italic
+          </button>
+        </div>
+      </template>
+
+      <div x-ref="element"></div>
+      </div>
+
+    <style>
+      button.is-active {
+        background: black;
+        color: white;
+      }
+      .tiptap {
+        padding: 0.5rem 1rem;
+        margin: 1rem 0;
+        border: 1px solid #ccc;
+      }
+    </style>
 </div>
 {% endblock %}
