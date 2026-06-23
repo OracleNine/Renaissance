@@ -6,6 +6,7 @@ This is a personal project, so updates may be irregular. However, anyone is free
 [![Django][Djangoproject.com]][Django-url] 
 [![Bootstrap][Bootstrap.com]][Bootstrap-url]
 [![HTMX][Htmx.org]][Htmx-url]
+[![AlpineJS][Alpinejs.dev]][Alpinejs-url]
 
 ## Installation
 
@@ -81,3 +82,5 @@ Go to your browser and visit `localhost:8000`. If you see Renaissance, then the 
 [Django-url]: https://djangoproject.com
 [Htmx.org]: https://img.shields.io/badge/HTMX-36C?style=for-the-badge&logo=htmx&logoColor=fff
 [Htmx-url]: https://htmx.org/
+[Alpinejs.dev]: https://img.shields.io/badge/alpinejs-white.svg?style=for-the-badge&logo=alpinedotjs&logoColor=%238BC0D0
+[Alpinejs-url]: https://alpinejs.dev/
