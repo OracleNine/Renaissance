@@ -11,8 +11,6 @@
 {% include 'wiki/navigation/nav-top.html' with page=page %}
 {% include 'wiki/navigation/nav-side.html' %}
 
-<script type="module" src="{% static 'js/wiki-editor-bundle.js' %}"></script>
-
 <div class="container mx-10 p-5">
     {% if error %}
     <div id="error">
@@ -35,9 +33,6 @@
 
     </form>
     <br />
-    <div class="test-editor">
-
-    </div>
 
 </div>
 

@@ -6,8 +6,11 @@
     {% htmx_script %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/48.2.0/ckeditor5.css" />
+    <script src="https://cdn.ckeditor.com/ckeditor5/48.2.0/ckeditor5.umd.js"></script>
+
     <title>Renaissance - {% block title %}{% endblock %}</title>
   <body hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
     {% include 'core/navigation/nav-top.html' %}

@@ -9,10 +9,5 @@
     {% if user.is_authenticated %}<p>Sweet, you're logged in as {{ user.username }}</p>{% endif %}
     
     <p>This is the home page. There's nothing here right now, but that's okay.</p>
-
-    <form method="post" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button type="btn btn-submit">Logout</button>
-    </form>
 </div>
 {% endblock %}
