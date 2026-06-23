@@ -44,17 +44,19 @@ npm install
 CREATE DATABASE <database_name>;
 ```
 8. Rename the `.env.example` file to `.env`, and then fill it out with your database information.
-9. Make migrations. This creates the tables in your database.
+9. Run these commands. This creates the tables in your database, creates static files, and bundles the AlpineJS installation.
 ```
 python3 manage.py makemigrations
 python3 manage.py migrate
-```
-10. To start the server, run these commands.
-```
+python3 manage.py collectstatic
 npm run build
+```
+> **Note:** Every time there is a change in the `assets/alpine.js` file, you will need to rerun `npm run build`.
+
+10. To start the server, do:
+```
 python3 manage.py runserver
 ```
-> `npm run build` isn't necessary if you haven't changed anything in the `assets/alpine.js` file.
 
 Go to your browser and visit `localhost:8000`. If you see Renaissance, then the installation was successful.
 
