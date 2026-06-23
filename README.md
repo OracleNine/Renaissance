@@ -36,6 +36,7 @@ cd renaissance
 6. Install all requirements.
 ```
 pip install -r requirements.txt
+npm install
 ```
 7. In your database system of choice, create a new database.
 > Only postgresql has been tested currently. I do not know if other DBs are compatible, but you are welcome to try.
