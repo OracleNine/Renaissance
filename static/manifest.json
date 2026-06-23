@@ -1,8 +1,8 @@
 {
-  "assets/js/wiki-editor.js": {
-    "file": "js/wiki-editor-bundle.js",
-    "name": "wiki-editor",
-    "src": "assets/js/wiki-editor.js",
+  "assets/index.js": {
+    "file": "js/index-bundle.js",
+    "name": "index",
+    "src": "assets/index.js",
     "isEntry": true
   }
 }

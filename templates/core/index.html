@@ -6,6 +6,14 @@
 {% block content %}
 <div class="container">
 
+    <div x-data="{ open: false }">
+    <button @click="open = true">Expand</button>
+ 
+        <span x-show="open">
+            Content...
+        </span>
+    </div>
+
     {% if user.is_authenticated %}<p>Sweet, you're logged in as {{ user.username }}</p>{% endif %}
     
     <p>This is the home page. There's nothing here right now, but that's okay.</p>
