@@ -6,13 +6,13 @@
     {% htmx_script %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap/bootstrap.min.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <script type="module" src="{% static 'js/alpine-bundle.js' %}"></script>
     <title>{% block title %}{% endblock %}</title>
   <body hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
 
     {% block content %}{% endblock %}
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap/bootstrap.bundle.min.js' %}"></script>
   </body>
 </html>

@@ -1,0 +1,8 @@
+{
+  "assets/alpine.js": {
+    "file": "js/alpine-bundle.js",
+    "name": "alpine",
+    "src": "assets/alpine.js",
+    "isEntry": true
+  }
+}

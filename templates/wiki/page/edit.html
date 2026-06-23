@@ -20,6 +20,8 @@
 
     <form method="POST" class="form-group" id="editForm">
         {% csrf_token %}
+        {{ form.media }}
+        {{ form.errors }}
         {{ form|crispy }}
 
     <div class="btn-group" role="group" aria-label="Basic example">
