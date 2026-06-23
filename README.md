@@ -48,11 +48,12 @@ CREATE DATABASE <database_name>;
 python3 manage.py makemigrations
 python3 manage.py migrate
 ```
-10. Verify that the installation was successful.
-Run this command:
+10. To start the server, run these commands.
 ```
+npm run build
 python3 manage.py runserver
 ```
+> `npm run build` isn't necessary if you haven't changed anything in the `assets/alpine.js` file.
 
 Go to your browser and visit `localhost:8000`. If you see Renaissance, then the installation was successful.
 
