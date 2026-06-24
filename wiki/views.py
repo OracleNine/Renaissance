@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from core.models import Wiki
 from wiki.models import Page, Revision
 from wiki.forms import EditForm
-from wiki.utils import log_revision
+from wiki.utils import log_revision, find_context
 
 # pageName is the URL, which has underscores instead of spaces
 # name is the name of the page with these underscores stripped away
@@ -30,37 +30,40 @@ def page(request, wikiSubdomain, pageName):
 def edit(request, wikiSubdomain, pageName):
     wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
     page = Page.objects.filter(wiki=wiki, name=pageName)
-    context = {
-                "wiki": wiki.name,
-                "name": pageName,
-                "content": "",
-                "tags": []
-            }
-    if request.method == "POST":
-        form = EditForm(request.POST)
-        if page.exists():
-            form = EditForm(request.POST, instance=page[0])
-        if form.is_valid():
-            newPage = form.save(commit=False)
-            newPage.wiki = wiki
-            newPage.save()
-
-            log_revision(request.user.profile, newPage)
-            if 'redirect' in request.POST:
-                return redirect(reverse("wiki_page", kwargs={"wikiSubdomain": wikiSubdomain, "pageName": pageName}))
-            else:
-                return redirect(reverse("wiki_edit", kwargs={"wikiSubdomain": wikiSubdomain, "pageName": pageName}))
-        
-    else:
-        if page.exists():
-            context = page[0].createDict()
-        form = EditForm(initial={
-            "name": context['name'],
-            "content": context['content'],
-            "tags": context['tags']
-        })
+    context = find_context(page, wiki, pageName)
+    form = EditForm(initial={
+        "name": context['name'],
+        "content": context['content'],
+        "content_before": context['content'],
+        "tags": context['tags']
+    })
 
     return render(request, "wiki/page/edit.html", context={"form": form, "page": context, "pageName": pageName, "wikiSubdomain": wikiSubdomain})
+
+@login_required
+def save(request, wikiSubdomain, pageName):
+    if request.method == "POST":
+        wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+        page = Page.objects.filter(wiki=wiki, name=pageName)
+        if page.exists():
+            form = EditForm(request.POST, instance=page[0])
+        else:
+            form = EditForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            # Look for page conflicts (the page has changed while this user was editing it)
+            if page.exists() and data["content_before"] != page[0].content:
+                pass
+            savedPage = form.save(commit=False)
+            savedPage.wiki = wiki
+            savedPage.save()
+            log_revision(request.user.profile, savedPage)
+
+            response = HttpResponse("Page save successful.")
+            response['HX-Redirect'] = reverse('wiki_page', kwargs={"wikiSubdomain": wikiSubdomain, "pageName": pageName})
+            return response
+        
+        return render(request, "wiki/page/errors/invalid-form.html", context={"form": form, 'pageName': pageName, 'wikiSubdomain': wikiSubdomain})
 
 def view_revisions(request, wikiSubdomain, pageName):
     wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
