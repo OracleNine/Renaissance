@@ -1,22 +1,27 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col"># ID</th>
-      <th scope="col">Title</th>
-      <th scope="col">Content</th>
-      <th scope="col">Created on</th>
-      <th scope="col">Author</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for revision in revisionList %}
-    <tr>
-      <th scope="row">{{ revision.pk }}</th>
-      <td>{{ revision.name }}</td>
-      <td>{{ revision.content|truncatechars:30 }}</td>
-      <td>{{ revision.created_at }}</td>
-      <td>{{ revision.author }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+<div id="revision-history" class="p-5" x-data="{ open: true }">
+        <button class="btn btn-secondary" x-on:click="open = ! open" x-show="open">Close</button>
+        <div x-show="open">
+            <table class="table">
+            <thead>
+              <tr>
+                <th scope="col"># ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Content</th>
+                <th scope="col">Created on</th>
+                <th scope="col">Author</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for revision in revisionList %}
+              <tr>
+                <th scope="row">{{ revision.pk }}</th>
+                <td>{{ revision.name }}</td>
+                <td>{{ revision.content|truncatechars:30 }}</td>
+                <td>{{ revision.created_at }}</td>
+                <td>{{ revision.author }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+    </div>

@@ -52,8 +52,9 @@ def save(request, wikiSubdomain, pageName):
         if form.is_valid():
             data = form.cleaned_data
             # Look for page conflicts (the page has changed while this user was editing it)
-            if page.exists() and data["content_before"] != page[0].content:
-                pass
+            if page.exists() and data["content_before"] != page[0].content and 'conflict-confirm' not in request.POST:
+                context = page[0].createDict()
+                return render(request, "wiki/page/partials/edit-conflict.html", context={"page": context, "form": form, 'pageName': pageName, 'wikiSubdomain': wikiSubdomain})
             savedPage = form.save(commit=False)
             savedPage.wiki = wiki
             savedPage.save()
@@ -63,7 +64,7 @@ def save(request, wikiSubdomain, pageName):
             response['HX-Redirect'] = reverse('wiki_page', kwargs={"wikiSubdomain": wikiSubdomain, "pageName": pageName})
             return response
         
-        return render(request, "wiki/page/errors/invalid-form.html", context={"form": form, 'pageName': pageName, 'wikiSubdomain': wikiSubdomain})
+        return render(request, "wiki/page/partials/invalid-form.html", context={"form": form, 'pageName': pageName, 'wikiSubdomain': wikiSubdomain})
 
 def view_revisions(request, wikiSubdomain, pageName):
     wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
