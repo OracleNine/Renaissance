@@ -43,3 +43,10 @@ class Revision(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
     tags = models.ManyToManyField(Tag)
+
+class Post(models.Model):
+    author = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    page = models.ForeignKey(Page, on_delete=models.CASCADE)
+    target = models.ForeignKey("self", on_delete=models.CASCADE, blank=True, null=True)

@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib.auth.decorators import login_required
 
 from core.models import Wiki
-from wiki.models import Page, Revision
+from wiki.models import Page, Revision, Post
 from wiki.forms import EditForm
 from wiki.utils import log_revision, find_context
 
@@ -82,6 +82,10 @@ def view_revisions(request, wikiSubdomain, pageName):
         })
     
     return render(request, "wiki/page/revision-history.html", context={"revisionList": revisionList})
+
+def discuss(request, wikiSubdomain, pageName):
+    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+    page = get_object_or_404(Page, wiki=wiki, name=pageName)
 
 
 def index(request, wikiSubdomain):
