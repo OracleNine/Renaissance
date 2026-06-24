@@ -12,7 +12,7 @@
     <title>{% block title %}{% endblock %}</title>
   <body hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
 
-    {% block content %}{% endblock %}
+    {% block container %}{% endblock %}
     <script src="{% static 'js/bootstrap/bootstrap.bundle.min.js' %}"></script>
   </body>
 </html>

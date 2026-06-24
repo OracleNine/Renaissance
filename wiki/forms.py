@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from django_tiptap_editor.widgets.tiptap_widget import TipTapWidget
-from wiki.models import Page, Tag
+from wiki.models import Page, Tag, Post
 
 
 class EditForm(ModelForm):
@@ -13,3 +13,9 @@ class EditForm(ModelForm):
         fields = ["name", "content", "tags", "content_before"]
         exclude = ["wiki", "watchlist"]
         widgets = {"content": TipTapWidget(config={"height": "400px"})}
+
+class PostForm(ModelForm):
+    class Meta:
+        model = Post
+        fields = ["content"]
+        widget = {"content": TipTapWidget(config={"height": "100px"})}

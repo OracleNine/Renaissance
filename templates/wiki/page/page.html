@@ -1,13 +1,6 @@
-{% extends 'wiki/base.html' %}
-
-{% block title %}
-{{ page.wiki }} - {{ page.name }}
-{% endblock %}
+{% extends 'wiki/page/page-base.html' %}
 
 {% block content %}
-
-{% include 'wiki/navigation/nav-top.html' with page=page %}
-{% include 'wiki/navigation/nav-side.html' %}
 <div class="container mx-10 p-5">
 
     <h1>{{ page.name }}</h1>

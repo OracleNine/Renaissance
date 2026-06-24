@@ -1,6 +1,7 @@
 from django.http import Http404, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 from core.models import Wiki
 from wiki.models import Page, Revision, Post
@@ -51,7 +52,6 @@ def save(request, wikiSubdomain, pageName):
             form = EditForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            # Look for page conflicts (the page has changed while this user was editing it)
             if page.exists() and data["content_before"] != page[0].content and 'conflict-confirm' not in request.POST:
                 context = page[0].createDict()
                 return render(request, "wiki/page/partials/edit-conflict.html", context={"page": context, "form": form, 'pageName': pageName, 'wikiSubdomain': wikiSubdomain})
@@ -86,6 +86,11 @@ def view_revisions(request, wikiSubdomain, pageName):
 def discuss(request, wikiSubdomain, pageName):
     wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
     page = get_object_or_404(Page, wiki=wiki, name=pageName)
+    topLevelPostsList = Post.objects.filter(page=page, target=None)
+    paginator = Paginator(topLevelPostsList, 15)  # Show 25 contacts per page.
+    pageNumber = request.GET.get("page")
+    postsObject = paginator.get_page(pageNumber)
+    return render(request, "wiki/page/discussion.html", context={"posts": postsObject, "page": page})
 
 
 def index(request, wikiSubdomain):

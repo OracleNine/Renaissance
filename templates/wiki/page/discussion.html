@@ -6,18 +6,19 @@
 
 <div class="container mx-10 p-5">
     <div id="form-body">
-        <form hx-post="{% url 'wiki_save' wikiSubdomain=wikiSubdomain pageName=pageName %}" hx-swap="outerHTML" hx-target="#form-body">
+        <form action="{% url 'wiki_discuss' %}" class="form-group">
             {{ form.media }}    
             {{ form|crispy }}
             <button class="btn btn-primary">Save</button>
         </form>
     </div>
-
     <ul>
     {% for post in posts %}
-
+        <li>{{ post.content }} - {{ post.author }}</li>
+        <ul>
+            {% for reply in post.replies %}
+        </ul>
     {% endfor %}
-
     </ul>
 </div>
 
