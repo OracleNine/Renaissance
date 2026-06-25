@@ -22,6 +22,12 @@ cd renaissance
 ```
 poetry install
 ```
+3. Rename `.env.example` to `.env`. Leave `ENGINE` and `HOST` the same, the rest of the details you should change to what you want.
+`NAME` is the name of the database that renaissance uses, default is `renaissance_db`.
+`USER` is the username of the database admin, default is `admin`.
+`PASSWORD` is the password of the database admin, set this to something [long and complicated](https://www.lastpass.com/features/password-generator).
+`PORT` is the database port, default is 5432.
+
 3. Start the server with docker.
 ```
 docker compose up
