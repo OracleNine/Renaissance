@@ -10,7 +10,7 @@ This is a personal project, so updates may be irregular. However, anyone is free
 
 ## Installation
 
-> ***WARNING:*** Renaissance is still in development, and is not suitable for making wikis just yet. If you want to help develop Renaisance, these are the instructions for installing and running a development server on your own computer
+> ***WARNING:*** Renaissance is still in development, and is not suitable for making wikis just yet. If you want to help with development, these are the instructions for installing and running a development server on your own computer
 
 1. Clone the repo, and navigate to the directory which contains `manage.py`.
 ```
