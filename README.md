@@ -10,7 +10,7 @@ This is a personal project, so updates may be irregular. However, anyone is free
 
 ## Installation
 
-***WARNING:*** Renaissance is still in development, and is not suitable for making wikis just yet. If you want to help with development, these are the instructions for installing and running a development server on your own computer
+***WARNING:*** Renaissance is still in development, and is not suitable for making wikis just yet. If you want to help with development, these are the instructions for installing and running a development server on your own computer.
 
 1. Clone the repo, and navigate to the directory which contains `manage.py`.
 ```
@@ -39,6 +39,10 @@ poetry add <name>
 To remove dependencies, run the following command. `<name>` is the name of the PyPi package you wish to get rid of.
 ```
 poetry remove <name>
+```
+In order for the packages to be installed in the docker container, you need to export all of the dependencies to a `requirements.txt` file. Here's the command:
+```
+poetry export -f requirements.txt --output requirements.txt
 ```
 
 ## Contact
