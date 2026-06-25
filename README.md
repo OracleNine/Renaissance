@@ -9,60 +9,19 @@ This is a personal project, so updates may be irregular. However, anyone is free
 [![AlpineJS][Alpinejs.dev]][Alpinejs-url]
 
 ## Installation
-
-1. Make sure Python and git are installed, Renaissance is on Python `3.12.4`.
-2. Create a directory where you want Renaissance to be installed. 
-3. Inside this directory, initialize a virtual environment.
-```
-python3 -m venv venv
-```
-4. Activate the virtual environment.
-
-Windows:
-```
-venv\Scripts\activate
-```
-MacOS/Linux:
-```
-source venv/bin/activate
-```
-
-5. Clone the repo, and navigate to the directory which contains `manage.py`.
+1. Clone the repo, and navigate to the directory which contains `manage.py`.
 ```
 git clone https://github.com/OracleNine/Renaissance.git
 cd renaissance
 ```
-> If you want to contribute, you should [fork the repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) and [clone it](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo#cloning-your-forked-repository) to your machine. 
-6. Install all requirements.
+> If you want to contribute, you should [fork the repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) first and then [clone the forked repo](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo#cloning-your-forked-repository) to your machine. 
+2. Start the server with docker.
 ```
-pip install -r requirements.txt
-npm install
+docker compose up
 ```
-7. In your database system of choice, create a new database.
-> Only postgresql has been tested currently. I do not know if other DBs are compatible, but you are welcome to try.
-```
-CREATE DATABASE <database_name>;
-```
-8. Rename the `.env.example` file to `.env`, and then fill it out with your database information.
-9. Run these commands. This creates the tables in your database, creates static files, and bundles the AlpineJS installation.
-```
-python3 manage.py makemigrations
-python3 manage.py migrate
-python3 manage.py collectstatic
-npm run build
-```
-> **Note:** Every time there is a change in the `assets/alpine.js` file, you will need to rerun `npm run build`.
+3. Open your browser and visit `localhost:8000`.
 
-10. To start the server, do:
-```
-python3 manage.py runserver
-```
-
-Go to your browser and visit `localhost:8000`. If you see Renaissance, then the installation was successful.
-
-## Contributing
-
-
+If you see Renaissance, you did it!
 
 ## Contact
 * Join the [discord](https://discord.gg/JTMQq7mg22)

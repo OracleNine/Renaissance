@@ -1,0 +1,32 @@
+services:
+  web:
+    build: .
+    container_name: renaissance
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/app
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    env_file:
+      - .env
+  db:
+    image: postgres:17
+    container_name: ren_db_container
+    volumes:
+      - postgres_db:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_USER: ${USER}
+      POSTGRES_PASSWORD: ${PASSWORD}
+      POSTGRES_DB: ${NAME}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${USER} -d ${NAME}"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  postgres_db:
