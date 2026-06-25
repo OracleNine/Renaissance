@@ -40,7 +40,7 @@ To remove dependencies, run the following command. `<name>` is the name of the P
 ```
 poetry remove <name>
 ```
-In order for the packages to be installed in the docker container, you need to export all of the dependencies to a `requirements.txt` file. Here's the command:
+In order for all of the depencies to be applied to the docker container, you need to export them to a `requirements.txt` file. Here's the command:
 ```
 poetry export -f requirements.txt --output requirements.txt
 ```
