@@ -18,7 +18,10 @@ git clone https://github.com/OracleNine/Renaissance.git
 cd renaissance
 ```
 > If you want to contribute, you should [fork the repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) first and then [clone the forked repo](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo#cloning-your-forked-repository) to your machine. 
-2. Install [poetry](https://python-poetry.org/docs/#installing-with-the-official-installer).
+2. Install [poetry](https://python-poetry.org/docs/#installing-with-the-official-installer). Run the following command.
+```
+poetry install
+```
 See the section below on "Dependency Management" for more information.
 3. Start the server with docker.
 ```
