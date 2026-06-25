@@ -9,6 +9,9 @@ This is a personal project, so updates may be irregular. However, anyone is free
 [![AlpineJS][Alpinejs.dev]][Alpinejs-url]
 
 ## Installation
+
+> ***WARNING:*** Renaissance is still in development, and is not suitable for use just yet. You can speed this process up by contributing.
+
 1. Clone the repo, and navigate to the directory which contains `manage.py`.
 ```
 git clone https://github.com/OracleNine/Renaissance.git
