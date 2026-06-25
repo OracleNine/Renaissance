@@ -18,13 +18,28 @@ git clone https://github.com/OracleNine/Renaissance.git
 cd renaissance
 ```
 > If you want to contribute, you should [fork the repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) first and then [clone the forked repo](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo#cloning-your-forked-repository) to your machine. 
-2. Start the server with docker.
+2. Install [poetry](https://python-poetry.org/docs/#installing-with-the-official-installer).
+See the section below on "Dependency Management" for more information.
+3. Start the server with docker.
 ```
 docker compose up
 ```
-3. Open your browser and visit `localhost:8000`.
-
+4. Visit `localhost:8000` in your browser of choice.
 If you see Renaissance, you did it!
+
+## Dependency Management
+Renaissance's dependencies are managed through [poetry](https://python-poetry.org/). Due to past issues with dependency conflicts, poetry is preferred over `pip`.
+
+> **Note:** On Windows, run VSCode as an administrator or poetry commands may not work.
+
+To add dependencies, run the following command. `<name>` is the name of the PyPi package you wish to install.
+```
+poetry add <name>
+```
+To remove dependencies, run the following command. `<name>` is the name of the PyPi package you wish to get rid of.
+```
+poetry remove <name>
+```
 
 ## Contact
 * Join the [discord](https://discord.gg/JTMQq7mg22)
