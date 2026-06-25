@@ -28,11 +28,11 @@ poetry install
 `PASSWORD` is the password of the database admin, set this to something [long and complicated](https://www.lastpass.com/features/password-generator).
 `PORT` is the database port, default is 5432.
 
-3. Start the server with docker.
+4. Start the server with docker.
 ```
 docker compose up
 ```
-4. Visit `localhost:8000` in your browser of choice.
+5. Visit `localhost:8000` in your browser of choice.
 If you see Renaissance, you did it!
 
 ## Dependency Management
