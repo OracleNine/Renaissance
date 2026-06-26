@@ -102,6 +102,7 @@ def discuss(request, wikiSubdomain, pageName):
     postsCtx = {}
     for post in postsPage.object_list:
         postsCtx[post.pk] = {
+            "title": post.title,
             "author": post.author.user.username,
             "content": post.content,
             "replies": Post.objects.filter(target=post).order_by('created_at')
