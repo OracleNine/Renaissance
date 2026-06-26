@@ -6,7 +6,7 @@
 
 <div class="container mx-10 p-5">
     <div id="form-body">
-        <form hx-post="{% url 'wiki_save' wikiSubdomain=wikiSubdomain pageName=pageName %}?p=1">
+        <form hx-post="{% url 'wiki_save' wikiSubdomain=wikiSubdomain pageName=pageName %}">
             {{ form.media }}    
             {{ form|crispy }}
             <button class="btn btn-primary">Save</button>
