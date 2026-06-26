@@ -20,7 +20,7 @@
         <a href="#" class="btn btn-primary">Tags</a>
         <a href="#" class="btn btn-primary">Watch</a>
         <a hx-get="{% url 'wiki_view_revisions' wikiSubdomain=wikiSubdomain pageName=pageName %}" hx-target="#revision-history" class="btn btn-primary">Revisions</a>
-        <a href="#" class="btn btn-primary">Discussion</a>
+        <a href="{% url 'wiki_discuss' wikiSubdomain=wikiSubdomain pageName=pageName %}" class="btn btn-primary">Discussion</a>
     </div>
 
     <div id="revision-history">

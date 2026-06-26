@@ -5,7 +5,7 @@ from django.core.paginator import Paginator
 
 from core.models import Wiki
 from wiki.models import Page, Revision, Post
-from wiki.forms import EditForm
+from wiki.forms import EditForm, PostForm
 from wiki.utils import log_revision, find_context
 
 # pageName is the URL, which has underscores instead of spaces
@@ -86,11 +86,28 @@ def view_revisions(request, wikiSubdomain, pageName):
 def discuss(request, wikiSubdomain, pageName):
     wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
     page = get_object_or_404(Page, wiki=wiki, name=pageName)
-    topLevelPostsList = Post.objects.filter(page=page, target=None)
+    if request.method == "POST" and request.user.is_authenticated:
+        form = PostForm(request.POST)
+        if form.is_valid():
+            newPost = form.save(commit=False)
+            newPost.author = request.user.profile
+            newPost.page = page
+            newPost.save()
+
+    form = PostForm()
+    topLevelPostsList = Post.objects.filter(page=page, target=None).order_by('-created_at')
     paginator = Paginator(topLevelPostsList, 15)  # Show 25 contacts per page.
-    pageNumber = request.GET.get("page")
-    postsObject = paginator.get_page(pageNumber)
-    return render(request, "wiki/page/discussion.html", context={"posts": postsObject, "page": page})
+    pageNumber = request.GET.get("p")
+    postsPage = paginator.get_page(pageNumber)
+    postsCtx = {}
+    for post in postsPage.object_list:
+        postsCtx[post.pk] = {
+            "author": post.author.user.username,
+            "content": post.content,
+            "replies": Post.objects.filter(target=post).order_by('created_at')
+        }
+    
+    return render(request, "wiki/page/discussion.html", context={"form": form, "posts": postsCtx, 'pageName': pageName, 'wikiSubdomain': wikiSubdomain})
 
 
 def index(request, wikiSubdomain):

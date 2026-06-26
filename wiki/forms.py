@@ -18,4 +18,4 @@ class PostForm(ModelForm):
     class Meta:
         model = Post
         fields = ["content"]
-        widget = {"content": TipTapWidget(config={"height": "100px"})}
+        widgets = {"content": TipTapWidget(config={"height": "100px"})}
