@@ -86,13 +86,13 @@ WSGI_APPLICATION = 'renaissance.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv("ENGINE"),
-        'HOST': os.getenv("HOST"),
-        'NAME': os.getenv("NAME"),
-        'USER': os.getenv("USER"),
-        'PASSWORD': os.getenv("PASSWORD"),
-        'HOST': os.getenv("HOST"),
-        'PORT': os.getenv("PORT")
+        'ENGINE': os.getenv("REN_DB_ENGINE"),
+        'HOST': os.getenv("REN_DB_HOST"),
+        'NAME': os.getenv("REN_DB_NAME"),
+        'USER': os.getenv("REN_DB_USER"),
+        'PASSWORD': os.getenv("REN_DB_PASSWORD"),
+        'HOST': os.getenv("REN_DB_HOST"),
+        'PORT': os.getenv("REN_DB_PORT")
     },
 }
 
