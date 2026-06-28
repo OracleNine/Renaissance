@@ -121,12 +121,13 @@ def discuss(request, wikiSubdomain, pageName):
                                                                  "posts": postsCtx,
                                                                  'pageName': pageName, 
                                                                  'wikiSubdomain': wikiSubdomain,
-                                                                 'pageNumber': paginator.get_elided_page_range(pageNumber)})
+                                                                 'postsPage': postsPage})
 
 def discuss_post(request, wikiSubdomain, pageName):
     wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
     page = get_object_or_404(Page, wiki=wiki, name=pageName)
     targetId = request.GET.get("t")
+    pageNumber = request.GET.get("p")
     target = Post.objects.filter(pk=targetId)
     form = PostForm()
     if target.exists():
@@ -136,7 +137,8 @@ def discuss_post(request, wikiSubdomain, pageName):
         })
     return render(request, "wiki/page/partials/post.html", context={"form": form, 
                                                                     "pageName": pageName, 
-                                                                    "wikiSubdomain": wikiSubdomain})
+                                                                    "wikiSubdomain": wikiSubdomain,
+                                                                    "pageNumber": pageNumber})
 
 def discuss_delete(request, wikiSubdomain, pageName):
     wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)

@@ -1,7 +1,7 @@
 {% load crispy_forms_tags %}
 
 <div id="form-body">
-        <form method="POST" action="{% url 'wiki_discuss' wikiSubdomain pageName %}" class="form-group">
+        <form method="POST" action="{% url 'wiki_discuss' wikiSubdomain pageName %}?p={{ pageNumber }}" class="form-group">
             {% csrf_token %}
             {{ form.media }}    
             {{ form|crispy }}
