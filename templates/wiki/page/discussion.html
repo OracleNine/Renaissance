@@ -5,31 +5,31 @@
 {% block content %}
 
 <div class="container mx-10 p-5">
-    <div id="form-body">
-        <form method="POST" class="form-group">
-            {% csrf_token %}
-            {{ form.media }}    
-            {{ form|crispy }}
-            <button type="submit" class="btn btn-primary">Save</button>
-        </form>
-    </div>
-    <ul class="list-group" id="discussion_post_list">
+    <button hx-get="{% url 'wiki_discuss_post' wikiSubdomain pageName %}" class="btn btn-primary" hx-swap="outerHTML">Create Post</button>
+    <br />
+    <br />
     {% for pid, info in posts.items %}
-        <li class="list-group-item d-flex justify-content-between align-items-start">
-                <div class="ms-2 me-auto">
-                    <div class="fw-bold"><h3>{{ info.title }} | By {{ info.author }}</h3></div>
-                    {{ info.content|safe }}
-                </div>
-        </li>
-        <!--
-        <ul>
-            {% for reply in info.replies %}
-                <li>{{ reply.content }} - {{ reply.author }}</li>
-            {% endfor %}
-        </ul>
-        -->
+        <div class="fw-bold"><h3>{{ info.title }} | By {{ info.author }}</h3></div>
+        {{ info.content|safe }}
+
+        <button hx-get="{% url 'wiki_discuss_post' wikiSubdomain pageName %}?t={{ pid }}" class="btn btn-primary" hx-swap="outerHTML">Reply</button>
+        <div class="post-replies">
+        {% for reply in info.replies %}
+            <div class="fw-bold"><h4>{{ reply.title }} | By {{ reply.author.user.username }}</h4></div>
+            {{ reply.content|safe }}
+
+            <button hx-get="{% url 'wiki_discuss_post' wikiSubdomain pageName %}?t={{ pid }}" class="btn btn-primary" hx-swap="outerHTML">Reply</button>
+        {% endfor %}
+        </div>
     {% endfor %}
-    </ul>
 </div>
+
+<style>
+.post-replies {
+    margin-left: 2rem;
+    padding: 1.25rem;
+    border-left: 3px solid #E6E6E6;
+}
+</style>
 
 {% endblock %}

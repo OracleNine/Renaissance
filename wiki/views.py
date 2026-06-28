@@ -84,19 +84,20 @@ def view_revisions(request, wikiSubdomain, pageName):
     return render(request, "wiki/page/revision-history.html", context={"revisionList": revisionList})
 
 def discuss(request, wikiSubdomain, pageName):
+    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+    page = get_object_or_404(Page, wiki=wiki, name=pageName)
     if request.method == "POST" and request.user.is_authenticated:
         form = PostForm(request.POST)
         if form.is_valid():
             newPost = form.save(commit=False)
             newPost.author = request.user.profile
             newPost.page = page
-            data = form.cleaned_data
-            target = Post.objects.filter(data["target"])
+            targetId = request.GET.get("t")
+            target = Post.objects.filter(pk=targetId)
             if target.exists():
                 newPost.target = target[0]
             newPost.save()
-    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
-    page = get_object_or_404(Page, wiki=wiki, name=pageName)
+            return redirect("wiki_discuss", wikiSubdomain=wikiSubdomain, pageName=pageName)
     form = PostForm()
     topLevelPostsList = Post.objects.filter(page=page, target=None).order_by('-created_at')
     paginator = Paginator(topLevelPostsList, 15)  # Show 25 contacts per page.
@@ -113,7 +114,19 @@ def discuss(request, wikiSubdomain, pageName):
     
     return render(request, "wiki/page/discussion.html", context={"form": form, "posts": postsCtx, 'pageName': pageName, 'wikiSubdomain': wikiSubdomain})
 
-        
+def discuss_post(request, wikiSubdomain, pageName):
+    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+    page = get_object_or_404(Page, wiki=wiki, name=pageName)
+    targetId = request.GET.get("t")
+    target = Post.objects.filter(pk=targetId)
+    form = PostForm()
+    if target.exists():
+        form = PostForm(initial={
+            "title": "Re: " + target[0].title,
+            "target": target[0]
+        })
+
+    return render(request, "wiki/page/partials/post.html", context={"form": form, "pageName": pageName, "wikiSubdomain": wikiSubdomain})
 
 
 def index(request, wikiSubdomain):
