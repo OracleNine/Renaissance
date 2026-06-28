@@ -23,9 +23,7 @@ def page(request, wikiSubdomain, pageName):
         raise Http404
     page = page[0]
     context = page.createDict()
-    return render(request, "wiki/page/page.html", context={"page": context, 
-                                                           "pageName": pageName, 
-                                                           "wikiSubdomain": wikiSubdomain})
+    return render(request, "wiki/page/page.html", context={"page": context})
 
 @login_required
 def edit(request, wikiSubdomain, pageName):
@@ -39,9 +37,7 @@ def edit(request, wikiSubdomain, pageName):
         "tags": context['tags']
     })
     return render(request, "wiki/page/edit.html", context={"form": form, 
-                                                           "page": context, 
-                                                           "pageName": pageName, 
-                                                           "wikiSubdomain": wikiSubdomain})
+                                                           "page": context})
 
 @login_required
 def save(request, wikiSubdomain, pageName):
@@ -50,16 +46,14 @@ def save(request, wikiSubdomain, pageName):
         page = Page.objects.filter(wiki=wiki, name=pageName)
         if page.exists():
             form = EditForm(request.POST, instance=page[0])
+            context = find_context(page, wiki, pageName)
         else:
             form = EditForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
             if page.exists() and data["content_before"] != page[0].content and 'conflict-confirm' not in request.POST:
-                context = page[0].createDict()
                 return render(request, "wiki/page/partials/edit-conflict.html", context={"page": context, 
-                                                                                         "form": form, 
-                                                                                         'pageName': pageName, 
-                                                                                         'wikiSubdomain': wikiSubdomain})
+                                                                                         "form": form})
             savedPage = form.save(commit=False)
             savedPage.wiki = wiki
             savedPage.save()
@@ -67,10 +61,8 @@ def save(request, wikiSubdomain, pageName):
             response = HttpResponse("Page save successful.")
             response['HX-Redirect'] = reverse('wiki_page', kwargs={"wikiSubdomain": wikiSubdomain, "pageName": pageName})
             return response
-        
         return render(request, "wiki/page/partials/invalid-form.html", context={"form": form, 
-                                                                                'pageName': pageName, 
-                                                                                'wikiSubdomain': wikiSubdomain})
+                                                                                'page': context})
 
 def view_revisions(request, wikiSubdomain, pageName):
     wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
@@ -91,6 +83,7 @@ def view_revisions(request, wikiSubdomain, pageName):
 def discuss(request, wikiSubdomain, pageName):
     wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
     page = get_object_or_404(Page, wiki=wiki, name=pageName)
+    context = page.createDict()
     if request.method == "POST" and request.user.is_authenticated:
         form = PostForm(request.POST)
         if form.is_valid():
@@ -119,10 +112,8 @@ def discuss(request, wikiSubdomain, pageName):
         }
     return render(request, "wiki/page/discussion.html", context={"form": form, 
                                                                  "posts": postsCtx,
-                                                                 'pageName': pageName, 
-                                                                 'wikiSubdomain': wikiSubdomain,
                                                                  'postsPage': postsPage,
-                                                                 'page': page.createDict()})
+                                                                 'page': context})
 
 @login_required
 def discuss_post(request, wikiSubdomain, pageName):
@@ -138,14 +129,10 @@ def discuss_post(request, wikiSubdomain, pageName):
             "target": target[0]
         })
     return render(request, "wiki/page/partials/post.html", context={"form": form, 
-                                                                    "pageName": pageName, 
-                                                                    "wikiSubdomain": wikiSubdomain,
-                                                                    "pageNumber": pageNumber})
+                                                                    "page": page})
 
 @login_required
 def discuss_delete(request, wikiSubdomain, pageName):
-    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
-    page = get_object_or_404(Page, wiki=wiki, name=pageName)
     targetId = request.GET.get("t")
     target = Post.objects.filter(pk=targetId)
     if target.exists() and request.user.profile.pk == target[0].author.pk:
@@ -154,6 +141,12 @@ def discuss_delete(request, wikiSubdomain, pageName):
         response['HX-Redirect'] = reverse('wiki_discuss', kwargs={"wikiSubdomain": wikiSubdomain, "pageName": pageName})
         return response
     return HttpResponse("You can't delete this!")
+
+def search(request, wikiSubdomain):
+    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+    page = get_object_or_404(Page, wiki=wiki, name='Home')
+    return render(request, 'wiki/search/search.html', context={'page': page.createDict()
+                                                               })
 
 def index(request, wikiSubdomain):
     return page(request, wikiSubdomain, "Home")

@@ -16,7 +16,7 @@ def find_context(page, wiki, pageName):
         return page[0].createDict()
     else:
         return {
-                "wiki": wiki.name,
+                "wiki": wiki,
                 "name": pageName,
                 "content": "",
                 "tags": []

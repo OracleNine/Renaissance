@@ -7,21 +7,21 @@
 <div class="container mx-10 p-5">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item" aria-current="page"><a href="{% url 'wiki_page' wikiSubdomain pageName %}">{{ page.name }}</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="{% url 'wiki_page' page.wiki.subdomain page.name %}">{{ page.name }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">Discussion</li>
         </ol>
     </nav>
     <hr />
-    <button hx-get="{% url 'wiki_discuss_post' wikiSubdomain pageName %}" class="btn btn-primary" hx-swap="outerHTML">Create Post</button>
+    <button hx-get="{% url 'wiki_discuss_post' page.wiki.subdomain page.name %}" class="btn btn-primary" hx-swap="outerHTML">Create Post</button>
     <br />
     <br />
     {% for pid, info in posts.items %}
         <div class="fw-bold"><h3 id="{{ pid }}">{{ info.title }} | By {{ info.author.user.get_username }}</h3></div>
         {{ info.content|safe }}
         <div class="btn-group" role="group" aria-label="Post actions">
-            <button hx-get="{% url 'wiki_discuss_post' wikiSubdomain pageName %}?t={{ pid }}&p={{ postsPage.number }}" class="btn btn-primary" hx-swap="outerHTML" hx-target="next #reply-form">Reply</button>
+            <button hx-get="{% url 'wiki_discuss_post' page.wiki.subdomain page.name %}?t={{ pid }}&p={{ postsPage.number }}" class="btn btn-primary" hx-swap="outerHTML" hx-target="next #reply-form">Reply</button>
             {% if user.pk == info.author.user.pk %}
-            <button type="button" hx-get="{% url 'wiki_discuss_delete' wikiSubdomain pageName %}?t={{ pid }}" class="btn btn-danger">Delete</button>
+            <button type="button" hx-get="{% url 'wiki_discuss_delete' page.wiki.subdomain page.name %}?t={{ pid }}" class="btn btn-danger">Delete</button>
             {% endif %}
         </div>
         <div id="reply-form"></div>
@@ -39,9 +39,9 @@
                 {{ reply.content|safe }}
 
             <div class="btn-group" role="group" aria-label="Post actions">
-                <button hx-get="{% url 'wiki_discuss_post' wikiSubdomain pageName %}?t={{ pid }}&p={{ postsPage.number }}" class="btn btn-primary" hx-swap="outerHTML" hx-target="next #reply-form">Reply</button>
-                {% if user.pk == info.author.user.pk %}
-                <button type="button" hx-get="{% url 'wiki_discuss_delete' wikiSubdomain pageName %}?t={{ reply.pk }}" class="btn btn-danger">Delete</button>
+                <button hx-get="{% url 'wiki_discuss_post' page.wiki.subdomain page.name %}?t={{ pid }}&p={{ postsPage.number }}" class="btn btn-primary" hx-swap="outerHTML" hx-target="next #reply-form">Reply</button>
+                {% if user.pk == reply.author.pk %}
+                <button type="button" hx-get="{% url 'wiki_discuss_delete' page.wiki.subdomain page.name %}?t={{ reply.pk }}" class="btn btn-danger">Delete</button>
                 {% endif %}
             </div>
             <div id="reply-form"></div>
@@ -54,13 +54,13 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination">
             {% if postsPage.has_previous %}
-            <li class="page-item"><a class="page-link" href="{% url 'wiki_discuss' wikiSubdomain pageName %}?p=1"><span aria-hidden="true">&laquo;</span> First</a></li>
-            <li class="page-item"><a class="page-link" href="{% url 'wiki_discuss' wikiSubdomain pageName %}?p={{ postsPage.previous_page_number }}">{{ postsPage.previous_page_number }}</a></li>
+            <li class="page-item"><a class="page-link" href="{% url 'wiki_discuss' page.wiki.subdomain page.name %}?p=1"><span aria-hidden="true">&laquo;</span> First</a></li>
+            <li class="page-item"><a class="page-link" href="{% url 'wiki_discuss' page.wiki.subdomain page.name %}?p={{ postsPage.previous_page_number }}">{{ postsPage.previous_page_number }}</a></li>
             {% endif %}
-            <li class="page-item active"><a class="page-link" href="{% url 'wiki_discuss' wikiSubdomain pageName %}?p={{ postsPage.number }}">{{ postsPage.number }}</a></li>
+            <li class="page-item active"><a class="page-link" href="{% url 'wiki_discuss' page.wiki.subdomain page.name %}?p={{ postsPage.number }}">{{ postsPage.number }}</a></li>
             {% if postsPage.has_next %}
-            <li class="page-item"><a class="page-link" href="{% url 'wiki_discuss' wikiSubdomain pageName %}?p={{ postsPage.next_page_number }}">{{ postsPage.next_page_number }}</a></li>
-            <li class="page-item"><a class="page-link" href="{% url 'wiki_discuss' wikiSubdomain pageName %}?p={{ postsPage.paginator.num_pages }}">Last <span aria-hidden="true">&raquo;</span></a></li>
+            <li class="page-item"><a class="page-link" href="{% url 'wiki_discuss' page.wiki.subdomain page.name %}?p={{ postsPage.next_page_number }}">{{ postsPage.next_page_number }}</a></li>
+            <li class="page-item"><a class="page-link" href="{% url 'wiki_discuss' page.wiki.subdomain page.name %}?p={{ postsPage.paginator.num_pages }}">Last <span aria-hidden="true">&raquo;</span></a></li>
             {% endif %}
         </ul>
     </nav>

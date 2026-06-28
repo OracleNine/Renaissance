@@ -13,7 +13,7 @@
             {{ page.content|safe }}
         </div>
         <div class="col">
-            <form hx-post="{% url 'wiki_save' wikiSubdomain=wikiSubdomain pageName=pageName %}" hx-swap="outerHTML" hx-target="#form-body">
+            <form hx-post="{% url 'wiki_save' page.wiki.subdomain page.name %}" hx-swap="outerHTML" hx-target="#form-body">
                 {{ form.media }}
                 {{ form|crispy }}
                 <button name="conflict-confirm" class="btn btn-primary">Confirm changes</button>

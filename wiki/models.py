@@ -20,7 +20,7 @@ class Page(models.Model):
     def createDict(self):
         context = {}
         context["pk"] = self.pk
-        context["wiki"] = self.wiki.name
+        context["wiki"] = self.wiki
         context["name"] = self.name
         context["content"] = self.content
 

@@ -7,7 +7,7 @@
             <strong>Error:</strong> There was an issue with one or more of your fields.
         </div>
     </div>
-        <form hx-post="{% url 'wiki_save' wikiSubdomain=wikiSubdomain pageName=pageName %}" hx-swap="outerHTML" hx-target="#form-body">
+        <form hx-post="{% url 'wiki_save' page.wiki.subdomain page.name %}" hx-swap="outerHTML" hx-target="#form-body">
             {{ form.media }}
             {{ form|crispy }}
         <button class="btn btn-primary">Save</button>
