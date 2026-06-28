@@ -102,11 +102,12 @@ def discuss(request, wikiSubdomain, pageName):
             if target.exists():
                 newPost.target = target[0]
             newPost.save()
-            return redirect(newPost.get_absolute_url())
+            pageNumber = request.GET.get("p", "1")
+            return redirect(newPost.get_absolute_url(pageNumber))
     form = PostForm()
     topLevelPostsList = Post.objects.filter(page=page, target=None).order_by('-created_at')
-    paginator = Paginator(topLevelPostsList, 15)  # Show 25 contacts per page.
-    pageNumber = request.GET.get("p")
+    paginator = Paginator(topLevelPostsList, 3)
+    pageNumber = request.GET.get("p", "1")
     postsPage = paginator.get_page(pageNumber)
     postsCtx = {}
     for post in postsPage.object_list:
@@ -119,7 +120,8 @@ def discuss(request, wikiSubdomain, pageName):
     return render(request, "wiki/page/discussion.html", context={"form": form, 
                                                                  "posts": postsCtx,
                                                                  'pageName': pageName, 
-                                                                 'wikiSubdomain': wikiSubdomain})
+                                                                 'wikiSubdomain': wikiSubdomain,
+                                                                 'pageNumber': paginator.get_elided_page_range(pageNumber)})
 
 def discuss_post(request, wikiSubdomain, pageName):
     wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)

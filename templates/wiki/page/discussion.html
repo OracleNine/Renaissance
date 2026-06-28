@@ -43,6 +43,14 @@
         {% endif %}
     <br />
     {% endfor %}
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% for page in pageNumber %}
+                <li class="page-item"><a class="page-link" href="{% url 'wiki_discuss' wikiSubdomain pageName %}?p={{ page }}">{{ page }}</a></li>
+            {% endfor %}
+        </ul>
+    </nav>
 </div>
 
 {% endblock %}

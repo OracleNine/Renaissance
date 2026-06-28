@@ -52,5 +52,5 @@ class Post(models.Model):
     page = models.ForeignKey(Page, on_delete=models.CASCADE)
     target = models.ForeignKey("self", on_delete=models.CASCADE, blank=True, null=True)
 
-    def get_absolute_url(self):
-        return "/wiki/%s/p/%s/discuss#%s" % (self.page.wiki.subdomain, self.page.name, self.pk)
+    def get_absolute_url(self, pageNumber):
+        return "/wiki/%s/p/%s/discuss?p=%s#%s" % (self.page.wiki.subdomain, self.page.name, pageNumber, self.pk)
