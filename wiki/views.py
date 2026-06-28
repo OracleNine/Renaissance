@@ -2,6 +2,7 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.contrib.postgres.search import SearchQuery, SearchVector, SearchRank
 
 from core.models import Wiki
 from wiki.models import Page, Revision, Post
@@ -145,8 +146,17 @@ def discuss_delete(request, wikiSubdomain, pageName):
 def search(request, wikiSubdomain):
     wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
     page = get_object_or_404(Page, wiki=wiki, name='Home')
-    return render(request, 'wiki/search/search.html', context={'page': page.createDict()
-                                                               })
+    return render(request, 'wiki/search/search.html', context={'page': page.createDict()})
+
+def search_results(request, wikiSubdomain):
+    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+    query = request.GET.get("query", "")
+    query = SearchQuery(query, search_type="phrase")
+    vector = SearchVector("name", "content")
+    results = Page.objects.annotate(rank=SearchRank(vector, query)).order_by('-rank')
+
+    return render(request, 'wiki/search/partials/search-results.html', context={'results': results})
+                                                
 
 def index(request, wikiSubdomain):
     return page(request, wikiSubdomain, "Home")

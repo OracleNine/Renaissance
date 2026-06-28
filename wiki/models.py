@@ -45,7 +45,7 @@ class Revision(models.Model):
     tags = models.ManyToManyField(Tag)
 
 class Post(models.Model):
-    title = models.CharField(max_length=25)
+    title = models.CharField(max_length=75)
     author = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
