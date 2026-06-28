@@ -121,8 +121,10 @@ def discuss(request, wikiSubdomain, pageName):
                                                                  "posts": postsCtx,
                                                                  'pageName': pageName, 
                                                                  'wikiSubdomain': wikiSubdomain,
-                                                                 'postsPage': postsPage})
+                                                                 'postsPage': postsPage,
+                                                                 'page': page.createDict()})
 
+@login_required
 def discuss_post(request, wikiSubdomain, pageName):
     wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
     page = get_object_or_404(Page, wiki=wiki, name=pageName)
@@ -140,6 +142,7 @@ def discuss_post(request, wikiSubdomain, pageName):
                                                                     "wikiSubdomain": wikiSubdomain,
                                                                     "pageNumber": pageNumber})
 
+@login_required
 def discuss_delete(request, wikiSubdomain, pageName):
     wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
     page = get_object_or_404(Page, wiki=wiki, name=pageName)

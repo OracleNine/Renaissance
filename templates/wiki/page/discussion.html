@@ -1,10 +1,17 @@
-{% extends 'wiki/page/page-base.html' %}
+{% extends 'wiki/base.html' %}
 {% load crispy_forms_tags %}
 {% load static %}
 
 {% block content %}
 
 <div class="container mx-10 p-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item" aria-current="page"><a href="{% url 'wiki_page' wikiSubdomain pageName %}">{{ page.name }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Discussion</li>
+        </ol>
+    </nav>
+    <hr />
     <button hx-get="{% url 'wiki_discuss_post' wikiSubdomain pageName %}" class="btn btn-primary" hx-swap="outerHTML">Create Post</button>
     <br />
     <br />
