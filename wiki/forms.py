@@ -17,5 +17,7 @@ class EditForm(ModelForm):
 class PostForm(ModelForm):
     class Meta:
         model = Post
-        fields = ["title", "content"]
-        widgets = {"content": TipTapWidget(config={"height": "100px"})}
+        fields = ["title", "content", "target"]
+        widgets = {
+            "content": TipTapWidget(config={"height": "100px"}),
+            "target": forms.HiddenInput()}

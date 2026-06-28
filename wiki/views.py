@@ -84,16 +84,19 @@ def view_revisions(request, wikiSubdomain, pageName):
     return render(request, "wiki/page/revision-history.html", context={"revisionList": revisionList})
 
 def discuss(request, wikiSubdomain, pageName):
-    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
-    page = get_object_or_404(Page, wiki=wiki, name=pageName)
     if request.method == "POST" and request.user.is_authenticated:
         form = PostForm(request.POST)
         if form.is_valid():
             newPost = form.save(commit=False)
             newPost.author = request.user.profile
             newPost.page = page
+            data = form.cleaned_data
+            target = Post.objects.filter(data["target"])
+            if target.exists():
+                newPost.target = target[0]
             newPost.save()
-
+    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+    page = get_object_or_404(Page, wiki=wiki, name=pageName)
     form = PostForm()
     topLevelPostsList = Post.objects.filter(page=page, target=None).order_by('-created_at')
     paginator = Paginator(topLevelPostsList, 15)  # Show 25 contacts per page.
@@ -109,6 +112,8 @@ def discuss(request, wikiSubdomain, pageName):
         }
     
     return render(request, "wiki/page/discussion.html", context={"form": form, "posts": postsCtx, 'pageName': pageName, 'wikiSubdomain': wikiSubdomain})
+
+        
 
 
 def index(request, wikiSubdomain):

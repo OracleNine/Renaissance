@@ -22,7 +22,7 @@ cd renaissance
 ```
 poetry install
 ```
-3. Rename `.env.example` to `.env`. Leave `REN_DB_ENGINE` and `REN_DB_HOST` the same, the rest of the details you should change to what you want.
+3. Create a copy of `.env.example` and rename this copy to `.env`. (This means you should have both a `.env.example` and a `.env` in your root directory). Leave `REN_DB_ENGINE` and `REN_DB_HOST` the same, the rest of the details you should change to what you want.
 
 `REN_DB_NAME` is the name of the database that renaissance uses, default is `renaissance_db`.
 
