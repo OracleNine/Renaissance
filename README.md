@@ -31,12 +31,15 @@ poetry install
 `REN_DB_PASSWORD` is the password of the database admin.
 
 `REN_DB_PORT` is the database port, default for postgresql is 5432.
-
-4. Start the server with docker.
+4. On some systems, you may have to give permission to your machine to make the `entrypoint.sh` script executable.
+```
+chmod +x ./entrypoint.sh
+```
+5. Start the server with docker.
 ```
 docker compose up
 ```
-5. Visit `localhost:8000` in your browser of choice.
+6. Visit `localhost:8000` in your browser of choice.
 If you see Renaissance, you did it!
 
 ## Dependency Management
