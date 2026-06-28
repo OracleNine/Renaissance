@@ -10,4 +10,5 @@ urlpatterns = [
     path("<str:wikiSubdomain>/p/<str:pageName>/save", views.save, name="wiki_save"),
     path("<str:wikiSubdomain>/p/<str:pageName>/discuss", views.discuss, name="wiki_discuss"),
     path("<str:wikiSubdomain>/p/<str:pageName>/discuss/post", views.discuss_post, name="wiki_discuss_post"),
+    path("<str:wikiSubdomain>/p/<str:pageName>/discuss/delete", views.discuss_delete, name="wiki_discuss_delete"),
 ]

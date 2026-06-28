@@ -15,17 +15,17 @@ def page(request, wikiSubdomain, pageName):
     wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
     name = pageName.replace("_", " ")
     page = Page.objects.filter(wiki=wiki, name=pageName)
-
     if not page.exists() and name == "Home":
         homePage = Page(wiki=wiki, name="Home", content="Welcome to your new wiki!")
         homePage.save()
     elif not page.exists():
         # TODO Create a custom 404 which allows users to create a new page
         raise Http404
-
     page = page[0]
     context = page.createDict()
-    return render(request, "wiki/page/page.html", context={"page": context, "pageName": pageName, "wikiSubdomain": wikiSubdomain})
+    return render(request, "wiki/page/page.html", context={"page": context, 
+                                                           "pageName": pageName, 
+                                                           "wikiSubdomain": wikiSubdomain})
 
 @login_required
 def edit(request, wikiSubdomain, pageName):
@@ -38,8 +38,10 @@ def edit(request, wikiSubdomain, pageName):
         "content_before": context['content'],
         "tags": context['tags']
     })
-
-    return render(request, "wiki/page/edit.html", context={"form": form, "page": context, "pageName": pageName, "wikiSubdomain": wikiSubdomain})
+    return render(request, "wiki/page/edit.html", context={"form": form, 
+                                                           "page": context, 
+                                                           "pageName": pageName, 
+                                                           "wikiSubdomain": wikiSubdomain})
 
 @login_required
 def save(request, wikiSubdomain, pageName):
@@ -54,22 +56,25 @@ def save(request, wikiSubdomain, pageName):
             data = form.cleaned_data
             if page.exists() and data["content_before"] != page[0].content and 'conflict-confirm' not in request.POST:
                 context = page[0].createDict()
-                return render(request, "wiki/page/partials/edit-conflict.html", context={"page": context, "form": form, 'pageName': pageName, 'wikiSubdomain': wikiSubdomain})
+                return render(request, "wiki/page/partials/edit-conflict.html", context={"page": context, 
+                                                                                         "form": form, 
+                                                                                         'pageName': pageName, 
+                                                                                         'wikiSubdomain': wikiSubdomain})
             savedPage = form.save(commit=False)
             savedPage.wiki = wiki
             savedPage.save()
             log_revision(request.user.profile, savedPage)
-
             response = HttpResponse("Page save successful.")
             response['HX-Redirect'] = reverse('wiki_page', kwargs={"wikiSubdomain": wikiSubdomain, "pageName": pageName})
             return response
         
-        return render(request, "wiki/page/partials/invalid-form.html", context={"form": form, 'pageName': pageName, 'wikiSubdomain': wikiSubdomain})
+        return render(request, "wiki/page/partials/invalid-form.html", context={"form": form, 
+                                                                                'pageName': pageName, 
+                                                                                'wikiSubdomain': wikiSubdomain})
 
 def view_revisions(request, wikiSubdomain, pageName):
     wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
     page = Page.objects.filter(wiki=wiki, name=pageName)[0]
-
     allRevisions = Revision.objects.filter(target=page).order_by('-created_at')
     revisionList = []
     for revision in allRevisions:
@@ -107,12 +112,14 @@ def discuss(request, wikiSubdomain, pageName):
     for post in postsPage.object_list:
         postsCtx[post.pk] = {
             "title": post.title,
-            "author": post.author.user.username,
+            "author": post.author,
             "content": post.content,
             "replies": Post.objects.filter(target=post).order_by('created_at')
         }
-    
-    return render(request, "wiki/page/discussion.html", context={"form": form, "posts": postsCtx, 'pageName': pageName, 'wikiSubdomain': wikiSubdomain})
+    return render(request, "wiki/page/discussion.html", context={"form": form, 
+                                                                 "posts": postsCtx,
+                                                                 'pageName': pageName, 
+                                                                 'wikiSubdomain': wikiSubdomain})
 
 def discuss_post(request, wikiSubdomain, pageName):
     wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
@@ -125,9 +132,21 @@ def discuss_post(request, wikiSubdomain, pageName):
             "title": "Re: " + target[0].title,
             "target": target[0]
         })
+    return render(request, "wiki/page/partials/post.html", context={"form": form, 
+                                                                    "pageName": pageName, 
+                                                                    "wikiSubdomain": wikiSubdomain})
 
-    return render(request, "wiki/page/partials/post.html", context={"form": form, "pageName": pageName, "wikiSubdomain": wikiSubdomain})
-
+def discuss_delete(request, wikiSubdomain, pageName):
+    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+    page = get_object_or_404(Page, wiki=wiki, name=pageName)
+    targetId = request.GET.get("t")
+    target = Post.objects.filter(pk=targetId)
+    if target.exists() and request.user.profile.pk == target[0].author.pk:
+        target[0].delete()
+        response = HttpResponse()
+        response['HX-Redirect'] = reverse('wiki_discuss', kwargs={"wikiSubdomain": wikiSubdomain, "pageName": pageName})
+        return response
+    return HttpResponse("You can't delete this!")
 
 def index(request, wikiSubdomain):
     return page(request, wikiSubdomain, "Home")
