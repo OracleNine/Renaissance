@@ -102,7 +102,7 @@ def discuss(request, wikiSubdomain, pageName):
             if target.exists():
                 newPost.target = target[0]
             newPost.save()
-            return redirect("wiki_discuss", wikiSubdomain=wikiSubdomain, pageName=pageName)
+            return redirect(newPost.get_absolute_url())
     form = PostForm()
     topLevelPostsList = Post.objects.filter(page=page, target=None).order_by('-created_at')
     paginator = Paginator(topLevelPostsList, 15)  # Show 25 contacts per page.
