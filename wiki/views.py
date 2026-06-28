@@ -106,7 +106,7 @@ def discuss(request, wikiSubdomain, pageName):
             return redirect(newPost.get_absolute_url(pageNumber))
     form = PostForm()
     topLevelPostsList = Post.objects.filter(page=page, target=None).order_by('-created_at')
-    paginator = Paginator(topLevelPostsList, 3)
+    paginator = Paginator(topLevelPostsList, 10)
     pageNumber = request.GET.get("p", "1")
     postsPage = paginator.get_page(pageNumber)
     postsCtx = {}
