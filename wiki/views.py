@@ -155,7 +155,8 @@ def search_results(request, wikiSubdomain):
     vector = SearchVector("name", "content")
     results = Page.objects.annotate(rank=SearchRank(vector, query)).order_by('-rank')
 
-    return render(request, 'wiki/search/partials/search-results.html', context={'results': results})
+    return render(request, 'wiki/search/partials/search-results.html', context={'results': results,
+                                                                                'wikiSubdomain': wikiSubdomain})
                                                 
 
 def index(request, wikiSubdomain):
