@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.decorators import login_required
+import math
 
 from core.models import Profile, User, Wiki, Member
 from core.utils import sortNotifications, POSTS_PER_PAGE
@@ -49,9 +50,11 @@ def dashboard_activity(request):
         }
         notifications.append(revision)
     for post in postNotifs:
-        postPosition = Post.objects.filter(created_at__lt=post.created_at).count()
-        itemsPerPage = POSTS_PER_PAGE
-        pageIndex = int(postPosition/itemsPerPage)
+        parent = post.target
+        postPosition = Post.objects.filter(page=post.page, target=None, created_at__gt=parent.created_at).count()
+        pageIndex = math.ceil(postPosition/POSTS_PER_PAGE)
+        if (pageIndex == 0):
+            pageIndex = 1
         post = {
             "title": post.title,
             "author": post.author,
