@@ -16,7 +16,7 @@
               <tr>
                 <th scope="row">{{ revision.pk }}</th>
                 <td>{{ revision.name }}</td>
-                <td>{{ revision.content|truncatechars:30 }}</td>
+                <td>{{ revision.content|safe|truncatechars:100 }}</td>
                 <td>{{ revision.created_at }}</td>
                 <td>{{ revision.author }}</td>
               </tr>

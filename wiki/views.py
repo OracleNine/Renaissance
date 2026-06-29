@@ -81,7 +81,7 @@ def view_revisions(request, wikiSubdomain, pageName):
             "author": revision.author.user.username
         })
     
-    return render(request, "wiki/page/revision-history.html", context={"revisionList": revisionList})
+    return render(request, "wiki/page/partials/revision-history.html", context={"revisionList": revisionList})
 
 def discuss(request, wikiSubdomain, pageName):
     wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)

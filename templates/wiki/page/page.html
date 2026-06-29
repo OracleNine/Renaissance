@@ -25,13 +25,12 @@
                 Watch
             {% endif %}
         </a>
-        <a hx-get="{% url 'wiki_view_revisions' page.wiki.subdomain page.name %}" hx-target="#revision-history" class="btn btn-primary">Revisions</a>
+        <a hx-get="{% url 'wiki_view_revisions' page.wiki.subdomain page.name %}" hx-target="#revision-dropdown" class="btn btn-primary">Revisions</a>
         <a href="{% url 'wiki_discuss' page.wiki.subdomain page.name %}?p=1" class="btn btn-primary">Discussion</a>
     </div>
 
-    <div id="revision-history">
-
-    </div>
+    <div id="revision-dropdown"></div>
+    <div id="tag-dropdown"></div>
 </div>
 
 {% endblock %}
