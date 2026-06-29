@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect, HttpResponse
-from core.models import Profile, User, Wiki, Member
-from .forms import RegisterForm, CreateWikiForm
 from django.contrib.auth.decorators import login_required
+
+from core.models import Profile, User, Wiki, Member
+from core.utils import sortNotifications, POSTS_PER_PAGE
+from wiki.models import Revision, Post, Page
+from .forms import RegisterForm, CreateWikiForm
 
 # Registration Views
 def index(request):
@@ -28,7 +31,39 @@ def signup(request):
 # Dashboard Views
 @login_required
 def dashboard_activity(request):
-    return render(request, "core/social/activity.html")
+    lastLogin = request.user.last_login
+    profile = request.user.profile
+    watchedPages = profile.page_set.all()
+    watchedPosts = profile.post_set.all()
+    revisionNotifs = Revision.objects.filter(target__in=watchedPages, created_at__lt=lastLogin).order_by('-created_at').exclude(author=profile)
+    postNotifs = Post.objects.filter(target__in=watchedPosts, created_at__lt=lastLogin).order_by('-created_at').exclude(author=profile)
+    notifications = []
+    for revision in revisionNotifs:
+        revision = {
+            "target": revision.target,
+            "name": revision.name,
+            "content": revision.content,
+            "created_at": revision.created_at,
+            "author": revision.author,
+            "absolute_url": revision.get_absolute_url()
+        }
+        notifications.append(revision)
+    for post in postNotifs:
+        postPosition = Post.objects.filter(created_at__lt=post.created_at).count()
+        itemsPerPage = POSTS_PER_PAGE
+        pageIndex = int(postPosition/itemsPerPage)
+        post = {
+            "title": post.title,
+            "author": post.author,
+            "content": post.content,
+            "created_at": post.created_at,
+            "page": post.page,
+            "target": post.target,
+            "absolute_url": post.get_absolute_url(pageIndex)
+        }
+        notifications.append(post)
+    notifications.sort(key=sortNotifications, reverse=True)
+    return render(request, "core/social/activity.html", {"notifications": notifications})
 
 @login_required
 def dashboard_wikis(request):

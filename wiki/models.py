@@ -35,6 +35,9 @@ class Page(models.Model):
         context["tags"] = tagList
 
         return context
+    
+    def get_absolute_url(self):
+        return "/wiki/%s/p/%s" % (self.wiki.subdomain, self.name)
 
 class Revision(models.Model):
     target = models.ForeignKey(Page, on_delete=models.CASCADE)
@@ -43,6 +46,9 @@ class Revision(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
     tags = models.ManyToManyField(Tag)
+
+    def get_absolute_url(self):
+        return "/wiki/%s/p/%s" % (self.target.wiki.subdomain, self.target.name)
 
 class Post(models.Model):
     title = models.CharField(max_length=75)

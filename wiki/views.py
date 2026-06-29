@@ -8,6 +8,7 @@ from core.models import Wiki
 from wiki.models import Page, Revision, Post
 from wiki.forms import EditForm, PostForm
 from wiki.utils import log_revision, find_context
+from core.utils import POSTS_PER_PAGE
 
 # pageName is the URL, which has underscores instead of spaces
 # name is the name of the page with these underscores stripped away
@@ -101,7 +102,7 @@ def discuss(request, wikiSubdomain, pageName):
             return redirect(newPost.get_absolute_url(pageNumber))
     form = PostForm()
     topLevelPostsList = Post.objects.filter(page=page, target=None).order_by('-created_at')
-    paginator = Paginator(topLevelPostsList, 10)
+    paginator = Paginator(topLevelPostsList, POSTS_PER_PAGE)
     pageNumber = request.GET.get("p", "1")
     postsPage = paginator.get_page(pageNumber)
     postsCtx = {}
@@ -122,7 +123,6 @@ def discuss_post(request, wikiSubdomain, pageName):
     wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
     page = get_object_or_404(Page, wiki=wiki, name=pageName)
     targetId = request.GET.get("t")
-    pageNumber = request.GET.get("p")
     target = Post.objects.filter(pk=targetId)
     form = PostForm()
     if target.exists():
