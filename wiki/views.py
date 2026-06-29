@@ -24,7 +24,8 @@ def page(request, wikiSubdomain, pageName):
         raise Http404
     page = page[0]
     context = page.createDict()
-    return render(request, "wiki/page/page.html", context={"page": context})
+    watcher = page.watchlist.filter(pk=request.user.profile.pk)
+    return render(request, "wiki/page/page.html", context={"page": context, "isWatched": watcher.exists()})
 
 @login_required
 def edit(request, wikiSubdomain, pageName):
@@ -154,9 +155,22 @@ def search_results(request, wikiSubdomain):
     query = SearchQuery(query, search_type="phrase")
     vector = SearchVector("name", "content")
     results = Page.objects.annotate(rank=SearchRank(vector, query)).order_by('-rank')
-
     return render(request, 'wiki/search/partials/search-results.html', context={'results': results,
                                                                                 'wikiSubdomain': wikiSubdomain})
+
+@login_required
+def toggle_watch(request, wikiSubdomain, pageName):
+    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+    page = get_object_or_404(Page, wiki=wiki, name=pageName)
+    watcher = page.watchlist.filter(pk=request.user.profile.pk)
+    if watcher.exists():
+        page.watchlist.remove(watcher[0])
+    else:
+        page.watchlist.add(request.user.profile)
+    page.save()
+    response = HttpResponse()
+    response['HX-Redirect'] = reverse('wiki_page', kwargs={"wikiSubdomain": wikiSubdomain, "pageName": pageName})
+    return response
                                                 
 
 def index(request, wikiSubdomain):
