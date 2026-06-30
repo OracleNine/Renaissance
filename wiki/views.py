@@ -183,23 +183,13 @@ def tags_list(request, wikiSubdomain, pageName):
 
 def tags_all(request, wikiSubdomain):
     wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
-    query = request.GET.get("tag-query", "")
-    if query == "":
+    phrase = request.GET.get("tag-query", "")
+    if phrase == "":
         return HttpResponse("")
-    query = SearchQuery(query, search_type="phrase")
+    query = SearchQuery(phrase, search_type="phrase")
     vector = SearchVector("name")
-    results = Tag.objects.annotate(rank=SearchRank(vector, query)).order_by('-rank')[:10]
-    return render(request, 'wiki/page/partials/tag-menu.html', {'results': results})
-
-@login_required
-def tags_add(request, wikiSubdomain):
-    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
-    if request.method == "POST":
-        form = TagCreationForm(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-            newTag = Tag(name=data['name'], wiki=wiki)
-            newTag.save()
+    results = Tag.objects.filter(wiki=wiki).annotate(rank=SearchRank(vector, query)).order_by('-rank')[:10]
+    return render(request, 'wiki/page/partials/tag-menu.html', {'results': results, 'phrase': phrase})   
 
 def index(request, wikiSubdomain):
     return page(request, wikiSubdomain, "Home")

@@ -5,6 +5,8 @@
     <div class="invalid-input">
         <div class="alert alert-danger">
             <strong>Error:</strong> There was an issue with one or more of your fields.
+            {{ form.non_field_errors }}
+            {{ form.errors }}
         </div>
     </div>
         <form hx-post="{% url 'wiki_save' page.wiki.subdomain page.name %}" hx-swap="outerHTML" hx-target="#form-body">

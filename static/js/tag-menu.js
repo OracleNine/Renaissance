@@ -1,11 +1,15 @@
 let TAG_LIST = [];
 
 function removeTag(tag) {
-    const targetTag = document.getElementById(tag);
+    const targetTag = document.getElementById(tag); 
+    const tagHiddenInput = document.getElementById("id_tags");
     targetTag.remove();
     TAG_LIST = TAG_LIST.filter(function(item) {
         return item !== tag
     });
+    tagListAsStr = JSON.stringify(TAG_LIST);
+    tagListAsStr.replace("\"", "\'");
+    tagHiddenInput.value = tagListAsStr; 
 }
 
 function appendTag(tag) {
@@ -13,6 +17,7 @@ function appendTag(tag) {
     const tagInputBox = document.getElementById("tag-menu-box");
     const newTag = document.createElement("div");
     const tagName = document.createTextNode(tag);
+    const tagHiddenInput = document.getElementById("id_tags");
     newTag.id = tag;
     newTag.classList.add("col");
     newTag.classList.add("tag-icon");
@@ -25,6 +30,9 @@ function appendTag(tag) {
     } else {
         outerTagMenu.appendChild(newTag);
         TAG_LIST.push(tag);
+        tagListAsStr = JSON.stringify(TAG_LIST);
+        tagListAsStr.replaceAll("\"", "\'");
+        tagHiddenInput.value = tagListAsStr;
     }
 
 }

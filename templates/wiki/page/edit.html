@@ -14,11 +14,11 @@
             <div class="container">
                 <div id="tag-menu-outer" class="row row-cols-auto">
                     <div class="col">
-                        <input type="text" id="tag-menu-box" name="tag-query"
-                        hx-get="{% url 'wiki_tags_all' page.wiki.subdomain %}"
-                        hx-target="#tag-search-results"
-                        hx-swap="innerHTML"
-                        hx-trigger="input changed delay:500ms">
+                            <input type="text" id="tag-menu-box" name="tag-query"
+                            hx-get="{% url 'wiki_tags_all' page.wiki.subdomain %}"
+                            hx-target="#tag-search-results"
+                            hx-swap="innerHTML"
+                            hx-trigger="input changed delay:500ms">
                     </div>
                 </div>
             </div>
