@@ -21,3 +21,9 @@ class PostForm(ModelForm):
         widgets = {
             "content": TipTapWidget(config={"height": "100px"}),
             "target": forms.HiddenInput()}
+
+class TagCreationForm(ModelForm):
+    class Meta:
+        model = Tag
+        fields = ["name"]
+        exclude = ["wiki"]

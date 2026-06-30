@@ -6,7 +6,7 @@ from django.contrib.postgres.search import SearchQuery, SearchVector, SearchRank
 
 from core.models import Wiki
 from wiki.models import Page, Revision, Post, Tag
-from wiki.forms import EditForm, PostForm
+from wiki.forms import EditForm, PostForm, TagCreationForm
 from wiki.utils import log_revision, find_context
 from core.utils import POSTS_PER_PAGE
 
@@ -184,10 +184,22 @@ def tags_list(request, wikiSubdomain, pageName):
 def tags_all(request, wikiSubdomain):
     wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
     query = request.GET.get("tag-query", "")
+    if query == "":
+        return HttpResponse("")
     query = SearchQuery(query, search_type="phrase")
     vector = SearchVector("name")
     results = Tag.objects.annotate(rank=SearchRank(vector, query)).order_by('-rank')[:10]
     return render(request, 'wiki/page/partials/tag-menu.html', {'results': results})
+
+@login_required
+def tags_add(request, wikiSubdomain):
+    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+    if request.method == "POST":
+        form = TagCreationForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            newTag = Tag(name=data['name'], wiki=wiki)
+            newTag.save()
 
 def index(request, wikiSubdomain):
     return page(request, wikiSubdomain, "Home")

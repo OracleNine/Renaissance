@@ -1,6 +1,5 @@
-
 <ul>
     {% for entry in results %}
-        <li x-on:click="document.getElementById('tag-menu-box').value += '{{ entry.name }}'">{{ entry.name }}</li>
+        <li x-on:click="appendTag('{{ entry.name }}')">{{ entry.name }}</li>
     {% endfor %}
 </ul>
