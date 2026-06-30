@@ -1,0 +1,6 @@
+#tag-menu-box {
+    border: none;
+}
+#tag-menu-box:focus {
+    outline: none;
+}

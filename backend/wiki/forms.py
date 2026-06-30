@@ -1,0 +1,29 @@
+from django import forms
+from django.forms import ModelForm
+from django_tiptap_editor.widgets.tiptap_widget import TipTapWidget
+from wiki.models import Page, Tag, Post
+
+
+class EditForm(ModelForm):
+    tags = forms.ModelMultipleChoiceField(queryset=Tag.objects.all(), required=False, widget=forms.HiddenInput())
+    content_before = forms.CharField(required=False, widget=forms.HiddenInput())
+
+    class Meta:
+        model = Page
+        fields = ["name", "content", "tags", "content_before"]
+        exclude = ["watchlist", "wiki"]
+        widgets = {"content": TipTapWidget(config={"height": "400px"})}
+
+class PostForm(ModelForm):
+    class Meta:
+        model = Post
+        fields = ["title", "content", "target"]
+        widgets = {
+            "content": TipTapWidget(config={"height": "100px"}),
+            "target": forms.HiddenInput()}
+
+class TagCreationForm(ModelForm):
+    class Meta:
+        model = Tag
+        fields = ["name"]
+        exclude = ["wiki"]

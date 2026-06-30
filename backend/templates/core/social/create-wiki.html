@@ -1,0 +1,24 @@
+{% extends "core/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Create a Wiki{% endblock %}
+
+{% block content %}
+<div class="container mx-10 p-5">
+    <h1 class="display-4">Create a Wiki</h1>
+    <hr>
+    {% if error %}
+    <div class="alert alert-danger">
+        <strong>Error:</strong> {{ message }}
+    </div>
+    {% endif %}
+    <form method="POST" class="form-group">
+        {% csrf_token %}
+        {{ form.name|as_crispy_field }}
+        {{ form.subdomain|as_crispy_field }}
+        <div id="subdomain-occupied"></div>
+        {{ form.description|as_crispy_field }}
+        <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+</div>
+{% endblock %}

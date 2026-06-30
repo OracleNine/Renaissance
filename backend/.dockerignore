@@ -1,0 +1,6 @@
+.env
+Dockerfile
+pyproject.toml
+poetry.lock
+.env.example
+LICENSE.txt

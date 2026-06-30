@@ -1,0 +1,7 @@
+<div class="container py-10 mt-3">
+{% for entry in results %}
+    <h3><a href="{% url 'wiki_page' wikiSubdomain entry.name %}">{{ entry.name }}</a></h3>
+    {{ entry.content|safe|truncatechars:150 }}
+    <br />
+{% endfor %}
+</div>

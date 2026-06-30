@@ -1,0 +1,36 @@
+{% extends 'wiki/base.html' %}
+
+{% block content %}
+<div class="container mx-10 p-5">
+
+    <h1>{{ page.name }}</h1>
+
+    <p>{{ page.content|safe }}</p>
+
+    <p>Watchers:
+    <ul>
+        {% for user in page.watchlist %}
+        <li>{{ user }}</li>
+        {% endfor %}
+    </ul>
+    </p>
+
+    <div class="btn-group">
+        <a href="{% url 'wiki_edit' page.wiki.subdomain page.name %}" class="btn btn-primary">Edit</a>
+        <a hx-get="{% url 'wiki_tags_list' page.wiki.subdomain page.name %}" hx-target="#tag-dropdown" class="btn btn-primary">Tags</a>
+        <a hx-get="{% url 'wiki_toggle_watch' page.wiki.subdomain page.name %}" class="btn btn-primary">
+            {% if isWatched %}
+                Unwatch
+            {% else %}
+                Watch
+            {% endif %}
+        </a>
+        <a hx-get="{% url 'wiki_view_revisions' page.wiki.subdomain page.name %}" hx-target="#revision-dropdown" class="btn btn-primary">Revisions</a>
+        <a href="{% url 'wiki_discuss' page.wiki.subdomain page.name %}?p=1" class="btn btn-primary">Discussion</a>
+    </div>
+
+    <div id="revision-dropdown"></div>
+    <div id="tag-dropdown"></div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "core/social/dashboard.html" %}
+
+{% block title %}My Wikis{% endblock %}
+
+{% block dashboard-content %}
+
+{% load static %}
+
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    {% for wiki in wikis %}
+    <div class="col">
+        <div class="card h-100">
+            <img src="{% static 'img/resonance.jpg' %}" class="card-img-top" alt="A stylized diagram of a benzene ring.">
+            <div class="card-body">
+                <h5 class="card-title">{{ wiki.name }}</h5>
+                <p class="card-text">{{ wiki.description }}</p>
+                <a href="/wiki/{{ wiki.subdomain }}" class="stretched-link"></a>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+    <div class="col">
+        <div class="card h-100">
+            <img src="{% static 'img/resonance.jpg' %}" class="card-img-top" alt="A stylized diagram of a benzene ring.">
+            <div class="card-body">
+                <h5 class="card-title">Create a new wiki</h5>
+                <p class="card-text">Create your own wiki from scratch. Start something beautiful.</p>
+                <a href="{% url 'dashboard_create' %}" class="stretched-link"></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,195 @@
+from django.http import Http404, HttpResponse, JsonResponse
+from django.shortcuts import render, get_object_or_404, redirect, reverse
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.contrib.postgres.search import SearchQuery, SearchVector, SearchRank
+
+from core.models import Wiki
+from wiki.models import Page, Revision, Post, Tag
+from wiki.forms import EditForm, PostForm, TagCreationForm
+from wiki.utils import log_revision, find_context
+from core.utils import POSTS_PER_PAGE
+
+# pageName is the URL, which has underscores instead of spaces
+# name is the name of the page with these underscores stripped away
+
+def page(request, wikiSubdomain, pageName):
+    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+    name = pageName.replace("_", " ")
+    page = Page.objects.filter(wiki=wiki, name=pageName)
+    if not page.exists() and name == "Home":
+        homePage = Page(wiki=wiki, name="Home", content="Welcome to your new wiki!")
+        homePage.save()
+    elif not page.exists():
+        # TODO Create a custom 404 which allows users to create a new page
+        raise Http404
+    page = page[0]
+    context = page.createDict()
+    watcher = page.watchlist.filter(pk=request.user.profile.pk)
+    return render(request, "wiki/page/page.html", context={"page": context, "isWatched": watcher.exists()})
+
+@login_required
+def edit(request, wikiSubdomain, pageName):
+    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+    page = Page.objects.filter(wiki=wiki, name=pageName)
+    context = find_context(page, wiki, pageName)
+    form = EditForm(initial={
+        "name": context['name'],
+        "content": context['content'],
+        "content_before": context['content'],
+        "tags": context['tags']
+    })
+    return render(request, "wiki/page/edit.html", context={"form": form, 
+                                                           "page": context})
+
+@login_required
+def save(request, wikiSubdomain, pageName):
+    if request.method == "POST":
+        wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+        page = Page.objects.filter(wiki=wiki, name=pageName)
+        if page.exists():
+            form = EditForm(request.POST, instance=page[0])
+            context = find_context(page, wiki, pageName)
+        else:
+            form = EditForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            if page.exists() and data["content_before"] != page[0].content and 'conflict-confirm' not in request.POST:
+                return render(request, "wiki/page/partials/edit-conflict.html", context={"page": context, 
+                                                                                         "form": form})
+            savedPage = form.save(commit=False)
+            savedPage.wiki = wiki
+            savedPage.save()
+            log_revision(request.user.profile, savedPage)
+            response = HttpResponse("Page save successful.")
+            response['HX-Redirect'] = reverse('wiki_page', kwargs={"wikiSubdomain": wikiSubdomain, "pageName": pageName})
+            return response
+        return render(request, "wiki/page/partials/invalid-form.html", context={"form": form, 
+                                                                                'page': context})
+
+def view_revisions(request, wikiSubdomain, pageName):
+    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+    page = Page.objects.filter(wiki=wiki, name=pageName)[0]
+    allRevisions = Revision.objects.filter(target=page).order_by('-created_at')
+    revisionList = []
+    for revision in allRevisions:
+        revisionList.append({
+            "pk": revision.pk,
+            "name": revision.name,
+            "content": revision.content,
+            "created_at": revision.created_at,
+            "author": revision.author.user.username
+        })
+    
+    return render(request, "wiki/page/partials/revision-history.html", context={"revisionList": revisionList})
+
+def discuss(request, wikiSubdomain, pageName):
+    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+    page = get_object_or_404(Page, wiki=wiki, name=pageName)
+    context = page.createDict()
+    if request.method == "POST" and request.user.is_authenticated:
+        form = PostForm(request.POST)
+        if form.is_valid():
+            newPost = form.save(commit=False)
+            newPost.author = request.user.profile
+            newPost.page = page
+            targetId = request.GET.get("t")
+            target = Post.objects.filter(pk=targetId)
+            if target.exists():
+                newPost.target = target[0]
+            newPost.save()
+            pageNumber = request.GET.get("p", "1")
+            return redirect(newPost.get_absolute_url(pageNumber))
+    form = PostForm()
+    topLevelPostsList = Post.objects.filter(page=page, target=None).order_by('-created_at')
+    paginator = Paginator(topLevelPostsList, POSTS_PER_PAGE)
+    pageNumber = request.GET.get("p", "1")
+    postsPage = paginator.get_page(pageNumber)
+    postsCtx = {}
+    for post in postsPage.object_list:
+        postsCtx[post.pk] = {
+            "title": post.title,
+            "author": post.author,
+            "content": post.content,
+            "replies": Post.objects.filter(target=post).order_by('created_at')
+        }
+    return render(request, "wiki/page/discussion.html", context={"form": form, 
+                                                                 "posts": postsCtx,
+                                                                 'postsPage': postsPage,
+                                                                 'page': context})
+
+@login_required
+def discuss_post(request, wikiSubdomain, pageName):
+    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+    page = get_object_or_404(Page, wiki=wiki, name=pageName)
+    targetId = request.GET.get("t")
+    pageNumber = request.GET.get("p")
+    target = Post.objects.filter(pk=targetId)
+    form = PostForm()
+    if target.exists():
+        form = PostForm(initial={
+            "title": "Re: " + target[0].title,
+            "target": target[0]
+        })
+    return render(request, "wiki/page/partials/post.html", context={"form": form, 
+                                                                    "page": page,
+                                                                    "pageNumber": pageNumber})
+
+@login_required
+def discuss_delete(request, wikiSubdomain, pageName):
+    targetId = request.GET.get("t")
+    target = Post.objects.filter(pk=targetId)
+    if target.exists() and request.user.profile.pk == target[0].author.pk:
+        target[0].delete()
+        response = HttpResponse()
+        response['HX-Redirect'] = reverse('wiki_discuss', kwargs={"wikiSubdomain": wikiSubdomain, "pageName": pageName})
+        return response
+    return HttpResponse("You can't delete this!")
+
+def search(request, wikiSubdomain):
+    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+    page = get_object_or_404(Page, wiki=wiki, name='Home')
+    return render(request, 'wiki/search/search.html', context={'page': page.createDict()})
+
+def search_results(request, wikiSubdomain):
+    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+    query = request.GET.get("query", "")
+    query = SearchQuery(query, search_type="phrase")
+    vector = SearchVector("name", "content")
+    results = Page.objects.annotate(rank=SearchRank(vector, query)).order_by('-rank')
+    return render(request, 'wiki/search/partials/search-results.html', context={'results': results,
+                                                                                'wikiSubdomain': wikiSubdomain})
+
+@login_required
+def toggle_watch(request, wikiSubdomain, pageName):
+    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+    page = get_object_or_404(Page, wiki=wiki, name=pageName)
+    watcher = page.watchlist.filter(pk=request.user.profile.pk)
+    if watcher.exists():
+        page.watchlist.remove(watcher[0])
+    else:
+        page.watchlist.add(request.user.profile)
+    page.save()
+    response = HttpResponse()
+    response['HX-Redirect'] = reverse('wiki_page', kwargs={"wikiSubdomain": wikiSubdomain, "pageName": pageName})
+    return response
+
+def tags_list(request, wikiSubdomain, pageName):
+    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+    page = get_object_or_404(Page, wiki=wiki, name=pageName)
+    tags = page.tags.values()
+
+    return render(request, 'wiki/page/partials/tag-menu.html', {'results': tags})
+
+def tags_all(request, wikiSubdomain):
+    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+    phrase = request.GET.get("tag-query", "")
+    if phrase == "":
+        return HttpResponse("")
+    query = SearchQuery(phrase, search_type="phrase")
+    vector = SearchVector("name")
+    results = Tag.objects.filter(wiki=wiki).annotate(rank=SearchRank(vector, query)).order_by('-rank')[:10]
+    return render(request, 'wiki/page/partials/tag-menu.html', {'results': results, 'phrase': phrase})   
+
+def index(request, wikiSubdomain):
+    return page(request, wikiSubdomain, "Home")

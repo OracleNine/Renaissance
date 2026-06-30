@@ -1,0 +1,6 @@
+<ul>
+    <li x-on:click="appendTag('{{ phrase }}')">Create new tag: {{ phrase }}</li>
+    {% for entry in results %}
+        <li x-on:click="appendTag('{{ entry.name }}')">{{ entry.name }}</li>
+    {% endfor %}
+</ul>
