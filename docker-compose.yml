@@ -1,11 +1,13 @@
 services:
-  web:
-    build: .
-    container_name: renaissance
+  backend:
+    build:
+      dockerfile: backend/Dockerfile
+      context: .
+    container_name: api
     ports:
       - 8000:8000
     volumes:
-      - .:/app
+      - ./backend:/app/backend
     depends_on:
       db:
         condition: service_healthy
@@ -27,6 +29,16 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
+  frontend:
+    build:
+      dockerfile: frontend/Dockerfile
+      context: .
+    container_name: frontend
+    volumes:
+      - ./frontend:/app/
+      - /app/node_modules
+    ports:
+      - "5173:5173"
 
 volumes:
   postgres_db:

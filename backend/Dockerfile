@@ -1,22 +1,30 @@
 FROM python:3
 
-ENV PYTHONDONTWRITEBYTECODE=1 \
-PYTHONUNBUFFERED=1
+ENV PYTHONFAULTHANDLER=1 \
+  PYTHONUNBUFFERED=1 \
+  PYTHONHASHSEED=random \
+  PIP_NO_CACHE_DIR=off \
+  PIP_DISABLE_PIP_VERSION_CHECK=on \
+  PIP_DEFAULT_TIMEOUT=100 \
+  POETRY_VERSION=2.0.1
 
-WORKDIR /app
+RUN groupadd user && useradd --create-home --home-dir /home/user -g user user
 
-RUN apt-get update \
-  # dependencies for building Python packages
-  && apt-get install -y build-essential \
-  # psycopg2 dependencies
-  && apt-get install -y libpq-dev gcc
+# Install system dependencies
+RUN apt-get update && apt-get install python3-dev gcc build-essential libpq-dev -y
 
-COPY requirements.txt .
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+# install python dependencies
+RUN pip install "poetry==$POETRY_VERSION"
+COPY backend/pyproject.toml /home/user/app/
+COPY backend/*poetry.lock /home/user/app/
 
-COPY . .
+WORKDIR /home/user/app/
 
-EXPOSE 8000
+RUN poetry config virtualenvs.create false
+RUN poetry install --no-root --no-interaction --no-ansi
 
-CMD [ "./entrypoint.sh" ]
+WORKDIR /home/user/app/backend
+COPY backend/ /home/user/app/backend
+
+USER user
+CMD gunicorn renaissance.wsgi --log-file - -b 0.0.0.0:8000 --reload

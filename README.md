@@ -57,6 +57,7 @@ poetry remove <name>
 ```
 In order for all of the depencies to be applied to the docker container, you need to export them to a `requirements.txt` file. Here's the command:
 ```
+poetry self add poetry-plugin-export
 poetry export -f requirements.txt --output requirements.txt
 ```
 
