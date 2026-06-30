@@ -3,12 +3,19 @@
 {% load static %}
 
 {% block content %}
-
+<script src="{% static 'js/tag-menu.js' %}"></script>
 <div class="container mx-10 p-5">
     <div id="form-body">
         <form hx-post="{% url 'wiki_save' page.wiki.subdomain page.name %}">
             {{ form.media }}    
             {{ form|crispy }}
+            <label for="tag-menu-box">Tags</label><br />
+            <input type="text" class="form-control" id="tag-menu-box" name="tag-query"
+            hx-get="{% url 'wiki_tags_all' page.wiki.subdomain %}"
+            hx-target="#tag-search-results"
+            hx-swap="innerHTML"
+            hx-trigger="input changed delay:500ms, keyup[key=='Enter']"><br />
+            <div id="tag-search-results"></div>
             <button class="btn btn-primary">Save</button>
         </form>
     </div>

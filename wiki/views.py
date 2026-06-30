@@ -1,11 +1,11 @@
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.contrib.postgres.search import SearchQuery, SearchVector, SearchRank
 
 from core.models import Wiki
-from wiki.models import Page, Revision, Post
+from wiki.models import Page, Revision, Post, Tag
 from wiki.forms import EditForm, PostForm
 from wiki.utils import log_revision, find_context
 from core.utils import POSTS_PER_PAGE
@@ -173,7 +173,21 @@ def toggle_watch(request, wikiSubdomain, pageName):
     response = HttpResponse()
     response['HX-Redirect'] = reverse('wiki_page', kwargs={"wikiSubdomain": wikiSubdomain, "pageName": pageName})
     return response
-                                                
+
+def tags_list(request, wikiSubdomain, pageName):
+    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+    page = get_object_or_404(Page, wiki=wiki, name=pageName)
+    tags = page.tags.values()
+
+    return render(request, 'wiki/page/partials/tag-menu.html', {'results': tags})
+
+def tags_all(request, wikiSubdomain):
+    wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+    query = request.GET.get("tag-query", "")
+    query = SearchQuery(query, search_type="phrase")
+    vector = SearchVector("name")
+    results = Tag.objects.annotate(rank=SearchRank(vector, query)).order_by('-rank')[:10]
+    return render(request, 'wiki/page/partials/tag-menu.html', {'results': results})
 
 def index(request, wikiSubdomain):
     return page(request, wikiSubdomain, "Home")

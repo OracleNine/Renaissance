@@ -17,7 +17,7 @@
 
     <div class="btn-group">
         <a href="{% url 'wiki_edit' page.wiki.subdomain page.name %}" class="btn btn-primary">Edit</a>
-        <a href="#" class="btn btn-primary">Tags</a>
+        <a hx-get="{% url 'wiki_tags_list' page.wiki.subdomain page.name %}" hx-target="#tag-dropdown" class="btn btn-primary">Tags</a>
         <a hx-get="{% url 'wiki_toggle_watch' page.wiki.subdomain page.name %}" class="btn btn-primary">
             {% if isWatched %}
                 Unwatch
