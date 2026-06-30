@@ -1,13 +1,13 @@
 services:
-  backend:
+  server:
     build:
-      dockerfile: backend/Dockerfile
+      dockerfile: server/Dockerfile
       context: .
     container_name: api
     ports:
       - 8000:8000
     volumes:
-      - ./backend:/app/backend
+      - ./server:/app/server
     depends_on:
       db:
         condition: service_healthy
@@ -29,13 +29,13 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
-  frontend:
+  client:
     build:
-      dockerfile: frontend/Dockerfile
+      dockerfile: client/Dockerfile
       context: .
-    container_name: frontend
+    container_name: client
     volumes:
-      - ./frontend:/app/
+      - ./client:/app/
       - /app/node_modules
     ports:
       - "5173:5173"

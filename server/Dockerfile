@@ -15,16 +15,16 @@ RUN apt-get update && apt-get install python3-dev gcc build-essential libpq-dev 
 
 # install python dependencies
 RUN pip install "poetry==$POETRY_VERSION"
-COPY backend/pyproject.toml /home/user/app/
-COPY backend/*poetry.lock /home/user/app/
+COPY server/pyproject.toml /home/user/app/
+COPY server/*poetry.lock /home/user/app/
 
 WORKDIR /home/user/app/
 
 RUN poetry config virtualenvs.create false
 RUN poetry install --no-root --no-interaction --no-ansi
 
-WORKDIR /home/user/app/backend
-COPY backend/ /home/user/app/backend
+WORKDIR /app/server/
+COPY server/ /app/server
 
 USER user
-CMD gunicorn renaissance.wsgi --log-file - -b 0.0.0.0:8000 --reload
+CMD [ "./entrypoint.sh" ]

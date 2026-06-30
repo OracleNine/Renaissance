@@ -9,7 +9,7 @@ FROM node:${NODE_VERSION} AS dev
 WORKDIR /app
  
 # Copy package files
-COPY frontend/package*.json ./
+COPY client/package*.json ./
  
 # Install dependencies
 RUN npm install
