@@ -16,22 +16,6 @@ files = [
 tests = ["mypy (>=1.14.0)", "pytest", "pytest-asyncio"]
 
 [[package]]
-name = "crispy-bootstrap5"
-version = "2026.3"
-description = "Bootstrap5 template pack for django-crispy-forms"
-optional = false
-python-versions = ">=3.9"
-groups = ["main"]
-files = [
-    {file = "crispy_bootstrap5-2026.3-py3-none-any.whl", hash = "sha256:e0fff85c0503e9aed610a0ee31368e2191d340657f813669491c288c1c2e2dfa"},
-    {file = "crispy_bootstrap5-2026.3.tar.gz", hash = "sha256:e7f5adb36acfbb456444c46e82c436931c796c539e9c620be4fa9dc9c9d6679c"},
-]
-
-[package.dependencies]
-django = ">=4.2"
-django-crispy-forms = ">=2.3"
-
-[[package]]
 name = "django"
 version = "6.0.6"
 description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
@@ -66,52 +50,6 @@ files = [
 
 [package.dependencies]
 asgiref = ">=3.6"
-django = ">=4.2"
-
-[[package]]
-name = "django-crispy-forms"
-version = "2.6"
-description = "Best way to have Django DRY forms"
-optional = false
-python-versions = ">=3.10"
-groups = ["main"]
-files = [
-    {file = "django_crispy_forms-2.6-py3-none-any.whl", hash = "sha256:8ee0ae28b6b0ac41ff48a65944480c049fe8d1b0047086874fd7efabf4ec1374"},
-    {file = "django_crispy_forms-2.6.tar.gz", hash = "sha256:4921a1087c6cd4f9fa3c139654c1de1c1c385f8bd6729aaee530bc0121ab4b93"},
-]
-
-[package.dependencies]
-django = ">=5.2"
-
-[[package]]
-name = "django-htmx"
-version = "1.27.0"
-description = "Extensions for using Django with htmx."
-optional = false
-python-versions = ">=3.10"
-groups = ["main"]
-files = [
-    {file = "django_htmx-1.27.0-py3-none-any.whl", hash = "sha256:13e1e13b87d39b57f95aae6e4987cb3df056d0b1373a41f4a94504a00298ffd8"},
-    {file = "django_htmx-1.27.0.tar.gz", hash = "sha256:036e5da801bfdf5f1ca815f21592cfb9f004a898f330c842f15e55c70e301a75"},
-]
-
-[package.dependencies]
-asgiref = ">=3.6"
-django = ">=4.2"
-
-[[package]]
-name = "django-tiptap-editor"
-version = "0.4.0"
-description = "Drop-in TipTap (ProseMirror) rich-text editor widget for Django forms and admin."
-optional = false
-python-versions = ">=3.10"
-groups = ["main"]
-files = [
-    {file = "django_tiptap_editor-0.4.0-py3-none-any.whl", hash = "sha256:d66bfae108754fd9a8957a8cd656485a9e68e9f9e25adbfa554683b61585f5af"},
-    {file = "django_tiptap_editor-0.4.0.tar.gz", hash = "sha256:32e745a9736d55a3965f75657971847beae0b82cfc99154fa44569ced702393b"},
-]
-
-[package.dependencies]
 django = ">=4.2"
 
 [[package]]
@@ -369,4 +307,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12"
-content-hash = "2236ca6840c15c28cd2f58dc5804238de10696e812112b690c7759e99c72eb7a"
+content-hash = "b771a71ddd867f4f5a8f230e870e97469106d281afb3f4dfe89dafd7bb056867"
