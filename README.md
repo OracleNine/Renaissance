@@ -33,9 +33,10 @@ poetry install
 `REN_DB_PORT` is the database port, default for postgresql is 5432.
 4. On some systems, you may have to give permission to your machine to make the `entrypoint.sh` script executable.
 ```
+cd server
 chmod +x ./entrypoint.sh
 ```
-5. Start the server with docker.
+5. Start the server with docker. Execute this command in the root directory, the same folder that `docker-compose.yml` is located in.
 ```
 docker compose up
 ```
@@ -46,6 +47,11 @@ If you see Renaissance, you did it!
 Renaissance's dependencies are managed through [poetry](https://python-poetry.org/). Due to past issues with dependency conflicts, poetry is preferred over `pip`.
 
 > **Note:** On Windows, run VSCode as an administrator or poetry commands may not work.
+
+Start by navigating into the backend.
+```
+cd server
+```
 
 To add dependencies, run the following command. `<name>` is the name of the PyPi package you wish to install.
 ```
