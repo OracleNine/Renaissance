@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from .models import User
+from .models import User, Wiki
 
 class RenTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -24,3 +24,8 @@ class UserSerializer(serializers.ModelSerializer):
             instance.set_password(password)
         instance.save()
         return instance
+
+class WikiSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Wiki
+        fields = ["name", "subdomain", "description"]
