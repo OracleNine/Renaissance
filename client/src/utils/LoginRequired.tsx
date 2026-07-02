@@ -1,18 +1,17 @@
-import { useNavigate } from "react-router";
-import { useContext, useEffect } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { useContext } from 'react'
+import { Navigate, Outlet } from 'react-router'
+import { AuthContext } from '../context/AuthContext'
 
-export function requireLogin() {
-  // Assume this made-up hook provides is a boolean value 
-  // and its false if user not logged in
-  const AuthCtx = useContext(AuthContext)
-  
-  const navigate = useNavigate();
+export function LoginRequired() {
+  const authCtx = useContext(AuthContext)
 
-  useEffect(() => {
-    if (!AuthCtx?.isAuthenticated) {
-      // Redirect the user back to /login route
-      navigate("/login", { replace: true } );
-    }
-  }, [AuthCtx?.isAuthenticated]);
+  if (!authCtx?.isAuthenticated) {
+    return (
+      <Navigate to="/login" replace />
+    )
+  }
+
+  return (
+    <Outlet />
+  )
 }
