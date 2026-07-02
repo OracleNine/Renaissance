@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import {
   IconGauge,
   IconHome2,
@@ -11,6 +11,7 @@ import {
 import { Center, Stack, Tooltip, Anchor } from '@mantine/core';
 import classes from '../assets/css/NavbarMinimal.module.css';
 import { Link } from 'react-router';
+import { AuthContext, AuthCtxProvider } from '../context/AuthContext';
 
 interface NavbarLinkProps {
   icon: typeof IconHome2;
@@ -47,6 +48,7 @@ const mockdata = [
 
 export function NavbarMinimal() {
   const [active, setActive] = useState(0);
+  const authCtx = useContext(AuthContext)
 
   const links = mockdata.map((link, index) => (
     <NavbarLink
@@ -58,19 +60,19 @@ export function NavbarMinimal() {
   ));
 
   return (
-    <nav className={classes.navbar}>
-      <Center>
-        
-      </Center>
+      <nav className={classes.navbar}>
+        <Center>
+          
+        </Center>
 
-      <div className={classes.navbarMain}>
-        <Stack justify="center" gap={0}>
-          {links}
-        </Stack>
-      </div>
-        <Stack justify="center" gap={0}>
-          <NavbarLink href="/login" icon={IconLogin} label="Login" />
-        </Stack>
-    </nav>
+        <div className={classes.navbarMain}>
+          <Stack justify="center" gap={0}>
+            {links}
+          </Stack>
+        </div>
+          <Stack justify="center" gap={0}>
+            {authCtx?.isAuthenticated ? <NavbarLink href="/logout" icon={IconLogout} label="Logout" /> : <NavbarLink href="/login" icon={IconLogin} label="Login" /> } 
+          </Stack>
+      </nav>
   );
 }
