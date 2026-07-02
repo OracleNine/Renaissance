@@ -17,12 +17,21 @@ function App() {
       <MantineProvider theme={theme} defaultColorScheme="dark">
         <AppShell
         padding="md"
+        header={{ height: 60 }}
         navbar={{
           width: 80,
           breakpoint: 'sm',
           collapsed: { mobile: !opened },
         }}
         >
+        <AppShell.Header>
+          <Burger
+            opened={opened}
+            onClick={toggle}
+            hiddenFrom="sm"
+            size="sm"
+          />
+        </AppShell.Header>
 
         <AppShell.Navbar>
           <NavbarMinimal></NavbarMinimal>
