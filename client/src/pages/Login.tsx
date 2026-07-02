@@ -11,8 +11,39 @@ import {
   Title,
 } from '@mantine/core';
 import classes from '../assets/css/AuthenticationTitle.module.css';
+import { useForm } from '@mantine/form';
+import axios, { AxiosError, type AxiosResponse } from "axios";
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 function Login() {
+  const authCtx = useContext(AuthContext)
+
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      email: '',
+      password: '',
+    },
+
+    validate: {
+      email: (value: string) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+      password: (value: string) => (value.length < 255 ? null : 'Invalid password'),
+    },
+  })
+  function postLoginData() {
+    const data = form.getValues();
+    axios.post("http://localhost:8000/api/core/token/", {
+      email: data["email"],
+      password: data["password"]
+    })
+    .then((response: AxiosResponse) => {
+      console.log(response.data)
+    })
+    .catch((error: AxiosError) => {
+      console.error(error)
+    })
+  }
   return (
     <Container size={420} my={40}>
       <Title ta="center" className={classes.title}>
@@ -24,17 +55,19 @@ function Login() {
       </Text>
 
       <Paper withBorder shadow="sm" p={22} mt={30} radius="md">
-        <TextInput label="Email" placeholder="you@renaissance.md" required radius="md" />
-        <PasswordInput label="Password" placeholder="Your password" required mt="md" radius="md" />
-        <Group justify="space-between" mt="lg">
-          <Checkbox label="Remember me" />
-          <Anchor component="button" size="sm">
-            Forgot password?
-          </Anchor>
-        </Group>
-        <Button fullWidth mt="xl" radius="md">
-          Sign in
-        </Button>
+        <form onSubmit={form.onSubmit(postLoginData)}>
+          <TextInput label="Email" placeholder="you@renaissance.md" required radius="md" key={form.key('email')} {...form.getInputProps('email')} />
+          <PasswordInput label="Password" placeholder="Your password" required mt="md" radius="md" key={form.key('password')} {...form.getInputProps('password')}/>
+          <Group justify="space-between" mt="lg">
+            <Checkbox label="Remember me" />
+            <Anchor component="button" size="sm">
+              Forgot password?
+            </Anchor>
+          </Group>
+          <Button fullWidth mt="xl" radius="md" type="submit">
+            Sign in
+          </Button>
+        </form>
       </Paper>
     </Container>
   );

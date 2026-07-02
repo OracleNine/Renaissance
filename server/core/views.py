@@ -14,10 +14,6 @@ class RegisterView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
-    
-class UserListView(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
 
 class RenTokenObtainPairView(TokenObtainPairView):
     serializer_class = RenTokenObtainPairSerializer
