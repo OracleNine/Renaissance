@@ -12,7 +12,6 @@ import {
 } from '@mantine/core';
 import classes from '../assets/css/AuthenticationTitle.module.css';
 import { useForm } from '@mantine/form';
-import axios, { AxiosError, type AxiosResponse } from "axios";
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 
@@ -33,16 +32,8 @@ function Login() {
   })
   function postLoginData() {
     const data = form.getValues();
-    axios.post("http://localhost:8000/api/core/token/", {
-      email: data["email"],
-      password: data["password"]
-    })
-    .then((response: AxiosResponse) => {
-      console.log(response.data)
-    })
-    .catch((error: AxiosError) => {
-      console.error(error)
-    })
+    authCtx?.login(data)
+    
   }
   return (
     <Container size={420} my={40}>
