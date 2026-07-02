@@ -6,6 +6,7 @@ import {
   IconSettings,
   IconUser,
   IconBook,
+  IconLogin
 } from '@tabler/icons-react';
 import { Center, Stack, Tooltip, Anchor } from '@mantine/core';
 import classes from '../assets/css/NavbarMinimal.module.css';
@@ -38,8 +39,8 @@ function NavbarLink({ icon: Icon, label, active, onClick, href }: NavbarLinkProp
 
 const mockdata = [
   { icon: IconHome2, label: 'Home', href: "/" },
-  { icon: IconGauge, label: 'Dashboard', href: "#"},
-  { icon: IconBook, label: 'My Wikis', href: "#"},
+  { icon: IconGauge, label: 'Dashboard', href: "/dashboard"},
+  { icon: IconBook, label: 'My Wikis', href: "/dashboard/wikis"},
   { icon: IconUser, label: 'Account', href: "#"},
   { icon: IconSettings, label: 'Settings', href: "#"},
 ];
@@ -68,7 +69,7 @@ export function NavbarMinimal() {
         </Stack>
       </div>
         <Stack justify="center" gap={0}>
-          <NavbarLink href="#" icon={IconLogout} label="Logout" />
+          <NavbarLink href="/login" icon={IconLogin} label="Login" />
         </Stack>
     </nav>
   );
