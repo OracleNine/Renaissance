@@ -38,7 +38,7 @@ function NavbarLink({ icon: Icon, label, active, onClick, href }: NavbarLinkProp
   );
 }
 
-const mockdata = [
+const navdata = [
   { icon: IconHome2, label: 'Home', href: "/" },
   { icon: IconGauge, label: 'Dashboard', href: "/dashboard"},
   { icon: IconBook, label: 'My Wikis', href: "/dashboard/wikis"},
@@ -50,7 +50,7 @@ export function NavbarMinimal() {
   const [active, setActive] = useState(0);
   const AuthCtx = useContext(AuthContext)
 
-  const links = mockdata.map((link, index) => (
+  const links = navdata.map((link, index) => (
     <NavbarLink
       {...link}
       key={link.label}

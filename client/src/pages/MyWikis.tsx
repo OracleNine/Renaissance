@@ -3,10 +3,50 @@ import axios, { AxiosError, type AxiosResponse } from "axios";
 import { AuthContext } from '../context/AuthContext';
 import { Card, Image, Text, Button, Group, Container, SimpleGrid, Title } from '@mantine/core';
 
+type WikiCardProps = {
+  name: string;
+  subdomain: string;
+  description: string;
+}
+
+
+function WikiCard({name, subdomain, description}: WikiCardProps) {
+  return (
+    <Card shadow="sm" padding="lg" withBorder>
+      <Card.Section>
+        <Image
+          src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
+          height={80}
+          width={50}
+          alt="Norway"
+        />
+      </Card.Section>
+
+      <Group justify="space-between" mt="md" mb="xs">
+        <Text fw={80}>{name}</Text>
+      </Group>
+
+      <Text size="sm" c="dimmed">
+        {description}
+      </Text>
+
+      <Button component="a" href={`/wiki/` + subdomain} color="yellow" fullWidth mt="md">
+        Visit
+      </Button>
+    </Card>
+  )
+}
 
 function MyWikis() {
   const AuthCtx = useContext(AuthContext)
   const [WikiList, updateWikis] = useState([])
+
+  const WikiCards = WikiList.map((wiki: WikiCardProps) => (
+    <WikiCard 
+    {...wiki}
+    key={wiki.name}
+    />
+  ))
 
   useEffect(() => {
     axios.get("http://localhost:8000/api/core/mywikis", {
@@ -19,6 +59,7 @@ function MyWikis() {
     <Container size="lg">
       <Title order={1}>My Wikis</Title>
       <SimpleGrid cols={3}>
+          {WikiCards}
           <Card shadow="sm" padding="lg" withBorder>
                 <Card.Section>
                   <Image
@@ -37,7 +78,7 @@ function MyWikis() {
                   Start something beautiful.
                 </Text>
 
-                <Button color="blue" fullWidth mt="md">
+                <Button color="yellow" fullWidth mt="md">
                   Create
                 </Button>
               </Card>
