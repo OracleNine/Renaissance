@@ -31,6 +31,7 @@ function Login() {
     },
   })
   function postLoginData() {
+    // If I don't do it this way, typescript yells at me.
     const data = form.getValues();
     authCtx?.login(data)
     

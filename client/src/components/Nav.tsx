@@ -48,7 +48,7 @@ const mockdata = [
 
 export function NavbarMinimal() {
   const [active, setActive] = useState(0);
-  const authCtx = useContext(AuthContext)
+  const AuthCtx = useContext(AuthContext)
 
   const links = mockdata.map((link, index) => (
     <NavbarLink
@@ -71,7 +71,7 @@ export function NavbarMinimal() {
           </Stack>
         </div>
           <Stack justify="center" gap={0}>
-            {authCtx?.isAuthenticated ? <NavbarLink href="/logout" icon={IconLogout} label="Logout" /> : <NavbarLink href="/login" icon={IconLogin} label="Login" /> } 
+            {AuthCtx?.isAuthenticated ? <NavbarLink href="/#" icon={IconLogout} label="Logout" onClick={AuthCtx.logout}/> : <NavbarLink href="/login" icon={IconLogin} label="Login" /> } 
           </Stack>
       </nav>
   );
