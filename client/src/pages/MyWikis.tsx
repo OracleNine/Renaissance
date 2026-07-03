@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import axios, { AxiosError, type AxiosResponse } from "axios";
 import { AuthContext } from '../context/AuthContext';
-import { Card, Image, Text, Badge, Button, Group, Container, Grid, GridCol, SimpleGrid } from '@mantine/core';
+import { Card, Image, Text, Button, Group, Container, SimpleGrid, Title } from '@mantine/core';
 
 
 function MyWikis() {
@@ -17,6 +17,7 @@ function MyWikis() {
   }, [])
   return (
     <Container size="lg">
+      <Title order={1}>My Wikis</Title>
       <SimpleGrid cols={3}>
           <Card shadow="sm" padding="lg" withBorder>
                 <Card.Section>
