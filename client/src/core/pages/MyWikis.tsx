@@ -49,7 +49,7 @@ function MyWikis() {
   ))
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/core/mywikis", {
+    axios.get("http://localhost:8000/api/core/wiki", {
         })
         .then(response => {
             updateWikis(response.data)
