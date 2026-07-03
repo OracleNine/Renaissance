@@ -9,6 +9,7 @@ import { LoginRequired } from './core/utils/LoginRequired';
 import MyWikis from './core/pages/MyWikis';
 import Login from './core/pages/Login';
 import { AuthCtxProvider } from './core/context/AuthContext';
+import CreateWiki from './core/pages/CreateWiki';
 
 const theme = createTheme({
   fontFamily: 'Open Sans, sans-serif',
@@ -27,6 +28,7 @@ function App() {
               <Route path="/login" element={<Login />} />
                 <Route element={<LoginRequired />}>
                   <Route path="/dashboard/wikis" element={<MyWikis />} />
+                  <Route path="/dashboard/create" element={<CreateWiki />} />
                 </Route>
           </Route>
         </Routes>

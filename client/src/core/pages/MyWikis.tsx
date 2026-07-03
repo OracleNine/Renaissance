@@ -78,7 +78,7 @@ function MyWikis() {
                   Start something beautiful.
                 </Text>
 
-                <Button color="yellow" fullWidth mt="md">
+                <Button component="a" href="/dashboard/create" color="yellow" fullWidth mt="md">
                   Create
                 </Button>
               </Card>

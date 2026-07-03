@@ -20,9 +20,8 @@ class MyWikiViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
-        serializer.save(commit=False)
-        serializer.add_founder(self.request.user)
         serializer.save()
+        serializer.add_founder(self.request.user)
 
     def get_queryset(self):
         memberships = Member.objects.filter(user=self.request.user)
