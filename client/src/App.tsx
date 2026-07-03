@@ -1,14 +1,14 @@
 import '@mantine/core/styles.css';
 import './App.css'
 import { createTheme, MantineProvider } from '@mantine/core';
-import { BrowserRouter, Route, Routes} from 'react-router';
-import Dashboard from './pages/Dashboard';
-import Home from './pages/Home';
-import RenShell from './pages/RenShell';
-import { LoginRequired } from './utils/LoginRequired';
-import MyWikis from './pages/MyWikis';
-import Login from './pages/Login';
-import { AuthCtxProvider } from './context/AuthContext';
+import { Route, Routes} from 'react-router';
+import Dashboard from './core/pages/Dashboard';
+import Home from './core/pages/Home';
+import RenShell from './core/pages/RenShell';
+import { LoginRequired } from './core/utils/LoginRequired';
+import MyWikis from './core/pages/MyWikis';
+import Login from './core/pages/Login';
+import { AuthCtxProvider } from './core/context/AuthContext';
 
 const theme = createTheme({
   fontFamily: 'Open Sans, sans-serif',

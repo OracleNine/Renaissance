@@ -9,7 +9,7 @@ import {
   IconLogin
 } from '@tabler/icons-react';
 import { Center, Stack, Tooltip, Anchor } from '@mantine/core';
-import classes from '../assets/css/NavbarMinimal.module.css';
+import classes from '../../assets/css/NavbarMinimal.module.css';
 import { Link } from 'react-router';
 import { AuthContext, AuthCtxProvider } from '../context/AuthContext';
 

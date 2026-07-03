@@ -10,7 +10,7 @@ import {
   TextInput,
   Title,
 } from '@mantine/core';
-import classes from '../assets/css/AuthenticationTitle.module.css';
+import classes from '../../assets/css/AuthenticationTitle.module.css';
 import { useForm } from '@mantine/form';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
