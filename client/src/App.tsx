@@ -24,9 +24,9 @@ function App() {
         <Routes>
           <Route path="/" element={<RenShell />}>
               <Route index element={<Home />} />  
-              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/login" element={<Login />} />
                 <Route element={<LoginRequired />}>
+                  <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/dashboard/wikis" element={<MyWikis />} />
                   <Route path="/dashboard/create" element={<CreateWiki />} />
                 </Route>

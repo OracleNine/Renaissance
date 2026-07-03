@@ -4,7 +4,9 @@ import { AuthContext } from '../context/AuthContext'
 const Home = () => {
   const authCtx = useContext(AuthContext)
   return (
-    <div>What's up, {authCtx?.username}</div>
+    <div>What's up, {authCtx?.username}
+          {String(authCtx?.isAuthenticated)}
+    </div>
   )
 }
 

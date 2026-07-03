@@ -1,22 +1,22 @@
 import { useContext, useEffect } from 'react'
-import { Navigate, Outlet, useNavigate } from 'react-router'
+import { Navigate, Outlet, useLocation, useNavigate } from 'react-router'
 import { AuthContext } from '../context/AuthContext'
 
 export function LoginRequired() {
   const authCtx = useContext(AuthContext)
   const navigate = useNavigate()
+  const location = useLocation()
 
-  useEffect (() => {
-    const checkAuth = async () => {
-        if (!authCtx?.isAuthenticated) {
-        return (
-          navigate("/login", { replace: true })
-        )
-      }
+  if (authCtx?.isLoading) {
+    return null;
+  }
 
-      checkAuth()
-    }
-  }, [authCtx?.isAuthenticated])
+  if (!authCtx?.isAuthenticated) {
+    return (
+      <Navigate to="/login" replace />
+    )
+  }
+  
 
   return (
     <Outlet />
