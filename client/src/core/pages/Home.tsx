@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { AuthContext } from '../context/AuthContext'
 
-const Home = () => {
+function Home() {
   const authCtx = useContext(AuthContext)
   return (
     <div>What's up, {authCtx?.username}

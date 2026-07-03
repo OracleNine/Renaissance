@@ -106,6 +106,7 @@ export function AuthCtxProvider({ children }: AuthCtxProps) {
     function logout() {
         localStorage.removeItem("access")
         localStorage.removeItem("refresh")
+        delete axios.defaults.headers.common['Authorization']
         setAuthState(false)
         setUsername("None")
     }

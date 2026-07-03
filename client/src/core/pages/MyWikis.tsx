@@ -38,8 +38,8 @@ function WikiCard({name, subdomain, description}: WikiCardProps) {
 }
 
 function MyWikis() {
-  const AuthCtx = useContext(AuthContext)
   const [WikiList, updateWikis] = useState([])
+  const [isLoading, setLoading] = useState(true)
 
   const WikiCards = WikiList.map((wiki: WikiCardProps) => (
     <WikiCard 
@@ -52,15 +52,30 @@ function MyWikis() {
     axios.get("http://localhost:8000/api/core/wiki", {
         })
         .then(response => {
-            updateWikis(response.data)
+          updateWikis(response.data)
+        })
+        .catch(error => {
+          console.warn(error)
+        })
+        .finally(() => {
+          setLoading(false)
         })
   }, [])
+
+  if (isLoading) {
+    return (
+      <Container size="lg">
+        <Title order={1}>My Wikis</Title>
+          <p>Loading...</p>
+      </Container>
+    )
+  }
   return (
     <Container size="lg">
       <Title order={1}>My Wikis</Title>
       <SimpleGrid cols={3}>
           {WikiCards}
-          <Card shadow="sm" padding="lg" withBorder>
+          <Card shadow="sm" padding="lg" withBorder radius="md">
                 <Card.Section>
                   <Image
                     src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
