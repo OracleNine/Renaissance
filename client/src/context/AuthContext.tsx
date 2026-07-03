@@ -1,6 +1,6 @@
 import axios, { AxiosError, type AxiosResponse } from "axios";
 import { createContext, useEffect, useState, type ReactNode } from "react";
-import { redirect, useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { jwtDecode } from "jwt-decode";
 
 type AuthContextType = {
@@ -40,6 +40,7 @@ export function AuthCtxProvider({ children }: AuthCtxProps) {
                 refresh()
             } else if ((expiry) && (expiry > Math.floor(Date.now() / 1000))){
                 setAuthState(true)
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem("access") 
                 setUsername(decoded["username"])
             } else {
                 setAuthState(false)
@@ -58,6 +59,7 @@ export function AuthCtxProvider({ children }: AuthCtxProps) {
             if (response.data["access"] && response.data["refresh"]) {
                 localStorage.setItem("access", response.data["access"])
                 localStorage.setItem("refresh", response.data["refresh"])
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem("access") 
                 setAuthState(true)
                 navigate('/dashboard')
             } else {
@@ -79,6 +81,7 @@ export function AuthCtxProvider({ children }: AuthCtxProps) {
                 localStorage.setItem("access", response.data["access"])
                 localStorage.setItem("refresh", response.data["refresh"])
                 setAuthState(true)
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem("access") 
             } else {
                 setAuthState(false)
                 logout()

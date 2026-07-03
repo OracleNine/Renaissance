@@ -9,7 +9,7 @@ function RenShell() {
   return (
     <AppShell
       padding="md"
-      header={{ height: 0 }}
+      header={{ height: 30 }}
       navbar={{
         width: 80,
         breakpoint: 'sm',

@@ -23,7 +23,6 @@ class Wiki(models.Model):
     def add_founder(self, target):
         founderRole = Role.objects.create(wiki=self, name="Founder", PERM_FOUNDER=True)
         member = Member.objects.create(wiki=self, user=target)
-        
         member.roles.add(founderRole)
 
 class Role(models.Model):

@@ -2,9 +2,9 @@ from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
-from .serializers import UserSerializer, RenTokenObtainPairSerializer
-from .models import User
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from .serializers import UserSerializer, RenTokenObtainPairSerializer, WikiSerializer
+from .models import User, Member, Wiki
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 class RegisterView(APIView):
@@ -14,6 +14,15 @@ class RegisterView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+    
+class MyWikisView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class= WikiSerializer
+
+    def get_queryset(self):
+        memberships = Member.objects.filter(user=self.request.user)
+        return Wiki.objects.filter(member__in=memberships)
+
 
 class RenTokenObtainPairView(TokenObtainPairView):
     serializer_class = RenTokenObtainPairSerializer
