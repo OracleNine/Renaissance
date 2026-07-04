@@ -41,7 +41,7 @@ poetry install
 cd server
 chmod +x ./entrypoint.sh
 ```
-5. Start the server with docker. Execute this command in the root directory, the same folder that `docker-compose.yml` is located in.
+5. Start the server with [docker](https://www.docker.com/). Execute this command in the root directory, the same folder that `docker-compose.yml` is located in.
 ```
 docker compose up
 ```
