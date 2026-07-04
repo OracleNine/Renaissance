@@ -38,7 +38,12 @@ services:
       - ./client:/app/
       - /app/node_modules
     ports:
-      - "5173:5173"
+      - "4200:4200"
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
 
 volumes:
   postgres_db:
