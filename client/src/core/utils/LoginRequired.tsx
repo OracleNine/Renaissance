@@ -4,8 +4,6 @@ import { AuthContext } from '../context/AuthContext'
 
 export function LoginRequired() {
   const authCtx = useContext(AuthContext)
-  const navigate = useNavigate()
-  const location = useLocation()
 
   if (authCtx?.isLoading) {
     return null;

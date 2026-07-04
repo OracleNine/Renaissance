@@ -56,7 +56,7 @@ export function AuthCtxProvider({ children }: AuthCtxProps) {
     }, [])
 
     function login(data: LoginFormType) {
-        axios.post("http://localhost:8000/api/core/token/", {
+        axios.post("/api/core/token/", {
             email: data["email"],
             password: data["password"]
         })
@@ -80,14 +80,19 @@ export function AuthCtxProvider({ children }: AuthCtxProps) {
     function refresh() {
         setLoading(true)
         const refreshToken = localStorage.getItem("refresh")
-        axios.post("http://localhost:8000/api/core/token/refresh/", {
+        axios.post("/api/core/token/refresh/", {
             refresh: refreshToken
         })
         .then((response: AxiosResponse) => {
             if (response.data["access"] && response.data["refresh"]) {
                 localStorage.setItem("access", response.data["access"])
                 localStorage.setItem("refresh", response.data["refresh"])
+                const token = localStorage.getItem("access")
                 setAuthState(true)
+                if (token) {
+                    const decoded = jwtDecode<AuthPayload>(token)
+                    setUsername(decoded["username"])
+                }
                 axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem("access") 
             } else {
                 setAuthState(false)

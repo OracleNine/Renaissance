@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import axios, { AxiosError, type AxiosResponse } from "axios";
 import { AuthContext } from '../context/AuthContext';
-import { Card, Image, Text, Button, Group, Container, SimpleGrid, Title } from '@mantine/core';
+import { Card, Image, Text, Button, Group, Container, SimpleGrid, Title, LoadingOverlay } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 
 type WikiCardProps = {
   name: string;
@@ -39,7 +40,7 @@ function WikiCard({name, subdomain, description}: WikiCardProps) {
 
 function MyWikis() {
   const [WikiList, updateWikis] = useState([])
-  const [isLoading, setLoading] = useState(true)
+  const [isLoading, setLoading] = useDisclosure(true)
 
   const WikiCards = WikiList.map((wiki: WikiCardProps) => (
     <WikiCard 
@@ -49,7 +50,7 @@ function MyWikis() {
   ))
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/core/wiki", {
+    axios.get("/api/core/wiki", {
         })
         .then(response => {
           updateWikis(response.data)
@@ -58,22 +59,15 @@ function MyWikis() {
           console.warn(error)
         })
         .finally(() => {
-          setLoading(false)
+          setLoading.close()
         })
   }, [])
 
-  if (isLoading) {
-    return (
-      <Container size="lg">
-        <Title order={1}>My Wikis</Title>
-          <p>Loading...</p>
-      </Container>
-    )
-  }
   return (
     <Container size="lg">
       <Title order={1}>My Wikis</Title>
-      <SimpleGrid cols={3}>
+      <SimpleGrid cols={3} pos="relative">
+        <LoadingOverlay visible={isLoading} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} />
           {WikiCards}
           <Card shadow="sm" padding="lg" withBorder radius="md">
                 <Card.Section>

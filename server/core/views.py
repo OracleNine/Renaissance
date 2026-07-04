@@ -21,7 +21,9 @@ class MyWikiViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save()
-        serializer.add_founder(self.request.user)
+        target = Wiki.objects.filter(subdomain=serializer.data["subdomain"])[0]
+        target.add_founder(self.request.user)
+        target.save()
 
     def get_queryset(self):
         memberships = Member.objects.filter(user=self.request.user)

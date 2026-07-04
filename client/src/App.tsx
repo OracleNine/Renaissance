@@ -10,6 +10,7 @@ import MyWikis from './core/pages/MyWikis';
 import Login from './core/pages/Login';
 import { AuthCtxProvider } from './core/context/AuthContext';
 import CreateWiki from './core/pages/CreateWiki';
+import axios from 'axios';
 
 const theme = createTheme({
   fontFamily: 'Open Sans, sans-serif',
@@ -17,6 +18,8 @@ const theme = createTheme({
 });
 
 function App() {
+
+  axios.defaults.baseURL = "http://localhost:8000";
 
   return (
     <MantineProvider theme={theme} defaultColorScheme="dark">

@@ -16,7 +16,9 @@ class User(AbstractUser):
 class Wiki(models.Model):
     name = models.CharField(max_length=25)
     subdomainValidator = RegexValidator(r'^[0-9a-z\-]*$', 'Only alphanumeric characters and dashes are allowed.')
-    subdomain = models.CharField(max_length=25, validators=[subdomainValidator], unique=True)
+    subdomain = models.CharField(max_length=25, validators=[subdomainValidator], unique=True, error_messages={
+        "unique": "This subdomain is already taken."
+    })
     description = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
 
