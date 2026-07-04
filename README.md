@@ -9,8 +9,9 @@
 Renaissance is a open source wiki engine that is currently in development. Renaissance has several planned features including Markdown-based pages, an admin panel which allows you to manage plugins and schedule backups, and all the other bells and whistles you would expect in a standard wiki engine. If you're curious about specific features, there is a roadmap available on our [Discord](https://discord.gg/JTMQq7mg22).
 
 This is a personal project, so updates may be irregular. However, anyone is free to contribute and I will do my best to look through all pull requests.
+
 [![React][React.js]][React-url]
-[![Django][Django-img][Django-url]
+[![Django][Django-img]][Django-url]
 
 ## Installation
 
