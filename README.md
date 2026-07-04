@@ -29,13 +29,13 @@ poetry install
 ```
 3. Create a copy of `.env.example` and rename this copy to `.env`. (This means you should have both a `.env.example` and a `.env` in your root directory). Leave `REN_DB_ENGINE` and `REN_DB_HOST` the same, the rest of the details you should change to what you want.
 
-`REN_DB_NAME` is the name of the database that renaissance uses, default is `renaissance_db`.
-
-`REN_DB_USER` is the username of the database admin, default is `admin`.
-
-`REN_DB_PASSWORD` is the password of the database admin.
-
-`REN_DB_PORT` is the database port, default for postgresql is 5432.
+> `REN_DB_NAME` is the name of the database that renaissance uses, default is `renaissance_db`.
+> 
+> `REN_DB_USER` is the username of the database admin, default is `admin`.
+> 
+> `REN_DB_PASSWORD` is the password of the database admin.
+> 
+> `REN_DB_PORT` is the database port, default for postgresql is 5432.
 4. On some systems, you may have to give permission to your machine to make the `entrypoint.sh` script executable.
 ```
 cd server
@@ -45,7 +45,7 @@ chmod +x ./entrypoint.sh
 ```
 docker compose up
 ```
-6. Visit `localhost:8000` in your browser of choice.
+6. Visit `localhost:5173` in your browser of choice.
 If you see Renaissance, you did it!
 
 ## Dependency Management
