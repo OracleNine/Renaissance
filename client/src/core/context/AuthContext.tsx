@@ -66,6 +66,8 @@ export function AuthCtxProvider({ children }: AuthCtxProps) {
                 localStorage.setItem("refresh", response.data["refresh"])
                 axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem("access") 
                 setAuthState(true)
+                const decoded = jwtDecode<AuthPayload>(response.data["access"])
+                setUsername(decoded["username"])
                 navigate('/dashboard')
             } else {
                 navigate('/login')
