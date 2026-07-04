@@ -10,6 +10,7 @@ Renaissance is a open source wiki engine that is currently in development. Renai
 
 This is a personal project, so updates may be irregular. However, anyone is free to contribute and I will do my best to look through all pull requests.
 
+[![Angular][Angular-img]][Angular-url]
 [![Django][Django-img]][Django-url]
 
 ## Installation
@@ -89,3 +90,5 @@ poetry export -f requirements.txt --output requirements.txt
 <!-- Shields.io badges. You can a comprehensive list with many more badges at: https://github.com/inttter/md-badges -->
 [Django-img]: https://img.shields.io/badge/Django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white
 [Django-url]: https://djangoproject.com/
+[Angular-img]: https://img.shields.io/badge/Angular-%23DD0031.svg?style=for-the-badge&logo=angular&logoColor=white
+[Angular-url]: https://angular.dev/
