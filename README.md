@@ -1,12 +1,16 @@
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![project_license][license-shield]][license-url]
+
+
 ## About
 Renaissance is a open source wiki engine that is currently in development. Renaissance has several planned features including Markdown-based pages, an admin panel which allows you to manage plugins and schedule backups, and all the other bells and whistles you would expect in a standard wiki engine. If you're curious about specific features, there is a roadmap available on our [Discord](https://discord.gg/JTMQq7mg22).
 
 This is a personal project, so updates may be irregular. However, anyone is free to contribute and I will do my best to look through all pull requests.
-
-[![Django][Djangoproject.com]][Django-url] 
-[![Bootstrap][Bootstrap.com]][Bootstrap-url]
-[![HTMX][Htmx.org]][Htmx-url]
-[![AlpineJS][Alpinejs.dev]][Alpinejs-url]
+[![React][React.js]][React-url]
+[![Django][Django-img][Django-url]
 
 ## Installation
 
@@ -81,13 +85,9 @@ poetry export -f requirements.txt --output requirements.txt
 [issues-shield]: https://img.shields.io/github/issues/OracleNine/Renaissance.svg?style=for-the-badge
 [issues-url]: https://github.com/OracleNine/Renaissance/issues
 [license-shield]: https://img.shields.io/github/license/OracleNine/Renaissance.svg?style=for-the-badge
-[license-url]: https://github.com/OracleNine/Renaissance/blob/master/LICENSE.txt
+[license-url]: https://github.com/OracleNine/Renaissance/blob/main/LICENSE.txt
 <!-- Shields.io badges. You can a comprehensive list with many more badges at: https://github.com/inttter/md-badges -->
-[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
-[Bootstrap-url]: https://getbootstrap.com
-[Djangoproject.com]: https://img.shields.io/badge/Django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white
-[Django-url]: https://djangoproject.com
-[Htmx.org]: https://img.shields.io/badge/HTMX-36C?style=for-the-badge&logo=htmx&logoColor=fff
-[Htmx-url]: https://htmx.org/
-[Alpinejs.dev]: https://img.shields.io/badge/alpinejs-white.svg?style=for-the-badge&logo=alpinedotjs&logoColor=%238BC0D0
-[Alpinejs-url]: https://alpinejs.dev/
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
+[Django-img]: https://img.shields.io/badge/Django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white
+[Django-url]: https://djangoproject.com/
