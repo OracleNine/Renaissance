@@ -10,7 +10,6 @@ Renaissance is a open source wiki engine that is currently in development. Renai
 
 This is a personal project, so updates may be irregular. However, anyone is free to contribute and I will do my best to look through all pull requests.
 
-[![React][React.js]][React-url]
 [![Django][Django-img]][Django-url]
 
 ## Installation
@@ -88,7 +87,5 @@ poetry export -f requirements.txt --output requirements.txt
 [license-shield]: https://img.shields.io/github/license/OracleNine/Renaissance.svg?style=for-the-badge
 [license-url]: https://github.com/OracleNine/Renaissance/blob/main/LICENSE.txt
 <!-- Shields.io badges. You can a comprehensive list with many more badges at: https://github.com/inttter/md-badges -->
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
 [Django-img]: https://img.shields.io/badge/Django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white
 [Django-url]: https://djangoproject.com/
