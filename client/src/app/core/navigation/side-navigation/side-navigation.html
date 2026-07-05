@@ -1,16 +1,66 @@
-<div class="flex flex-row sm:hidden absolute bottom-0 w-full bg-zinc-900 h-15 text-white text-center p-5">
-    <div class="block">
-        <a routerLink="/"
-            matTooltip="Home">
-            <mat-icon 
-            aria-hidden="false" 
-            aria-label="Home" 
-            fontIcon="home"
-            ></mat-icon>
-            Home
-        </a>
-    </div>
+<div class="ren-mobile-nav block sm:hidden">
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>Renaissance</mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-list>
+            <mat-list-item>
+                <a class="flex align-center" 
+                routerLink="/"
+                    matTooltip="Home"
+                    matTooltipPosition="right">
+                    <mat-icon 
+                    aria-hidden="false" 
+                    aria-label="Home" 
+                    fontIcon="home"
+                    fxFlexAlign="center"
+                    ></mat-icon>
+                    <span class="ml-2">Home</span>
+                </a>
+            </mat-list-item>
+            <mat-list-item>
+                <a class="flex align-center"
+                    routerLink="/dashboard/wikis"
+                    matTooltip="Wikis"
+                    matTooltipPosition="right">
+                    <mat-icon 
+                    aria-hidden="false" 
+                    aria-label="Wikis" 
+                    fontIcon="book2"
+                    ></mat-icon>
+                    <span class="ml-3">Wikis</span>
+                </a>
+            </mat-list-item>
+            <mat-list-item>
+                <a class="flex align-center"
+                    routerLink="/dashboard/settings"
+                    matTooltip="Settings"
+                    matTooltipPosition="right">
+                        <mat-icon 
+                        aria-hidden="false" 
+                        aria-label="Settings" 
+                        fontIcon="settings"
+                        ></mat-icon>
+                        <span class="ml-3">Settings</span>
+                </a>
+            </mat-list-item>
+            <mat-list-item>
+                <a class="flex align-center"
+                    routerLink="/dashboard/profile"
+                    matTooltip="Profile"
+                    matTooltipPosition="right">
+                        <mat-icon 
+                        aria-hidden="false" 
+                        aria-label="Profile" 
+                        fontIcon="person"
+                        ></mat-icon>
+                        <span class="ml-3">Profile</span>
+                </a>
+            </mat-list-item>
+        </mat-list>
+    </mat-expansion-panel>
 </div>
+
 
 <div class="hidden sm:block absolute inset-y-0 left-0 w-15 bg-zinc-900 text-white pt-5 text-center">
     <ul class="list-none">
@@ -46,7 +96,7 @@
                         aria-label="Settings" 
                         fontIcon="settings"
                         ></mat-icon>
-                    </a>
+                </a>
             </li>
             <li class="p-3 w-full">
                 <a routerLink="/dashboard/profile"
@@ -62,6 +112,7 @@
         </div>
     </ul>
 </div>
-<div class="ml-30">
+
+<div class="sm:ml-30">
     <router-outlet></router-outlet>
 </div>

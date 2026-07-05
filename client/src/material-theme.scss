@@ -36,3 +36,15 @@ body {
   margin: 0;
   height: 100%;
 }
+.ren-mobile-nav {
+  @include mat.expansion-overrides((
+    actions-divider-color: #E6E6E6,
+    container-background-color: oklch(21% 0.006 285.885),
+    container-shape: 0px,
+    container-text-color: white,
+    header-text-color: white,
+  ));
+  @include mat.list-overrides((
+    list-item-label-text-color: white,
+  ));
+}
