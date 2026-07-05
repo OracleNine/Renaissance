@@ -46,5 +46,6 @@ body {
   ));
   @include mat.list-overrides((
     list-item-label-text-color: white,
+    list-item-hover-label-text-color: white,
   ));
 }

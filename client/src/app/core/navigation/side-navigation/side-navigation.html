@@ -6,9 +6,7 @@
         <mat-list>
             <mat-list-item>
                 <a class="flex align-center" 
-                routerLink="/"
-                    matTooltip="Home"
-                    matTooltipPosition="right">
+                routerLink="/">
                     <mat-icon 
                     aria-hidden="false" 
                     aria-label="Home" 
@@ -20,9 +18,7 @@
             </mat-list-item>
             <mat-list-item>
                 <a class="flex align-center"
-                    routerLink="/dashboard/wikis"
-                    matTooltip="Wikis"
-                    matTooltipPosition="right">
+                    routerLink="/dashboard/wikis">
                     <mat-icon 
                     aria-hidden="false" 
                     aria-label="Wikis" 
@@ -33,9 +29,7 @@
             </mat-list-item>
             <mat-list-item>
                 <a class="flex align-center"
-                    routerLink="/dashboard/settings"
-                    matTooltip="Settings"
-                    matTooltipPosition="right">
+                    routerLink="/dashboard/settings">
                         <mat-icon 
                         aria-hidden="false" 
                         aria-label="Settings" 
@@ -46,9 +40,7 @@
             </mat-list-item>
             <mat-list-item>
                 <a class="flex align-center"
-                    routerLink="/dashboard/profile"
-                    matTooltip="Profile"
-                    matTooltipPosition="right">
+                    routerLink="/dashboard/profile">
                         <mat-icon 
                         aria-hidden="false" 
                         aria-label="Profile" 
@@ -62,7 +54,7 @@
 </div>
 
 
-<div class="hidden sm:block absolute inset-y-0 left-0 w-15 bg-zinc-900 text-white pt-5 text-center">
+<div class="hidden sm:block absolute inset-y-0 left-0 w-20 text-md bg-zinc-900 text-white pt-5 text-center">
     <ul class="list-none">
         <li class="p-3">
             <a routerLink="/"
@@ -113,6 +105,6 @@
     </ul>
 </div>
 
-<div class="sm:ml-30">
+<div class="sm:ml-30 px-40 pt-20">
     <router-outlet></router-outlet>
 </div>
