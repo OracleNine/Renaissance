@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterLink, RouterOutlet } from "@angular/router";
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
@@ -9,4 +9,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
   templateUrl: './side-navigation.html',
   styleUrl: './side-navigation.css',
 })
-export class SideNavigation {}
+export class SideNavigation {
+
+
+}
