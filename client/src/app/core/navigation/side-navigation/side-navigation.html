@@ -1,0 +1,52 @@
+<div class="ren-container">
+    <div class="ren-nav-side">
+        <ul>
+            <li><a routerLink="/"
+                    matTooltip="Home"
+                    matTooltipPosition="right">
+                    <mat-icon 
+                    aria-hidden="false" 
+                    aria-label="Home" 
+                    fontIcon="home"
+                    ></mat-icon>
+                </a>
+            </li>
+            <li><a routerLink="/dashboard/wikis"
+                    matTooltip="Wikis"
+                    matTooltipPosition="right">
+                    <mat-icon 
+                    aria-hidden="false" 
+                    aria-label="Wikis" 
+                    fontIcon="book2"
+                    ></mat-icon>
+                </a>
+            </li>
+            <div class="ren-user-section">
+                <li><a routerLink="/dashboard/settings"
+                        matTooltip="Settings"
+                        matTooltipPosition="right">
+                            <mat-icon 
+                            aria-hidden="false" 
+                            aria-label="Settings" 
+                            fontIcon="settings"
+                            ></mat-icon>
+                    </a>
+                </li>
+                <li><a routerLink="/dashboard/profile"
+                        matTooltip="Profile"
+                        matTooltipPosition="right">
+                            <mat-icon 
+                            aria-hidden="false" 
+                            aria-label="Profile" 
+                            fontIcon="profile"
+                            ></mat-icon>
+                    </a>
+                </li>
+            </div>
+        </ul>
+    </div>
+
+    <div class="ren-content">
+        <router-outlet></router-outlet>
+    </div>
+</div>
