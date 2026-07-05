@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router';
+import { RouterLink, RouterOutlet } from "@angular/router";
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 
@@ -7,6 +7,6 @@ import {MatTooltipModule} from '@angular/material/tooltip';
   selector: 'app-side-navigation',
   imports: [RouterOutlet, RouterLink, MatIconModule, MatTooltipModule],
   templateUrl: './side-navigation.html',
-  styleUrl: './side-navigation.scss',
+  styleUrl: './side-navigation.css',
 })
 export class SideNavigation {}

@@ -4,6 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-activity',
   imports: [],
   templateUrl: './activity.html',
-  styleUrl: './activity.scss',
+  styleUrl: './activity.css',
 })
 export class Activity {}

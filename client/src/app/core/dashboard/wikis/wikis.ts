@@ -4,6 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-wikis',
   imports: [],
   templateUrl: './wikis.html',
-  styleUrl: './wikis.scss',
+  styleUrl: './wikis.css',
 })
 export class Wikis {}

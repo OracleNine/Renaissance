@@ -1,52 +1,53 @@
-<div class="ren-container">
-    <div class="ren-nav-side">
-        <ul>
-            <li><a routerLink="/"
-                    matTooltip="Home"
+<div class="absolute inset-y-0 left-0 w-20 bg-slate-900 text-white pt-5 text-center">
+    <ul class="list-none">
+        <li class="p-3">
+            <a routerLink="/"
+                matTooltip="Home"
+                matTooltipPosition="right">
+                <mat-icon 
+                aria-hidden="false" 
+                aria-label="Home" 
+                fontIcon="home"
+                ></mat-icon>
+            </a>
+        </li>
+        <li class="p-3">
+            <a routerLink="/dashboard/wikis"
+                matTooltip="Wikis"
+                matTooltipPosition="right">
+                <mat-icon 
+                aria-hidden="false" 
+                aria-label="Wikis" 
+                fontIcon="book2"
+                ></mat-icon>
+            </a>
+        </li>
+        <div class="absolute bottom-0 w-full">
+            <li class="p-3">
+                <a routerLink="/dashboard/settings"
+                    matTooltip="Settings"
                     matTooltipPosition="right">
-                    <mat-icon 
-                    aria-hidden="false" 
-                    aria-label="Home" 
-                    fontIcon="home"
-                    ></mat-icon>
+                        <mat-icon 
+                        aria-hidden="false" 
+                        aria-label="Settings" 
+                        fontIcon="settings"
+                        ></mat-icon>
+                    </a>
+            </li>
+            <li class="p-3 w-full">
+                <a routerLink="/dashboard/profile"
+                    matTooltip="Profile"
+                    matTooltipPosition="right">
+                        <mat-icon 
+                        aria-hidden="false" 
+                        aria-label="Profile" 
+                        fontIcon="person"
+                        ></mat-icon>
                 </a>
             </li>
-            <li><a routerLink="/dashboard/wikis"
-                    matTooltip="Wikis"
-                    matTooltipPosition="right">
-                    <mat-icon 
-                    aria-hidden="false" 
-                    aria-label="Wikis" 
-                    fontIcon="book2"
-                    ></mat-icon>
-                </a>
-            </li>
-            <div class="ren-user-section">
-                <li><a routerLink="/dashboard/settings"
-                        matTooltip="Settings"
-                        matTooltipPosition="right">
-                            <mat-icon 
-                            aria-hidden="false" 
-                            aria-label="Settings" 
-                            fontIcon="settings"
-                            ></mat-icon>
-                    </a>
-                </li>
-                <li><a routerLink="/dashboard/profile"
-                        matTooltip="Profile"
-                        matTooltipPosition="right">
-                            <mat-icon 
-                            aria-hidden="false" 
-                            aria-label="Profile" 
-                            fontIcon="person"
-                            ></mat-icon>
-                    </a>
-                </li>
-            </div>
-        </ul>
-    </div>
-
-    <div class="ren-content">
-        <router-outlet></router-outlet>
-    </div>
+        </div>
+    </ul>
+</div>
+<div class="ml-30">
+    <router-outlet></router-outlet>
 </div>
