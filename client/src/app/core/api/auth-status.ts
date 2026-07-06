@@ -5,8 +5,8 @@ import { jwtDecode } from "jwt-decode";
 export class AuthStatus {
     public isAuthenticated = signal(false)
 
-    refresh() {
-
+    refresh(token: string) {
+        
     }
 
     ngOnInit() {
@@ -20,6 +20,7 @@ export class AuthStatus {
             const expiry = decodeAccess["exp"]
             if (expiry && (expiry < Math.floor(Date.now() / 1000))) {
                 console.log("Token is too old, trying to refresh...")
+                this.refresh(refresh)
             } else if (expiry && (expiry > Math.floor(Date.now() / 1000))) {
                 console.log("Token is young")
                 this.isAuthenticated.set(true)
