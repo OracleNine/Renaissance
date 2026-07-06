@@ -1,9 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import {MatTableModule} from '@angular/material/table';
 
 @Component({
   selector: 'app-activity',
-  imports: [],
+  imports: [MatTableModule],
   templateUrl: './activity.html',
   styleUrl: './activity.css',
 })
-export class Activity {}
+export class Activity {
+  
+
+  
+
+}
