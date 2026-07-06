@@ -1,12 +1,32 @@
-import { Service, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { inject, Service, signal } from '@angular/core';
 import { jwtDecode } from "jwt-decode";
+import { Observable } from 'rxjs';
+
+interface refreshPayload {
+    access: string;
+    refresh: string;
+}
 
 @Service()
 export class AuthStatus {
     public isAuthenticated = signal(false)
+    private http = inject(HttpClient)
+    
+    refresh(refresh: string) {
+        const requestBody = {
+            "refresh_token": refresh
+        }
+        this.http.post<refreshPayload>('/api/config', requestBody).subscribe((payload) => {
+            if (payload["access"] && payload["refresh"]) {
+                localStorage.setItem("access", payload["access"])
+                localStorage.setItem("refresh", payload["refresh"])
+                console.log("Authentication refreshed")
+            } else {
+                console.log("Authentication failed, signing out...")
+            }
+        });
 
-    refresh(token: string) {
-        
     }
 
     ngOnInit() {
