@@ -15,18 +15,36 @@ export class AuthStatus {
     
     refresh(refresh: string) {
         const requestBody = {
-            "refresh_token": refresh
+            "refresh": refresh
         }
-        this.http.post<refreshPayload>('/api/config', requestBody).subscribe((payload) => {
+        this.http.post<refreshPayload>('localhost:8000/api/core/token/refresh/', requestBody).subscribe((payload) => {
             if (payload["access"] && payload["refresh"]) {
                 localStorage.setItem("access", payload["access"])
                 localStorage.setItem("refresh", payload["refresh"])
                 console.log("Authentication refreshed")
+                this.isAuthenticated.set(true)
             } else {
                 console.log("Authentication failed, signing out...")
             }
         });
 
+    }
+
+    login(username: string, password: string) {
+        const requestBody = {
+            "username": username,
+            "password": password,
+        }
+        this.http.post<refreshPayload>('localhost:8000/api/core/token/', requestBody).subscribe((payload) => {
+            if (payload["access"] && payload["refresh"]) {
+                localStorage.setItem("access", payload["access"])
+                localStorage.setItem("refresh", payload["refresh"])
+                console.log("Logged in successfully")
+                this.isAuthenticated.set(true)
+            } else {
+                console.log("Authentication failed")
+            }
+        })
     }
 
     ngOnInit() {
