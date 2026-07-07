@@ -24,6 +24,8 @@ export class AuthStatus {
                 console.log("Authentication refreshed")
                 this.isAuthenticated.set(true)
             } else {
+                localStorage.removeItem("access")
+                localStorage.removeItem("refresh")
                 console.log("Authentication failed, signing out...")
             }
         });
