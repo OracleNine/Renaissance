@@ -17,34 +17,50 @@ export class AuthStatus {
         const requestBody = {
             "refresh": refresh
         }
-        this.http.post<refreshPayload>('localhost:8000/api/core/token/refresh/', requestBody).subscribe((payload) => {
-            if (payload["access"] && payload["refresh"]) {
-                localStorage.setItem("access", payload["access"])
-                localStorage.setItem("refresh", payload["refresh"])
-                console.log("Authentication refreshed")
-                this.isAuthenticated.set(true)
-            } else {
-                localStorage.removeItem("access")
-                localStorage.removeItem("refresh")
-                console.log("Authentication failed, signing out...")
+        this.http.post<refreshPayload>('http://localhost:8000/api/core/token/refresh/', requestBody, {
+            headers: {
+                'Content-Type': 'application/json',
             }
-        });
+        }).subscribe({
+            next: (payload) => {
+                if (payload["access"] && payload["refresh"]) {
+                    localStorage.setItem("access", payload["access"])
+                    localStorage.setItem("refresh", payload["refresh"])
+                    console.log("Logged in successfully")
+                    this.isAuthenticated.set(true)
+                } else {
+                    console.log("Authentication failed")
+                }
+            },
+            error: (err) => {
+                console.warn(err.error.detail)
+            }
+        })
 
     }
 
     login(username: string, password: string) {
         const requestBody = {
-            "username": username,
+            "email": username,
             "password": password,
         }
-        this.http.post<refreshPayload>('localhost:8000/api/core/token/', requestBody).subscribe((payload) => {
-            if (payload["access"] && payload["refresh"]) {
-                localStorage.setItem("access", payload["access"])
-                localStorage.setItem("refresh", payload["refresh"])
-                console.log("Logged in successfully")
-                this.isAuthenticated.set(true)
-            } else {
-                console.log("Authentication failed")
+        this.http.post<refreshPayload>('http://localhost:8000/api/core/token/', requestBody, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).subscribe({
+            next: (payload) => {
+                if (payload["access"] && payload["refresh"]) {
+                    localStorage.setItem("access", payload["access"])
+                    localStorage.setItem("refresh", payload["refresh"])
+                    console.log("Logged in successfully")
+                    this.isAuthenticated.set(true)
+                } else {
+                    console.log("Authentication failed")
+                }
+            },
+            error: (err) => {
+                console.warn(err.error.detail)
             }
         })
     }

@@ -6,6 +6,11 @@ import {MatInputModule} from '@angular/material/input';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { AuthStatus } from '../auth-status';
 
+type LoginForm = {
+  email: string;
+  password: string;
+}
+
 @Component({
   selector: 'app-login',
   imports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, FormsModule, ReactiveFormsModule],
@@ -24,7 +29,10 @@ export class Login {
   })
 
   onSubmit() {
-    console.warn(this.loginForm.value)
+    const formValues = this.loginForm.value
+    if (formValues["email"] && formValues["password"]) {
+      this.auth.login(formValues["email"], formValues["password"])
+    }
   }
   
 
