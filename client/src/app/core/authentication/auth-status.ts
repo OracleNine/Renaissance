@@ -3,7 +3,7 @@ import { inject, Service, signal } from '@angular/core';
 import { jwtDecode } from "jwt-decode";
 import { Observable } from 'rxjs';
 
-interface refreshPayload {
+export interface refreshPayload {
     access: string;
     refresh: string;
 }
@@ -30,39 +30,15 @@ export class AuthStatus {
                     this.isAuthenticated.set(true)
                 } else {
                     console.log("Authentication failed")
+                    this.isAuthenticated.set(false)
                 }
             },
             error: (err) => {
                 console.warn(err.error.detail)
+                this.isAuthenticated.set(false)
             }
         })
 
-    }
-
-    login(username: string, password: string) {
-        const requestBody = {
-            "email": username,
-            "password": password,
-        }
-        this.http.post<refreshPayload>('http://localhost:8000/api/core/token/', requestBody, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }).subscribe({
-            next: (payload) => {
-                if (payload["access"] && payload["refresh"]) {
-                    localStorage.setItem("access", payload["access"])
-                    localStorage.setItem("refresh", payload["refresh"])
-                    console.log("Logged in successfully")
-                    this.isAuthenticated.set(true)
-                } else {
-                    console.log("Authentication failed")
-                }
-            },
-            error: (err) => {
-                console.warn(err.error.detail)
-            }
-        })
     }
 
     ngOnInit() {
