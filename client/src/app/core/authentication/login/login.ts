@@ -6,6 +6,7 @@ import {MatInputModule} from '@angular/material/input';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { AuthStatus, refreshPayload } from '../auth-status';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 type LoginForm = {
   email: string;
@@ -22,6 +23,7 @@ export class Login {
   auth = inject(AuthStatus)
   errorMsg = signal("")
   private http = inject(HttpClient)
+  private router = inject(Router)
 
   loginForm = new FormGroup({
     email: new FormControl('', [
@@ -55,6 +57,9 @@ export class Login {
             },
             error: (err) => {
                 this.errorMsg.set(err.error.detail)
+            },
+            complete: () => {
+              this.router.navigate(['/dashboard'])
             }
         })
     }
