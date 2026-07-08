@@ -19,6 +19,12 @@ class LoginView(APIView):
         else:
             return Response({'status': 0, 'details': 'Invalid login'}, status=HTTP_404_NOT_FOUND)
 
+class ProfileView(APIView):
+    permission_classes= [IsAuthenticated]
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
+
 class RegisterView(APIView):
     permission_classes = [AllowAny]
     def post(self, request):
