@@ -50,7 +50,6 @@ export class Login {
                     localStorage.setItem("access", payload["access"])
                     localStorage.setItem("refresh", payload["refresh"])
                     console.log("Logged in successfully")
-                    this.auth.isAuthenticated.set(true)
                 } else {
                     console.log("Authentication failed")
                 }

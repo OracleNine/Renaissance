@@ -10,7 +10,6 @@ export interface refreshPayload {
 
 @Service()
 export class AuthStatus {
-    public isAuthenticated = signal(false)
     private http = inject(HttpClient)
     
     refresh(refresh: string) {
@@ -24,41 +23,52 @@ export class AuthStatus {
         }).subscribe({
             next: (payload) => {
                 if (payload["access"] && payload["refresh"]) {
-                    localStorage.setItem("access", payload["access"])
-                    localStorage.setItem("refresh", payload["refresh"])
-                    console.log("Logged in successfully")
-                    this.isAuthenticated.set(true)
-                } else {
-                    console.log("Authentication failed")
-                    this.isAuthenticated.set(false)
+                    return {
+                        "access": payload["access"],
+                        "refresh": payload["refresh"]
+                    }
+                }
+                return {
+                    "access": "",
+                    "refresh": ""
                 }
             },
             error: (err) => {
                 console.warn(err.error.detail)
-                this.isAuthenticated.set(false)
             }
         })
+        return {
+                "access": "",
+                "refresh": ""
+            }
 
     }
 
-    ngOnInit() {
+    isAuthenticated() {
         const access = localStorage.getItem("access")
         const refresh = localStorage.getItem("refresh")
 
         if (!access || !refresh) {
-            this.isAuthenticated.set(false)
+            return false
         } else {
             const decodeAccess = jwtDecode(access)
             const expiry = decodeAccess["exp"]
             if (expiry && (expiry < Math.floor(Date.now() / 1000))) {
                 console.log("Token is too old, trying to refresh...")
-                this.refresh(refresh)
+                const payload = this.refresh(refresh)
+                if (payload["refresh"] && payload["access"]) {
+                    localStorage.setItem('access', payload['access'])
+                    localStorage.setItem('refresh', payload['refresh'])
+                    return true
+                } else {
+                    return false
+                }
             } else if (expiry && (expiry > Math.floor(Date.now() / 1000))) {
                 console.log("Token is young")
-                this.isAuthenticated.set(true)
+                return true
             } else {
                 console.log("No/invalid expiry")
-                this.isAuthenticated.set(false)
+                return false
             }
         }
     }
