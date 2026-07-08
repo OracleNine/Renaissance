@@ -29,8 +29,5 @@ class MyWikiViewSet(viewsets.ModelViewSet):
         memberships = Member.objects.filter(user=self.request.user)
         return Wiki.objects.filter(member__in=memberships)
 
-    
-
-
 class RenTokenObtainPairView(TokenObtainPairView):
     serializer_class = RenTokenObtainPairSerializer
