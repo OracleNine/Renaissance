@@ -8,7 +8,7 @@ export const sidenavResolverResolver: ResolveFn<unknown> = (route, state) => {
 
   return apiService.getUserInfo().pipe(
     catchError(error => of({
-      'details': error
+      'status' : 0
     }))
   )
 };

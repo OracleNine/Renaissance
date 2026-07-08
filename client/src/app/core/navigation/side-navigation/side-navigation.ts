@@ -16,7 +16,11 @@ export class SideNavigation {
 
   ngOnInit() {
     this.route.data.subscribe((response: any) => {
-      console.log(response)
+      if (response.user.username) {
+        console.log(response.user.username)
+      } else {
+        console.log("Couldnt find a user")
+      }
     })
   }
 }
