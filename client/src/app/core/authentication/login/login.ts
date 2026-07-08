@@ -32,7 +32,28 @@ export class Login {
   })
 
   onSubmit() {
-    
+    const formValues = this.loginForm.value
+    if (formValues["email"] && formValues["password"]) {
+      const requestBody = {
+            "email": formValues["email"],
+            "password": formValues["password"],
+        }
+        this.http.post('http://localhost:8000/api/core/token/', requestBody, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).subscribe({
+            next: (payload) => {
+                this.router.navigate(['/dashboard'])
+            },
+            error: (err) => {
+                this.errorMsg.set(err.error.detail)
+            },
+            complete: () => {
+              this.router.navigate(['/dashboard'])
+            }
+        })
+    }
   }
   
 
