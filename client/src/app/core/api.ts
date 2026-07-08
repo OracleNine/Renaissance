@@ -3,11 +3,12 @@ import { inject, Service } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Service()
-export class AuthService {
+export class Api {
     private http = inject(HttpClient)
-    private baseUrl = 'http://localhost:8000'
 
-    viewProfile(): Observable<Object> {
-        return this.http.get(this.baseUrl + '/api/core/profile')
+    getUserInfo(): Observable<unknown> {
+        return this.http.get("http://localhost:8000/api/core/profile", {
+            withCredentials: true
+        })
     }
 }
