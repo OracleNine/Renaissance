@@ -5,7 +5,9 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializers import UserSerializer, RenTokenObtainPairSerializer, WikiSerializer
 from .models import User, Member, Wiki
-from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.serializers import TokenRefreshSerializer
 
 class RegisterView(APIView):
     permission_classes = [AllowAny]
@@ -30,4 +32,46 @@ class MyWikiViewSet(viewsets.ModelViewSet):
         return Wiki.objects.filter(member__in=memberships)
 
 class RenTokenObtainPairView(TokenObtainPairView):
-    serializer_class = RenTokenObtainPairSerializer
+
+    def post(self, request):
+        serializer = RenTokenObtainPairSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        access = serializer.validated_data["access"]
+        refresh = serializer.validated_data["refresh"]
+        response = Response({"status": 1})
+        response.set_cookie(
+            key="access",
+            value=access,
+            httponly=True,
+            max_age=300
+        )
+        response.set_cookie(
+            key="refresh",
+            value=refresh,
+            httponly=True,
+            max_age=604800
+        )
+        return response
+
+class RenTokenRefresh(TokenRefreshView):
+
+    def post(self, request):
+        serializer = TokenRefreshSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        access = serializer.validated_data["access"]
+        refresh = serializer.validated_data["refresh"]
+        response = Response({"status": 1})
+        response.set_cookie(
+            key="access",
+            value=access,
+            httponly=True,
+            max_age=300
+        )
+        response.set_cookie(
+            key="refresh",
+            value=refresh,
+            httponly=True,
+            max_age=604800
+        )
+        return response
+        

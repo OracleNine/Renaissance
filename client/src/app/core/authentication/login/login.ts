@@ -4,7 +4,6 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import { AuthStatus, refreshPayload } from '../auth-status';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -20,7 +19,6 @@ type LoginForm = {
   styleUrl: './login.css',
 })
 export class Login {
-  auth = inject(AuthStatus)
   errorMsg = signal("")
   private http = inject(HttpClient)
   private router = inject(Router)
@@ -34,34 +32,7 @@ export class Login {
   })
 
   onSubmit() {
-    const formValues = this.loginForm.value
-    if (formValues["email"] && formValues["password"]) {
-      const requestBody = {
-            "email": formValues["email"],
-            "password": formValues["password"],
-        }
-        this.http.post<refreshPayload>('http://localhost:8000/api/core/token/', requestBody, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }).subscribe({
-            next: (payload) => {
-                if (payload["access"] && payload["refresh"]) {
-                    localStorage.setItem("access", payload["access"])
-                    localStorage.setItem("refresh", payload["refresh"])
-                    console.log("Logged in successfully")
-                } else {
-                    console.log("Authentication failed")
-                }
-            },
-            error: (err) => {
-                this.errorMsg.set(err.error.detail)
-            },
-            complete: () => {
-              this.router.navigate(['/dashboard'])
-            }
-        })
-    }
+    
   }
   
 
