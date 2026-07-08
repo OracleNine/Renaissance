@@ -1,14 +1,23 @@
 from django.shortcuts import render
+from django.contrib.auth import authenticate, login
 from rest_framework import generics, viewsets, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from .serializers import UserSerializer, RenTokenObtainPairSerializer, WikiSerializer
+from .serializers import UserSerializer, WikiSerializer
 from .models import User, Member, Wiki
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.serializers import TokenRefreshSerializer
-from rest_framework_simplejwt.exceptions import InvalidToken
+from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND
+
+class LoginView(APIView):
+    def post(self, request):
+        email = request.data.get("email")
+        password = request.data.get("password")
+        user = authenticate(request, email=email, password=password)
+        if user is not None:
+            login(request, user)
+            return Response({'status': 1}, status=HTTP_200_OK)
+        else:
+            return Response({'status': 0, 'details': 'Invalid login'}, status=HTTP_404_NOT_FOUND)
 
 class RegisterView(APIView):
     permission_classes = [AllowAny]
@@ -31,52 +40,4 @@ class MyWikiViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         memberships = Member.objects.filter(user=self.request.user)
         return Wiki.objects.filter(member__in=memberships)
-
-class RenTokenObtainPairView(TokenObtainPairView):
-
-    def post(self, request):
-        serializer = RenTokenObtainPairSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        access = serializer.validated_data["access"]
-        refresh = serializer.validated_data["refresh"]
-        response = Response({"status": 1})
-        response.set_cookie(
-            key="access",
-            value=access,
-            httponly=True,
-            max_age=300
-        )
-        response.set_cookie(
-            key="refresh",
-            value=refresh,
-            httponly=True,
-            max_age=604800
-        )
-        return response
-
-class RenTokenRefresh(TokenRefreshView):
-
-    def post(self, request):
-        try:
-            serializer = TokenRefreshSerializer(data=
-                                            { "refresh": request.COOKIES["refresh"] })
-            serializer.is_valid(raise_exception=True)
-            access = serializer.validated_data["access"]
-            refresh = serializer.validated_data["refresh"]
-            response = Response({"status": 1})
-            response.set_cookie(
-                key="access",
-                value=access,
-                httponly=True,
-                max_age=300
-            )
-            response.set_cookie(
-                key="refresh",
-                value=refresh,
-                httponly=True,
-                max_age=604800
-            )
-            return response
-        except:
-            return Response({"status": 0, "details": "Invalid or expired token"})
         

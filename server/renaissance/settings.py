@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'wiki.apps.WikiConfig',
     'rest_framework',
-    'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
 ]
 
@@ -135,14 +134,8 @@ AUTH_USER_MODEL = 'core.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     )
-}
-SIMPLE_JWT = {
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
-    'ROTATE_REFRESH_TOKENS': True,
-    'BLACKLIST_AFTER_ROTATION': True,
 }
 
 CORS_ALLOWED_ORIGINS = [

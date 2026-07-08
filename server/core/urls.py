@@ -1,15 +1,13 @@
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework_simplejwt.views import (TokenRefreshView)
-from .views import RegisterView, RenTokenObtainPairView, MyWikiViewSet, RenTokenRefresh
+from .views import RegisterView, MyWikiViewSet, LoginView
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register(r'wiki', MyWikiViewSet, basename='wiki')
+router.register(r'wikis', MyWikiViewSet, basename='wikis')
 
 urlpatterns = [
     path('register', RegisterView.as_view()),
-    path('token/', RenTokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', RenTokenRefresh.as_view(), name='token_refresh'),
+    path('login', LoginView.as_view()),
     *router.urls
 ]

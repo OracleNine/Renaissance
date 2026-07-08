@@ -38,7 +38,7 @@ export class Login {
             "email": formValues["email"],
             "password": formValues["password"],
         }
-        this.http.post('http://localhost:8000/api/core/token/', requestBody, {
+        this.http.post('http://localhost:8000/api/core/login', requestBody, {
             headers: {
                 'Content-Type': 'application/json',
             }
@@ -49,9 +49,6 @@ export class Login {
             error: (err) => {
                 this.errorMsg.set(err.error.detail)
             },
-            complete: () => {
-              this.router.navigate(['/dashboard'])
-            }
         })
     }
   }

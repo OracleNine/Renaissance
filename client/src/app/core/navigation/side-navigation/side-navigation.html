@@ -68,61 +68,62 @@
 
 <div class="hidden sm:block absolute inset-y-0 left-0 w-20 text-md bg-zinc-900 text-white pt-5 text-center">
     <ul class="list-none">
-        <li class="p-3">
-            <a routerLink="/"
-                matTooltip="Home"
-                matTooltipPosition="right">
+        <li routerLink="/"
+        class="block p-3 hover:bg-yellow-800 cursor-pointer"
+        routerLink="/"
+        matTooltip="Home"
+        matTooltipPosition="right">
                 <mat-icon 
                 aria-hidden="false" 
                 aria-label="Home" 
                 fontIcon="home"
                 ></mat-icon>
-            </a>
         </li>
-        <li class="p-3">
-            <a routerLink="/dashboard"
-                matTooltip="Dashboard"
-                matTooltipPosition="right">
-                <mat-icon 
-                aria-hidden="false" 
-                aria-label="Dashboard" 
-                fontIcon="inbox"
-                ></mat-icon>
-            </a>
+        <li routerLink="/dashboard" 
+        class="block p-3 hover:bg-yellow-800 cursor-pointer"
+        matTooltip="Dashboard"
+        matTooltipPosition="right"
+        >
+            <mat-icon 
+            aria-hidden="false" 
+            aria-label="Dashboard" 
+            fontIcon="inbox"
+            ></mat-icon>
+
         </li>
-        <li class="p-3">
-            <a routerLink="/dashboard/wikis"
-                matTooltip="Wikis"
-                matTooltipPosition="right">
-                <mat-icon 
-                aria-hidden="false" 
-                aria-label="Wikis" 
-                fontIcon="book2"
-                ></mat-icon>
-            </a>
+        <li routerLink="/dashboard/wikis" 
+        class="block p-3 hover:bg-yellow-800 cursor-pointer"
+        matTooltip="Wikis"
+        matTooltipPosition="right"
+        >
+            <mat-icon 
+            aria-hidden="false" 
+            aria-label="Wikis" 
+            fontIcon="book2"
+            ></mat-icon>
         </li>
         <div class="absolute bottom-0 w-full">
-            <li class="p-3">
-                <a routerLink="/dashboard/settings"
-                    matTooltip="Settings"
-                    matTooltipPosition="right">
-                        <mat-icon 
-                        aria-hidden="false" 
-                        aria-label="Settings" 
-                        fontIcon="settings"
-                        ></mat-icon>
-                </a>
+            <li routerLink="/dashboard/settings" 
+        class="block p-3 hover:bg-yellow-800 cursor-pointer"
+        matTooltip="Settings"
+        matTooltipPosition="right"
+        >
+                <mat-icon 
+                aria-hidden="false" 
+                aria-label="Settings" 
+                fontIcon="settings"
+                ></mat-icon>
             </li>
-            <li class="p-3 w-full">
-                <a routerLink="/login"
+            <li routerLink="/login" 
+                    class="block p-3 hover:bg-yellow-800 cursor-pointer"
                     matTooltip="Login"
-                    matTooltipPosition="right">
-                        <mat-icon 
-                        aria-hidden="false" 
-                        aria-label="Login" 
-                        fontIcon="login"
-                        ></mat-icon>
-                </a>
+                    matTooltipPosition="right"
+                    >
+                    <mat-icon 
+                    aria-hidden="false" 
+                    aria-label="Login" 
+                    fontIcon="login"
+                    ></mat-icon>
             </li>
         </div>
     </ul>
