@@ -1,5 +1,5 @@
 import { Component, inject, signal, WritableSignal } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {MatCardModule} from '@angular/material/card';
 import { MatButton } from '@angular/material/button';
 
@@ -11,7 +11,7 @@ interface Wiki {
 
 @Component({
   selector: 'app-wikis',
-  imports: [MatCardModule, MatButton],
+  imports: [MatCardModule, MatButton, RouterLink],
   templateUrl: './wikis.html',
   styleUrl: './wikis.css',
 })

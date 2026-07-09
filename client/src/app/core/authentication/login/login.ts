@@ -28,7 +28,7 @@ export class Login {
       Validators.required,
       Validators.email
     ]),
-    password: new FormControl(''),
+    password: new FormControl('', [Validators.required]),
   })
 
   onSubmit() {
