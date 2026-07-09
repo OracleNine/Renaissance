@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core'
+import { Component, inject, signal } from '@angular/core'
 import { RouterLink, RouterOutlet, ActivatedRoute } from "@angular/router"
 import {MatIconModule} from '@angular/material/icon'
 import {MatTooltipModule} from '@angular/material/tooltip'
@@ -13,13 +13,14 @@ import {MatListModule} from '@angular/material/list'
 })
 export class SideNavigation {
   protected route = inject(ActivatedRoute)
+  isAuthenticated = signal(false)
 
   ngOnInit() {
     this.route.data.subscribe((response: any) => {
       if (response.user.username) {
-        console.log(response.user.username)
+        this.isAuthenticated.set(true)
       } else {
-        console.log("Couldnt find a user")
+        this.isAuthenticated.set(false)
       }
     })
   }

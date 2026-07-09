@@ -1,3 +1,4 @@
+<!-- mobile -->
 <div class="ren-mobile-nav block sm:hidden">
     <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -16,13 +17,14 @@
                     <span class="ml-2">Home</span>
                 </a>
             </mat-list-item>
+            @if (isAuthenticated()) {
             <mat-list-item>
                 <a class="flex align-center" 
                 routerLink="/dashboard">
                     <mat-icon 
                     aria-hidden="false" 
                     aria-label="Dashboard" 
-                    fontIcon="news"
+                    fontIcon="inbox"
                     fxFlexAlign="center"
                     ></mat-icon>
                     <span class="ml-2">Dashboard</span>
@@ -61,11 +63,24 @@
                         <span class="ml-3">Profile</span>
                 </a>
             </mat-list-item>
+            } @else {
+                <mat-list-item>
+                <a class="flex align-center"
+                    routerLink="/login">
+                        <mat-icon 
+                        aria-hidden="false" 
+                        aria-label="Login" 
+                        fontIcon="login"
+                        ></mat-icon>
+                        <span class="ml-3">Login</span>
+                </a>
+            </mat-list-item>
+            }
         </mat-list>
     </mat-expansion-panel>
 </div>
 
-
+<!-- desktop -->
 <div class="hidden sm:block absolute inset-y-0 left-0 w-20 text-md bg-zinc-900 text-white pt-5 text-center">
     <ul class="list-none">
         <li routerLink="/"
@@ -79,7 +94,8 @@
                 fontIcon="home"
                 ></mat-icon>
         </li>
-        <li routerLink="/dashboard" 
+        @if (isAuthenticated()) {
+         <li routerLink="/dashboard" 
         class="block p-3 hover:bg-yellow-800 cursor-pointer"
         matTooltip="Dashboard"
         matTooltipPosition="right"
@@ -114,18 +130,44 @@
                 fontIcon="settings"
                 ></mat-icon>
             </li>
-            <li routerLink="/login" 
+           <li routerLink="/profile" 
                     class="block p-3 hover:bg-yellow-800 cursor-pointer"
-                    matTooltip="Login"
+                    matTooltip="Profile"
                     matTooltipPosition="right"
                     >
                     <mat-icon 
                     aria-hidden="false" 
-                    aria-label="Login" 
-                    fontIcon="login"
+                    aria-label="Profile" 
+                    fontIcon="person"
+                    ></mat-icon>
+            </li>
+            <li routerLink="/logout" 
+                    class="block p-3 hover:bg-yellow-800 cursor-pointer"
+                    matTooltip="Log out"
+                    matTooltipPosition="right"
+                    >
+                    <mat-icon 
+                    aria-hidden="false" 
+                    aria-label="Logout" 
+                    fontIcon="logout"
                     ></mat-icon>
             </li>
         </div>
+        } @else {
+            <div class="absolute bottom-0 w-full">
+                <li routerLink="/login" 
+                        class="block p-3 hover:bg-yellow-800 cursor-pointer"
+                        matTooltip="Login"
+                        matTooltipPosition="right"
+                        >
+                        <mat-icon 
+                        aria-hidden="false" 
+                        aria-label="Login" 
+                        fontIcon="login"
+                        ></mat-icon>
+                </li>
+            </div>
+        }
     </ul>
 </div>
 

@@ -11,4 +11,10 @@ export class Api {
             withCredentials: true
         })
     }
+
+    getWikis(): Observable<unknown> {
+        return this.http.get("http://localhost:8000/api/core/wikis/", {
+            withCredentials: true
+        })
+    }
 }
