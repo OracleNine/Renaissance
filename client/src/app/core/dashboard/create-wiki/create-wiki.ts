@@ -38,7 +38,18 @@ export class CreateWiki {
                 console.log("Success?")
             },
             error: (err) => {
-                this.errorMsg.set(err.error.detail)
+                
+                let fullError = ""
+                if (err.error.name) {
+                  fullError += err.error.name + "\n"
+                }
+                if (err.error.subdomain) {
+                  fullError += err.error.subdomain + "\n"
+                }
+                if (err.error.description) {
+                  fullError += err.error.description + "\n"
+                }
+                this.errorMsg.set(fullError)
             },
         })
     }
