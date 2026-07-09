@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -9,19 +9,25 @@ interface UserInfo {
     id: number;
 }
 
+export function cookieInterceptor(
+    req: HttpRequest<unknown>,
+    next: HttpHandlerFn,
+    ): Observable<HttpEvent<unknown>> {
+    const addCreds = req.clone({
+        withCredentials: true
+    })
+    return next(addCreds);
+}
+
 @Service()
 export class Api {
     private http = inject(HttpClient)
 
     getUserInfo(): Observable<unknown> {
-        return this.http.get("http://localhost:8000/api/core/profile", {
-            withCredentials: true
-        })
+        return this.http.get("http://localhost:8000/api/core/profile")
     }
 
     getWikis(): Observable<unknown> {
-        return this.http.get("http://localhost:8000/api/core/wikis", {
-            withCredentials: true
-        })
+        return this.http.get("http://localhost:8000/api/core/wikis")
     }
 }

@@ -6,6 +6,7 @@ import { Login } from './core/authentication/login/login';
 import { Home } from './core/dashboard/home/home';
 import { sidenavResolver } from './core/navigation/side-navigation/sidenav-resolver';
 import { wikisResolver } from './core/dashboard/wikis/wikis-resolver';
+import { Logout } from './core/authentication/logout/logout';
 
 export const routes: Routes = [
     {
@@ -30,10 +31,14 @@ export const routes: Routes = [
                     wikis: wikisResolver
                 },
             },
-            {
-                path: "login",
-                component: Login,
-            },
         ]
+    },
+    {
+        path: "login",
+        component: Login,
+    },
+    {
+        path: "logout",
+        component: Logout,
     },
 ];

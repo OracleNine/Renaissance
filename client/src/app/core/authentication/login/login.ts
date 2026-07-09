@@ -41,7 +41,7 @@ export class Login {
         this.http.post('http://localhost:8000/api/core/login', requestBody, {
             headers: {
                 'Content-Type': 'application/json',
-            }
+            },
         }).subscribe({
             next: (payload) => {
                 this.router.navigate(['/dashboard'])

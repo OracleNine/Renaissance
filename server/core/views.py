@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from rest_framework import generics, viewsets, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -19,8 +19,15 @@ class LoginView(APIView):
         else:
             return Response({'status': 0, 'details': 'Invalid login'}, status=HTTP_404_NOT_FOUND)
 
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        logout(request)
+        return Response({'status': 1}, status=HTTP_200_OK)
+
 class ProfileView(APIView):
-    permission_classes= [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         serializer = UserSerializer(request.user)
         return Response(serializer.data)
