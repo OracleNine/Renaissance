@@ -4,14 +4,15 @@ import { Activity } from './core/dashboard/activity/activity';
 import { Wikis } from './core/dashboard/wikis/wikis';
 import { Login } from './core/authentication/login/login';
 import { Home } from './core/dashboard/home/home';
-import { sidenavResolverResolver } from './core/navigation/side-navigation/sidenav-resolver-resolver';
+import { sidenavResolver } from './core/navigation/side-navigation/sidenav-resolver';
+import { wikisResolver } from './core/dashboard/wikis/wikis-resolver';
 
 export const routes: Routes = [
     {
         path: "",
         component: SideNavigation,
         resolve: {
-            user: sidenavResolverResolver
+            user: sidenavResolver
         },
         children: [
             {
@@ -25,6 +26,9 @@ export const routes: Routes = [
             {
                 path: "dashboard/wikis",
                 component: Wikis,
+                resolve: {
+                    wikis: wikisResolver
+                },
             },
             {
                 path: "login",

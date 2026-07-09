@@ -13,7 +13,7 @@ export class Api {
     }
 
     getWikis(): Observable<unknown> {
-        return this.http.get("http://localhost:8000/api/core/wikis/", {
+        return this.http.get("http://localhost:8000/api/core/wikis", {
             withCredentials: true
         })
     }

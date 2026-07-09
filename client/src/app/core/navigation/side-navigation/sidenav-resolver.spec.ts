@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { ResolveFn } from '@angular/router';
 
-import { sidenavResolverResolver } from './sidenav-resolver-resolver';
+import { sidenavResolver } from './sidenav-resolver-resolver';
 
-describe('sidenavResolverResolver', () => {
+describe('sidenavResolver', () => {
   const executeResolver: ResolveFn<boolean> = (...resolverParameters) =>
-    TestBed.runInInjectionContext(() => sidenavResolverResolver(...resolverParameters));
+    TestBed.runInInjectionContext(() => sidenavResolver(...resolverParameters));
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
