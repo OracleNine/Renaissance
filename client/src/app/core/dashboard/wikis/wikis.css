@@ -1,3 +1,7 @@
 .wiki-card {
-    max-width: 350px;
+    max-width: 250px;
+}
+mat-card img {
+    height: 250px;
+    width: 250px;
 }

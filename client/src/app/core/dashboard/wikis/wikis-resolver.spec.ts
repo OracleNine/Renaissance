@@ -4,7 +4,7 @@ import { ResolveFn } from '@angular/router';
 import { wikisResolver } from './wikis-resolver';
 
 describe('wikisResolver', () => {
-  const executeResolver: ResolveFn<boolean> = (...resolverParameters) =>
+  const executeResolver: ResolveFn<unknown> = (...resolverParameters) =>
     TestBed.runInInjectionContext(() => wikisResolver(...resolverParameters));
 
   beforeEach(() => {

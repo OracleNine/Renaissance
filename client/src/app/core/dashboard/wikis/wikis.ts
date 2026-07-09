@@ -1,7 +1,13 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {MatCardModule} from '@angular/material/card';
 import { MatButton } from '@angular/material/button';
+
+interface Wiki {
+  name: string;
+  subdomain: string;
+  description: string;
+}
 
 @Component({
   selector: 'app-wikis',
@@ -12,7 +18,7 @@ import { MatButton } from '@angular/material/button';
 export class Wikis {
   protected route = inject(ActivatedRoute)
   protected router = inject(Router)
-  wikis = signal([])
+  wikis: WritableSignal<Wiki[]> = signal([])
   ngOnInit() {
     this.route.data.subscribe((response: any) => {
       if (response.wikis) {
