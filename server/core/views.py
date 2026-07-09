@@ -40,17 +40,23 @@ class RegisterView(APIView):
         serializer.save()
         return Response(serializer.data)
 
-class MyWikiViewSet(viewsets.ModelViewSet):
+class MyWikis(generics.ListAPIView):
     serializer_class = WikiSerializer
     permission_classes = [IsAuthenticated]
-
-    def perform_create(self, serializer):
-        serializer.save()
-        target = Wiki.objects.filter(subdomain=serializer.data["subdomain"])[0]
-        target.add_founder(self.request.user)
-        target.save()
 
     def get_queryset(self):
         memberships = Member.objects.filter(user=self.request.user)
         return Wiki.objects.filter(member__in=memberships)
+
+class CreateWikiView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = WikiSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        newWiki = serializer.save()
+        newWiki.add_founder(request.user)
+        return Response({
+            "status": 1
+        }, status=HTTP_200_OK)
         

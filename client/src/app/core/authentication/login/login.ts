@@ -38,7 +38,7 @@ export class Login {
             "email": formValues["email"],
             "password": formValues["password"],
         }
-        this.http.post('http://localhost:8000/api/core/login', requestBody, {
+        this.http.post('/api/core/login', requestBody, {
             headers: {
                 'Content-Type': 'application/json',
             },

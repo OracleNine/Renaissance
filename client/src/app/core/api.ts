@@ -24,10 +24,10 @@ export class Api {
     private http = inject(HttpClient)
 
     getUserInfo(): Observable<unknown> {
-        return this.http.get("http://localhost:8000/api/core/profile")
+        return this.http.get("/api/core/profile")
     }
 
     getWikis(): Observable<unknown> {
-        return this.http.get("http://localhost:8000/api/core/wikis")
+        return this.http.get("/api/core/wikis")
     }
 }

@@ -65,7 +65,8 @@
             "allowedHosts": [
               "localhost",
               "host.docker.internal"
-            ]
+            ],
+            "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {

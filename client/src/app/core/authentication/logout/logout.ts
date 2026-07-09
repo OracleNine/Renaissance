@@ -13,7 +13,7 @@ export class Logout {
   private router = inject(Router)
 
   ngOnInit() {
-    this.http.get("http://localhost:8000/api/core/logout", {
+    this.http.get("/api/core/logout", {
       withCredentials: true,
     }).subscribe({
       next: (payload) => {
