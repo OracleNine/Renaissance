@@ -1,3 +1,13 @@
-<h1 class="text-5xl px-3">{{ name() }}</h1>
-<hr />
-<p class="px-3 text-lg">{{ content() }}</p>
+<div>
+    <wiki-top-nav></wiki-top-nav>
+</div>
+<div class="flex">
+    <div class="sm:w-54">
+        <wiki-side-nav></wiki-side-nav>
+    </div>
+    <div class="w-64 flex-1 mx-2">
+        <h1 class="text-3xl p-3">{{ name() }}</h1>
+        <hr />
+        <p class="p-3 text-md">{{ content() }}</p>
+    </div>
+</div>
