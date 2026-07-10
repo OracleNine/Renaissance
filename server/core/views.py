@@ -4,9 +4,10 @@ from rest_framework import generics, viewsets, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND
 from .serializers import UserSerializer, WikiSerializer
 from .models import User, Member, Wiki
-from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND
+from wiki.models import Page
 
 class LoginView(APIView):
     def post(self, request):
@@ -56,6 +57,10 @@ class CreateWikiView(APIView):
         serializer.is_valid(raise_exception=True)
         newWiki = serializer.save()
         newWiki.add_founder(request.user)
+        homePage = Page(name="Home", 
+                        content="Welcome to your new wiki! Click the edit button to get started.",
+                        wiki=newWiki)
+        homePage.save()
         return Response({
             "status": 1
         }, status=HTTP_200_OK)

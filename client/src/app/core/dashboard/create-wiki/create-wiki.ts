@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { MatButtonModule } from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-wiki',
@@ -19,6 +20,7 @@ export class CreateWiki {
   })
 
   private http = inject(HttpClient)
+  private router = inject(Router)
   errorMsg = signal('')
 
   onSubmit() {
@@ -36,6 +38,7 @@ export class CreateWiki {
         }).subscribe({
             next: (payload) => {
                 console.log("Success?")
+                this.router.navigate(['/dashboard/wikis'])
             },
             error: (err) => {
                 
