@@ -49,6 +49,9 @@ export class CreateWiki {
                 if (err.error.description) {
                   fullError += err.error.description + "\n"
                 }
+                if (err.error.detail) {
+                  fullError += err.error.detail + "\n"
+                }
                 this.errorMsg.set(fullError)
             },
         })
