@@ -2,6 +2,7 @@ import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {MatCardModule} from '@angular/material/card';
 import { MatButton } from '@angular/material/button';
+import { WikiHomeUrlPipe } from './wiki-home-url-pipe';
 
 interface Wiki {
   name: string;
@@ -11,7 +12,7 @@ interface Wiki {
 
 @Component({
   selector: 'app-wikis',
-  imports: [MatCardModule, MatButton, RouterLink],
+  imports: [MatCardModule, MatButton, RouterLink, WikiHomeUrlPipe],
   templateUrl: './wikis.html',
   styleUrl: './wikis.css',
 })

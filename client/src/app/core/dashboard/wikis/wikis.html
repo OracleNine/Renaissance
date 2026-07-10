@@ -17,7 +17,7 @@
                     <p>{{ wiki.description }}</p>
                 </mat-card-content>
                 <mat-card-actions>
-                    <button matButton>Visit</button>
+                    <a routerLink="{{ wiki.subdomain | wikiHomeUrl }}"><button matButton>Visit</button></a>
                 </mat-card-actions>
             </mat-card>
         }
