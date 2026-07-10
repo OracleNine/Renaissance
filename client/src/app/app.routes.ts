@@ -9,6 +9,7 @@ import { wikisResolver } from './core/dashboard/wikis/wikis-resolver';
 import { Logout } from './core/authentication/logout/logout';
 import { CreateWiki } from './core/dashboard/create-wiki/create-wiki';
 import { Page } from './wiki/page/page/page';
+import { pageResolver } from './wiki/page/page/page-resolver';
 
 export const routes: Routes = [
     {
@@ -40,6 +41,9 @@ export const routes: Routes = [
             {
                 path: "wiki/:wSubdomain/:pSlug",
                 component: Page,
+                resolve: {
+                    page: pageResolver
+                },
             },
         ]
     },
