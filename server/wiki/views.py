@@ -7,6 +7,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND
 from core.models import Wiki
 from .models import Page
+from .utils import has_permission
 from .serializers import PageSerializer
 
 class ViewPage(APIView):
@@ -14,6 +15,10 @@ class ViewPage(APIView):
     def get(self, request, wikiSubdomain, pageSlug):
         wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
         page = get_object_or_404(Page, wiki=wiki, slug=pageSlug)
-        serializer = PageSerializer(page)
-        return Response(serializer.data)
+        if has_permission(wiki, request.user, "READ_PAGE"):
+            serializer = PageSerializer(page)
+            return Response(serializer.data)
+        return Response({
+            "details": "You don't have permission to view this page!"
+        })
 

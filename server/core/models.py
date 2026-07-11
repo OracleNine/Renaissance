@@ -23,25 +23,44 @@ class Wiki(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def add_founder(self, target):
-        founderRole = Role.objects.create(wiki=self, name="Founder", PERM_FOUNDER=True)
+        founderRole = Role.objects.create(wiki=self, name="Founder")
+        founderPerms = Permissions.objects.create(
+            role = founderRole,
+            scope = "#global",
+            CREATE_PAGE = True,
+            READ_PAGE = True,
+            UPDATE_PAGE = True,
+            DELETE_PAGE = True,
+        )
         member = Member.objects.create(wiki=self, user=target)
         member.roles.add(founderRole)
+
+    def add_everyone(self):
+        everyoneRole = Role.objects.create(wiki=self, name="@everyone")
+        everyoneRole.save()
+        everyonePerms = Permissions.objects.create(
+            role = everyoneRole,
+            scope = "#global",
+            CREATE_PAGE = True,
+            READ_PAGE = True,
+            UPDATE_PAGE = True,
+            DELETE_PAGE = True,
+        )
+        everyonePerms.save()
 
 class Role(models.Model):
     wiki = models.ForeignKey(Wiki, on_delete=models.CASCADE)
     name = models.CharField(max_length=25)
-    PERM_FOUNDER = models.BooleanField()
-    PERMS_CHOICES = {
-        "CREATE_PAGE": "Create pages",
-        "EDIT_PAGE": "Edit pages",
-        "DELETE_PAGE": "Delete pages",
-    }
-    perms = models.CharField(choices=PERMS_CHOICES)
-
-    def has_perm(self, perm):
-        return perm in self.perms
-
+    
 class Member(models.Model):
     wiki = models.ForeignKey(Wiki, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     roles = models.ManyToManyField(Role)
+
+class Permissions(models.Model):
+    role = models.ForeignKey(Role, on_delete=models.CASCADE)
+    scope = models.CharField()
+    CREATE_PAGE = models.BooleanField(default=False)
+    READ_PAGE = models.BooleanField(default=False)
+    UPDATE_PAGE = models.BooleanField(default=False)
+    DELETE_PAGE = models.BooleanField(default=False)

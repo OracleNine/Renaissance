@@ -57,10 +57,10 @@ class CreateWikiView(APIView):
         serializer.is_valid(raise_exception=True)
         newWiki = serializer.save()
         newWiki.add_founder(request.user)
-        homePage = Page(name="Home", 
-                        content="Welcome to your new wiki! Click the edit button to get started.",
-                        wiki=newWiki)
-        homePage.save()
+        newWiki.add_everyone()
+        Page.objects.create(name="Home", 
+                            content="Welcome to your new wiki! Click the edit button to get started.",
+                            wiki=newWiki)
         return Response({
             "status": 1
         }, status=HTTP_200_OK)
