@@ -10,8 +10,7 @@ from .models import Page
 from .utils import has_permission
 from .serializers import PageSerializer
 
-class ReadPage(APIView):
-    
+class ReadPage(APIView): 
     def get(self, request, wikiSubdomain, pageSlug):
         wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
         page = get_object_or_404(Page, wiki=wiki, slug=pageSlug)
@@ -24,3 +23,13 @@ class ReadPage(APIView):
             "watchlist": [],
             "tags": []
         })
+    
+    def post(self, request, wikiSubdomain, pageSlug):
+        wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+        page = Page.objects.get(Page, wiki=wiki, slug=pageSlug)
+        if page.exists():
+            # Edit existing page
+            pass
+        else:
+            # Create a new page
+            pass
