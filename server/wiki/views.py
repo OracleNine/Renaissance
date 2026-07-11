@@ -16,3 +16,4 @@ class ViewPage(APIView):
         page = get_object_or_404(Page, wiki=wiki, slug=pageSlug)
         serializer = PageSerializer(page)
         return Response(serializer.data)
+

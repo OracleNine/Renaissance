@@ -31,6 +31,15 @@ class Role(models.Model):
     wiki = models.ForeignKey(Wiki, on_delete=models.CASCADE)
     name = models.CharField(max_length=25)
     PERM_FOUNDER = models.BooleanField()
+    PERMS_CHOICES = {
+        "CREATE_PAGE": "Create pages",
+        "EDIT_PAGE": "Edit pages",
+        "DELETE_PAGE": "Delete pages",
+    }
+    perms = models.CharField(choices=PERMS_CHOICES)
+
+    def has_perm(self, perm):
+        return perm in self.perms
 
 class Member(models.Model):
     wiki = models.ForeignKey(Wiki, on_delete=models.CASCADE)
