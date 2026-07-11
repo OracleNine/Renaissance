@@ -10,7 +10,7 @@ from .models import Page
 from .utils import has_permission
 from .serializers import PageSerializer
 
-class ViewPage(APIView):
+class ReadPage(APIView):
     
     def get(self, request, wikiSubdomain, pageSlug):
         wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
@@ -19,6 +19,8 @@ class ViewPage(APIView):
             serializer = PageSerializer(page)
             return Response(serializer.data)
         return Response({
-            "details": "You don't have permission to view this page!"
+            "name": "Unauthorized",
+            "content": "You do not have permission to view this page.",
+            "watchlist": [],
+            "tags": []
         })
-
