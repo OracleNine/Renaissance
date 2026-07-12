@@ -3,7 +3,7 @@ import { inject, Service } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Service()
-export class Api {
+export class WikiApi {
     private http = inject(HttpClient)
 
     viewPage(subdomain: string, slug: string): Observable<unknown> {

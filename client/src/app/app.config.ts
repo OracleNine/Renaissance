@@ -4,7 +4,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptors, withXsrfConfiguration } from '@angular/common/http';
-import { cookieInterceptor } from './core/api';
+import { cookieInterceptor } from './core/core-api';
 
 export const appConfig: ApplicationConfig = {
   providers: [

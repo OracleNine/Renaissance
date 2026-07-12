@@ -1,10 +1,10 @@
 import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
-import { Api } from '../api';
+import { WikiApi } from '../wiki-api';
 import { catchError, of } from 'rxjs';
 
 export const pageResolver: ResolveFn<unknown> = (route, state) => {
-  const apiService = inject(Api)
+  const apiService = inject(WikiApi)
   const subdomain = route.paramMap.get('wSubdomain')
   const slug = route.paramMap.get('pSlug')
 

@@ -20,7 +20,7 @@ export function cookieInterceptor(
 }
 
 @Service()
-export class Api {
+export class CoreApi {
     private http = inject(HttpClient)
 
     getUserInfo(): Observable<unknown> {
