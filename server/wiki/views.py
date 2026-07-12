@@ -39,6 +39,19 @@ class PageView(APIView):
             "watchlist": [],
             "tags": []
         }, status=HTTP_401_UNAUTHORIZED)
+    
+    def delete(self, request, wikiSubdomain, pageSlug):
+        wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
+        page = get_object_or_404(Page, wiki=wiki, slug=pageSlug)
+        if has_permission(wiki, request.user, "DELETE_PAGE") and (pageSlug != "home"):
+            page.delete()
+            return Response({"details": "Page has been deleted."})
+        return Response({
+            "name": "Unauthorized",
+            "content": "You do not have permission to delete this page.",
+            "watchlist": [],
+            "tags": []
+        }, status=HTTP_401_UNAUTHORIZED)
 
 class PageCreateView(APIView):
     def post(self, request, wikiSubdomain):
