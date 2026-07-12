@@ -16,8 +16,8 @@ class Page(models.Model):
     name = models.CharField(max_length=50, validators=[nameValidator])
     slug = models.SlugField(default="")
     content = models.TextField()
-    watchlist = models.ManyToManyField(User)
-    tags = models.ManyToManyField(Tag)
+    watchlist = models.ManyToManyField(User, blank=True)
+    tags = models.ManyToManyField(Tag, blank=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
