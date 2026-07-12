@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { Wysiwyg } from './wysiwyg/wysiwyg';
 
 @Component({
   selector: 'app-edit',
-  imports: [],
+  imports: [Wysiwyg],
   templateUrl: './edit.html',
   styleUrl: './edit.css',
 })
