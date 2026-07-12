@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
+from django.utils.text import slugify 
 from rest_framework import generics, viewsets, status, mixins
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -59,6 +60,9 @@ class PageCreateView(APIView):
         if has_permission(wiki, request.user, "CREATE_PAGE"):
             serializer = PageSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)
+            pageAlreadyExists = Page.objects.filter(slug=slugify(serializer.validated_data["name"]))
+            if pageAlreadyExists.exists():
+                return Response({"status": 0, "details": "Page already exists."})
             page = Page.objects.create(
                 wiki=wiki,
                 name=serializer.validated_data["name"],
@@ -67,6 +71,6 @@ class PageCreateView(APIView):
             if serializer.validated_data.get("tags"):
                 page.tags = serializer.validated_data["tags"]
             page.save()
-            return Response(serializer.data)
+            return Response({"status": 1, "details": "Page creation successful"})
         return Response({"details": "Unable to create new page"})
 

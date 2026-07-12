@@ -14,7 +14,7 @@ class Page(models.Model):
     wiki = models.ForeignKey(Wiki, on_delete=models.CASCADE)
     nameValidator = RegexValidator(r'^[\w\-\s]+$', 'Invalid page name.')
     name = models.CharField(max_length=50, validators=[nameValidator])
-    slug = models.SlugField(default="")
+    slug = models.SlugField(default="", unique=True)
     content = models.TextField()
     watchlist = models.ManyToManyField(User, blank=True)
     tags = models.ManyToManyField(Tag, blank=True)
