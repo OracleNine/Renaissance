@@ -1,34 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
-.domternal-editor h1,
-h1 {
+
+.domternal-editor h1 {
   font-size: 2.25rem;
   font-weight: 700;
   line-height: 1.2;
 }
 
-.domternal-editor h2,
-h2 {
+.domternal-editor h2 {
   font-size: 1.875rem;
   font-weight: 700;
 }
 
-.domternal-editor blockquote,
-blockquote {
+.domternal-editor blockquote {
   border-left: 4px solid #ccc;
   padding-left: 1rem;
   font-style: italic;
 }
 
-.domternal-editor ol,
-ol {
+.domternal-editor ol {
   list-style-type: decimal;
   padding-left: 2rem;
 }
 
-.domternal-editor ul,
-ul {
+.domternal-editor ul {
   list-style-type: disc;
   padding-left: 2rem;
 }
