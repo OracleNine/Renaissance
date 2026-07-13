@@ -5,6 +5,7 @@ import {
   DomternalBubbleMenuComponent,
 } from '@domternal/angular'
 import { Editor, StarterKit, BubbleMenu } from '@domternal/core'
+import { Markdown, getMarkdown, downloadMarkdown } from '@domternal/extension-markdown';
 
 @Component({
   selector: 'app-edit',
@@ -13,6 +14,6 @@ import { Editor, StarterKit, BubbleMenu } from '@domternal/core'
 })
 export class Edit {
   editor = signal<Editor | null>(null)
-  extensions = [StarterKit, BubbleMenu]
-  content = '<p>Hello from Angular!</p>'
+  extensions = [StarterKit, BubbleMenu, Markdown]
+  content = '# Hello from Angular!'
 }

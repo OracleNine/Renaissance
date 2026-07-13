@@ -24,6 +24,7 @@
     "@angular/ssr": "^22.0.5",
     "@domternal/angular": "^0.12.1",
     "@domternal/core": "^0.12.1",
+    "@domternal/extension-markdown": "^0.12.1",
     "@domternal/theme": "^0.12.1",
     "express": "^5.1.0",
     "rxjs": "~7.8.0",
