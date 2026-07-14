@@ -1,21 +1,10 @@
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![project_license][license-shield]][license-url]
-
-
 ## About
-Renaissance is a open source wiki engine that is currently in development. Renaissance has several planned features including Markdown-based pages, an admin panel which allows you to manage plugins and schedule backups, and all the other bells and whistles you would expect in a standard wiki engine. If you're curious about specific features, there is a roadmap available on our [Discord](https://discord.gg/JTMQq7mg22).
-
-This is a personal project, so updates may be irregular. However, anyone is free to contribute and I will do my best to look through all pull requests.
+Renaissance is my first attempt at an open source wiki engine, using Django Rest Framework for the backend and Angular for the frontend.
 
 [![Angular][Angular-img]][Angular-url]
 [![Django][Django-img]][Django-url]
 
 ## Installation
-
-***WARNING:*** Renaissance is still in development, and is not suitable for making wikis just yet. If you want to help with development, these are the instructions for installing and running a development server on your own computer.
 
 1. Clone the repo, and navigate to the directory which contains `manage.py`.
 ```
@@ -75,18 +64,6 @@ poetry export -f requirements.txt --output requirements.txt
 ## Contact
 * Join the [discord](https://discord.gg/JTMQq7mg22)
 
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/OracleNine/Renaissance.svg?style=for-the-badge
-[contributors-url]: https://github.com/OracleNine/Renaissance/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/OracleNine/Renaissance.svg?style=for-the-badge
-[forks-url]: https://github.com/OracleNine/Renaissance/network/members
-[stars-shield]: https://img.shields.io/github/stars/OracleNine/Renaissance.svg?style=for-the-badge
-[stars-url]: https://github.com/OracleNine/Renaissance/stargazers
-[issues-shield]: https://img.shields.io/github/issues/OracleNine/Renaissance.svg?style=for-the-badge
-[issues-url]: https://github.com/OracleNine/Renaissance/issues
-[license-shield]: https://img.shields.io/github/license/OracleNine/Renaissance.svg?style=for-the-badge
-[license-url]: https://github.com/OracleNine/Renaissance/blob/main/LICENSE.txt
 <!-- Shields.io badges. You can a comprehensive list with many more badges at: https://github.com/inttter/md-badges -->
 [Django-img]: https://img.shields.io/badge/Django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white
 [Django-url]: https://djangoproject.com/
