@@ -61,9 +61,6 @@ poetry self add poetry-plugin-export
 poetry export -f requirements.txt --output requirements.txt
 ```
 
-## Contact
-* Join the [discord](https://discord.gg/JTMQq7mg22)
-
 <!-- Shields.io badges. You can a comprehensive list with many more badges at: https://github.com/inttter/md-badges -->
 [Django-img]: https://img.shields.io/badge/Django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white
 [Django-url]: https://djangoproject.com/
