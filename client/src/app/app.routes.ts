@@ -11,6 +11,7 @@ import { CreateWiki } from './core/dashboard/create-wiki/create-wiki';
 import { Page } from './wiki/page/page/page';
 import { pageResolver } from './wiki/page/page-resolver';
 import { Edit } from './wiki/page/edit/edit';
+import { Register } from './core/authentication/register/register';
 
 export const routes: Routes = [
     {
@@ -62,5 +63,9 @@ export const routes: Routes = [
     {
         path: "logout",
         component: Logout,
+    },
+    {
+        path: "register",
+        component: Register,
     },
 ];

@@ -1,0 +1,52 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div class="flex flex-col md:w-lg">
+    @if (errorMsg()) {
+      <div class="bg-red-200 rounded-md p-5 m-5">
+        <p>{{ errorMsg() }}</p>
+      </div>
+    }
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input 
+      matInput
+      id="email" 
+      placeholder="you@renaissance.md"
+      type="text" 
+      formControlName="email"
+      required />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input 
+      matInput
+      id="name" 
+      placeholder="John Smith"
+      type="text" 
+      formControlName="name"
+       />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input 
+      matInput
+      id="username" 
+      placeholder="oracle9"
+      type="text" 
+      formControlName="username"
+      required />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Password: </mat-label>
+      <input
+      matInput 
+      id="password" 
+      type="password" 
+      formControlName="password"
+      required />
+    </mat-form-field>
+  </div>
+  <button matButton="filled" type="submit" [disabled]="!registerForm.valid">Submit</button>
+</form>

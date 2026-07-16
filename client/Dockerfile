@@ -18,7 +18,7 @@ WORKDIR /app
 COPY client/package.json client/package-lock.json* ./
 
 # Install dependencies using npm with caching to speed up subsequent builds
-RUN --mount=type=cache,target=/root/.npm npm install
+RUN --mount=type=cache,target=/root/.npm npm install 
 
 # Copy all application source files into the container
 COPY /client .
