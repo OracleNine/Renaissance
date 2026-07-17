@@ -22,7 +22,7 @@ export class Edit {
   ngOnInit() {
     this.route.data.subscribe((response: any) => {
       if (response.page) {
-        this.editor()?.commands.setMarkdownContent(response.page.content)
+        this.editor()?.commands.setMarkdownContent('# Testing 123')
       }
     })
   }

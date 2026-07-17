@@ -24,7 +24,7 @@ RUN --mount=type=cache,target=/root/.npm npm install
 COPY /client .
 
 # Expose the port Angular uses for the dev server (default is 4200)
-EXPOSE 4200
+EXPOSE 4200 49153
 
 # Start the Angular dev server and bind it to all network interfaces
-CMD ["npm", "start", "--", "--host=0.0.0.0"]
+CMD ["npm", "start", "--", "--host=0.0.0.0", "--poll", "1"]
