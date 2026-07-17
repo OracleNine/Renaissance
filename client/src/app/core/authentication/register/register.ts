@@ -31,7 +31,7 @@ export class Register {
       Validators.email
     ]),
     password: new FormControl('', [Validators.required]),
-    username: new FormControl('', [Validators.required, forbiddenUsernameValidator(/[^a-zA-Z0-9]+/)]),
+    username: new FormControl('', [Validators.required, forbiddenUsernameValidator(/[^a-zA-Z0-9_.]+/)]),
     name: new FormControl('', [Validators.required])
   })
 

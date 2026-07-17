@@ -6,7 +6,8 @@ from django.core.validators import RegexValidator
 class User(AbstractUser):
     name = models.CharField(max_length=255, null=True, blank=True)
     email = models.CharField(max_length=255, unique=True)
-    username = models.CharField(max_length=25, unique=True)
+    usernameValidator = RegexValidator(r'^[0-9a-zA-Z\_\.]*$', 'Only alphanumeric characters, underscores and periods are allowed.')
+    username = models.CharField(max_length=25, unique=True, validators=[usernameValidator])
     password = models.CharField(max_length=255)
     friends = models.ManyToManyField("self")
     
