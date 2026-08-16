@@ -3,9 +3,10 @@
 }
 <domternal-editor
   [extensions]="extensions"
-  [content]="content"
-  (editorCreated)="editor.set($event)"
+  (editorCreated)="onEditorCreated($event)"
 />
 @if (editor(); as ed) {
   <domternal-bubble-menu [editor]="ed" />
 }
+<br />
+<a matButton="filled">Save</a>
