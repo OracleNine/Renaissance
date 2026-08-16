@@ -46,7 +46,7 @@ class PageView(APIView):
         page = get_object_or_404(Page, wiki=wiki, slug=pageSlug)
         if has_permission(wiki, request.user, "DELETE_PAGE") and (pageSlug != "home"):
             page.delete()
-            return Response({"details": "Page has been deleted."})
+            return Response({"status": 1, "details": "Page has been deleted."})
         return Response({
             "name": "Unauthorized",
             "content": "You do not have permission to delete this page.",
@@ -71,6 +71,6 @@ class PageCreateView(APIView):
             if serializer.validated_data.get("tags"):
                 page.tags = serializer.validated_data["tags"]
             page.save()
-            return Response({"status": 1, "details": "Page creation successful"})
-        return Response({"details": "Unable to create new page"})
+            return Response({"status": 1, "details": "Page creation successful."})
+        return Response({"status": 0, "details": "You have insufficient permission."})
 
