@@ -40,20 +40,6 @@ export const routes: Routes = [
                 path: "dashboard/create-wiki",
                 component: CreateWiki,
             },
-            {
-                path: "wiki/:wSubdomain/:pSlug",
-                component: Page,
-                resolve: {
-                    page: pageResolver
-                },
-            },
-            {
-                path: "wiki/:wSubdomain/:pSlug/edit",
-                component: Edit,
-                resolve: {
-                    page: pageResolver
-                },
-            },
         ]
     },
     {
@@ -67,5 +53,19 @@ export const routes: Routes = [
     {
         path: "register",
         component: Register,
+    },
+    {
+        path: "wiki/:wSubdomain/:pSlug",
+        component: Page,
+        resolve: {
+            page: pageResolver
+        },
+    },
+    {
+        path: "wiki/:wSubdomain/:pSlug/edit",
+        component: Edit,
+        resolve: {
+            page: pageResolver
+        },
     },
 ];
