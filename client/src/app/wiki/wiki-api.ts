@@ -9,4 +9,6 @@ export class WikiApi {
     viewPage(subdomain: string, slug: string): Observable<unknown> {
         return this.http.get("/api/wiki/" + subdomain + "/" + slug)
     }
+
+    
 }

@@ -19,12 +19,7 @@ class PageView(APIView):
         if has_permission(wiki, request.user, "READ_PAGE"):
             serializer = PageSerializer(page)
             return Response(serializer.data)
-        return Response({
-            "name": "Unauthorized",
-            "content": "You do not have permission to view this page.",
-            "watchlist": [],
-            "tags": []
-        }, status=HTTP_401_UNAUTHORIZED)
+        return Response({'status': 0, 'details': 'You do not have permission to view this page'}, status=HTTP_401_UNAUTHORIZED)
     # Update page
     def put(self, request, wikiSubdomain, pageSlug):
         wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
@@ -34,12 +29,7 @@ class PageView(APIView):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data)
-        return Response({
-            "name": "Unauthorized",
-            "content": "You do not have permission to edit this page.",
-            "watchlist": [],
-            "tags": []
-        }, status=HTTP_401_UNAUTHORIZED)
+        return Response({'status': 0, 'details': 'You do not have permission to edit this page'}, status=HTTP_401_UNAUTHORIZED)
     
     def delete(self, request, wikiSubdomain, pageSlug):
         wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
@@ -47,12 +37,7 @@ class PageView(APIView):
         if has_permission(wiki, request.user, "DELETE_PAGE") and (pageSlug != "home"):
             page.delete()
             return Response({"status": 1, "details": "Page has been deleted."})
-        return Response({
-            "name": "Unauthorized",
-            "content": "You do not have permission to delete this page.",
-            "watchlist": [],
-            "tags": []
-        }, status=HTTP_401_UNAUTHORIZED)
+        return Response({'status': 0, 'details': 'You do not have permission to delete this page'}, status=HTTP_401_UNAUTHORIZED)
 
 class PageCreateView(APIView):
     def post(self, request, wikiSubdomain):
