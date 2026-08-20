@@ -1,13 +1,6 @@
 import { HttpClient, HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
-import { inject, Service } from '@angular/core';
+import { inject, Service, signal } from '@angular/core';
 import { Observable } from 'rxjs';
-
-interface UserInfo {
-    name: string;
-    username: string;
-    email: string;
-    id: number;
-}
 
 export function cookieInterceptor(
     req: HttpRequest<unknown>,
@@ -22,6 +15,7 @@ export function cookieInterceptor(
 @Service()
 export class CoreApi {
     private http = inject(HttpClient)
+    public isAuthenticated = signal(false)
 
     getUserInfo(): Observable<unknown> {
         return this.http.get("/api/core/profile")
