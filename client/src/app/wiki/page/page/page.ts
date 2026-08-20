@@ -20,9 +20,13 @@ export class Page {
   ngOnInit() {
     this.route.data.subscribe((response: any) => {
       if (response.page) {
-        this.name.set(response.page.name)
-        this.content.set(response.page.content)
-        this.tags.set(response.page.tags)
+        if (response.page.status == 0) {
+          
+        } else {
+          this.name.set(response.page.name)
+          this.content.set(response.page.content)
+          this.tags.set(response.page.tags)
+        }
       }
     })
   }

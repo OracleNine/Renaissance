@@ -20,11 +20,9 @@ class PageView(APIView):
             serializer = PageSerializer(page)
             return Response(serializer.data)
         return Response({
-            "name": "Unauthorized",
-            "content": "You do not have permission to view this page.",
-            "watchlist": [],
-            "tags": []
-        }, status=HTTP_401_UNAUTHORIZED)
+                "status" : 0,
+                "message": "You do not have permission to view this page.",
+            }, status=HTTP_401_UNAUTHORIZED)
     # Update page
     def put(self, request, wikiSubdomain, pageSlug):
         wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
@@ -35,11 +33,9 @@ class PageView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response({
-            "name": "Unauthorized",
-            "content": "You do not have permission to edit this page.",
-            "watchlist": [],
-            "tags": []
-        }, status=HTTP_401_UNAUTHORIZED)
+                "status" : 0,
+                "message": "You do not have permission to edit this page.",
+            }, status=HTTP_401_UNAUTHORIZED)
     
     def delete(self, request, wikiSubdomain, pageSlug):
         wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
@@ -48,11 +44,9 @@ class PageView(APIView):
             page.delete()
             return Response({"status": 1, "details": "Page has been deleted."})
         return Response({
-            "name": "Unauthorized",
-            "content": "You do not have permission to delete this page.",
-            "watchlist": [],
-            "tags": []
-        }, status=HTTP_401_UNAUTHORIZED)
+                "status" : 0,
+                "message": "You do not have permission to delete this page.",
+            }, status=HTTP_401_UNAUTHORIZED)
 
 class PageCreateView(APIView):
     def post(self, request, wikiSubdomain):
