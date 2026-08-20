@@ -2,3 +2,7 @@
 node_modules
 staticfiles
 __pycache__
+client
+client/node_modules
+client/.angular
+.vscode
