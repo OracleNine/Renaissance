@@ -19,10 +19,7 @@ class PageView(APIView):
         if has_permission(wiki, request.user, "READ_PAGE"):
             serializer = PageSerializer(page)
             return Response(serializer.data)
-        return Response({
-                "status" : 0,
-                "message": "You do not have permission to view this page.",
-            }, status=HTTP_401_UNAUTHORIZED)
+        return Response({'status': 0, 'details': 'You do not have permission to view this page'}, status=HTTP_401_UNAUTHORIZED)
     # Update page
     def put(self, request, wikiSubdomain, pageSlug):
         wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
@@ -32,10 +29,7 @@ class PageView(APIView):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data)
-        return Response({
-                "status" : 0,
-                "message": "You do not have permission to edit this page.",
-            }, status=HTTP_401_UNAUTHORIZED)
+        return Response({'status': 0, 'details': 'You do not have permission to edit this page'}, status=HTTP_401_UNAUTHORIZED)
     
     def delete(self, request, wikiSubdomain, pageSlug):
         wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
@@ -47,24 +41,4 @@ class PageView(APIView):
                 "status" : 0,
                 "message": "You do not have permission to delete this page.",
             }, status=HTTP_401_UNAUTHORIZED)
-
-class PageCreateView(APIView):
-    def post(self, request, wikiSubdomain):
-        wiki = get_object_or_404(Wiki, subdomain=wikiSubdomain)
-        if has_permission(wiki, request.user, "CREATE_PAGE"):
-            serializer = PageSerializer(data=request.data)
-            serializer.is_valid(raise_exception=True)
-            pageAlreadyExists = Page.objects.filter(slug=slugify(serializer.validated_data["name"]))
-            if pageAlreadyExists.exists():
-                return Response({"status": 0, "details": "Page already exists."})
-            page = Page.objects.create(
-                wiki=wiki,
-                name=serializer.validated_data["name"],
-                content=serializer.validated_data["content"],
-            )
-            if serializer.validated_data.get("tags"):
-                page.tags = serializer.validated_data["tags"]
-            page.save()
-            return Response({"status": 1, "details": "Page creation successful."})
-        return Response({"status": 0, "details": "You have insufficient permission."})
 

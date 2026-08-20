@@ -1,12 +1,26 @@
-@if (editor(); as ed) {
-  <domternal-toolbar [editor]="ed" />
-}
-<domternal-editor
-  [extensions]="extensions"
-  (editorCreated)="onEditorCreated($event)"
-/>
-@if (editor(); as ed) {
-  <domternal-bubble-menu [editor]="ed" />
-}
-<br />
-<a matButton="filled">Save</a>
+<div>
+    <wiki-top-nav></wiki-top-nav>
+</div>
+<div class="flex">
+    <div class="sm:w-54">
+        <wiki-side-nav></wiki-side-nav>
+    </div>
+    <div class="w-64 flex-1 mx-2">
+      <h1 class="text-3xl p-3">{{ name() }}</h1>
+      <hr />
+      <div class="p-3">
+        @if (editor(); as ed) {
+        <domternal-toolbar [editor]="ed" />
+        }
+        <domternal-editor
+          [extensions]="extensions"
+          (editorCreated)="onEditorCreated($event)"
+        />
+        @if (editor(); as ed) {
+          <domternal-bubble-menu [editor]="ed" />
+        }
+        <br />
+        <a matButton="filled">Save</a>
+      </div>
+    </div>
+</div>

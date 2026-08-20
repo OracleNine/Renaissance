@@ -12,6 +12,7 @@ import { Page } from './wiki/page/page/page';
 import { pageResolver } from './wiki/page/page-resolver';
 import { Edit } from './wiki/page/edit/edit';
 import { Register } from './core/authentication/register/register';
+import { authGuard } from './core/authentication/auth-guard';
 
 export const routes: Routes = [
     {
@@ -28,6 +29,7 @@ export const routes: Routes = [
             {
                 path: "dashboard",
                 component: Activity,
+                canActivate: [authGuard],
             },
             {
                 path: "dashboard/wikis",
@@ -35,24 +37,12 @@ export const routes: Routes = [
                 resolve: {
                     wikis: wikisResolver
                 },
+                canActivate: [authGuard],
             },
             {
                 path: "dashboard/create-wiki",
                 component: CreateWiki,
-            },
-            {
-                path: "wiki/:wSubdomain/:pSlug",
-                component: Page,
-                resolve: {
-                    page: pageResolver
-                },
-            },
-            {
-                path: "wiki/:wSubdomain/:pSlug/edit",
-                component: Edit,
-                resolve: {
-                    page: pageResolver
-                },
+                canActivate: [authGuard],
             },
         ]
     },
@@ -67,5 +57,19 @@ export const routes: Routes = [
     {
         path: "register",
         component: Register,
+    },
+    {
+        path: "wiki/:wSubdomain/:pSlug",
+        component: Page,
+        resolve: {
+            page: pageResolver
+        },
+    },
+    {
+        path: "wiki/:wSubdomain/:pSlug/edit",
+        component: Edit,
+        resolve: {
+            page: pageResolver
+        },
     },
 ];
